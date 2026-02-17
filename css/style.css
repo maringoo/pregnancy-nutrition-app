@@ -1,0 +1,2185 @@
+/* ===== グローバルスタイル ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== カラーパレット ===== */
+:root {
+    /* パステルカラー */
+    --primary-pink: #FFE4E8;
+    --primary-green: #E8F5E9;
+    --accent-pink: #FFB6C1;
+    --accent-green: #A5D6A7;
+    --dark-text: #333333;
+    --light-text: #666666;
+    --border-color: #EEEEEE;
+    --success-green: #66BB6A;
+    --warning-yellow: #FDD835;
+    --danger-red: #EF5350;
+    --white: #FFFFFF;
+}
+
+/* ===== フォント・基本スタイル ===== */
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #FAFAFA;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--dark-text);
+}
+
+button, input, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+/* ===== ヘッダー ===== */
+.header {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-green) 100%);
+    padding: 1.5rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.app-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+    color: var(--dark-text);
+}
+
+.today-date {
+    font-size: 0.95rem;
+    color: var(--light-text);
+    font-weight: 500;
+}
+
+/* ===== メインコンテナ ===== */
+.main-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+/* ===== セクション共通 ===== */
+section {
+    margin-bottom: 2rem;
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--dark-text);
+    border-bottom: 2px solid var(--primary-pink);
+    padding-bottom: 0.5rem;
+}
+
+/* ===== 食事タイプタブ ===== */
+.meal-type-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--white);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--light-text);
+}
+
+.tab-button:hover {
+    border-color: var(--accent-pink);
+    background-color: var(--primary-pink);
+}
+
+.tab-button.active {
+    background-color: var(--accent-pink);
+    border-color: var(--accent-pink);
+    color: var(--white);
+}
+
+/* ===== フォームグループ ===== */
+.form-group {
+    margin-bottom: 1.3rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.1);
+}
+
+/* ===== 検索コンテナ ===== */
+.search-container {
+    position: relative;
+}
+
+.food-search-input {
+    width: 100%;
+}
+
+.food-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.food-suggestions.hidden {
+    display: none;
+}
+
+.food-suggestion-item {
+    padding: 0.75rem;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.food-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.food-suggestion-item:hover {
+    background-color: var(--primary-pink);
+}
+
+.food-suggestion-name {
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+.food-suggestion-category {
+    font-size: 0.8rem;
+    color: var(--light-text);
+}
+
+/* ===== 選択食品表示 ===== */
+.selected-food-display {
+    background-color: var(--primary-green);
+    border-left: 4px solid var(--accent-green);
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selected-food-display p {
+    margin: 0;
+}
+
+.selected-food-display.hidden {
+    display: none;
+}
+
+/* ===== 入力ヒント ===== */
+.input-hint {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-top: 0.3rem;
+}
+
+/* ===== ボタンスタイル ===== */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--accent-pink);
+    color: var(--white);
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #FF9AB5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 182, 193, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: var(--accent-green);
+    color: var(--white);
+    width: 100%;
+}
+
+.btn-secondary:hover {
+    background-color: #81C784;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(165, 214, 167, 0.3);
+}
+
+.btn-small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    display: inline-block;
+    width: auto;
+}
+
+.btn-clear {
+    background-color: var(--light-text);
+    color: var(--white);
+}
+
+.btn-clear:hover {
+    background-color: var(--dark-text);
+}
+
+.btn-delete {
+    background-color: var(--danger-red);
+    color: var(--white);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+}
+
+.btn-delete:hover {
+    background-color: #E53935;
+}
+
+.btn-reset {
+    margin-top: 1rem;
+    background-color: #B0BEC5;
+    color: var(--white);
+}
+
+.btn-reset:hover {
+    background-color: #90A4AE;
+}
+
+/* ===== エラーメッセージ ===== */
+.error-message {
+    background-color: #FFEBEE;
+    border-left: 4px solid var(--danger-red);
+    padding: 0.75rem;
+    border-radius: 4px;
+    color: var(--danger-red);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+
+.error-message.hidden {
+    display: none;
+}
+
+/* ===== 空のメッセージ ===== */
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--light-text);
+    background-color: #FAFAFA;
+    border-radius: 8px;
+    border: 2px dashed var(--border-color);
+}
+
+/* ===== 食事フォーム ===== */
+.meal-form {
+    background-color: #FAFAFA;
+    padding: 1.3rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.btn-add {
+    margin-top: 0.5rem;
+}
+
+/* ===== 食事一覧 ===== */
+.meals-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* 食事タイプごとのグループ */
+.meal-group {
+    border-left: 4px solid var(--accent-pink);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.meal-group-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    margin-bottom: 0.8rem;
+}
+
+/* 食事項目カード */
+.meal-item {
+    background-color: #FAFAFA;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition: box-shadow 0.2s ease;
+}
+
+.meal-item:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.meal-item-info {
+    flex: 1;
+}
+
+.meal-item-name {
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.3rem;
+}
+
+.meal-item-quantity {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 0.3rem;
+}
+
+.meal-item-nutrients {
+    font-size: 0.85rem;
+    color: var(--light-text);
+}
+
+.meal-item-nutrients span {
+    margin-right: 1rem;
+}
+
+.meal-item-delete {
+    margin-left: 1rem;
+}
+
+/* ===== 栄養素グリッド ===== */
+.nutrients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 480px) {
+    .nutrients-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 栄養素カード */
+.nutrient-card {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-green) 100%);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.nutrient-card.warning {
+    background: linear-gradient(135deg, #FFF9C4 0%, #FFEBEE 100%);
+}
+
+.nutrient-card.danger {
+    background: linear-gradient(135deg, #FFEBEE 0%, #FFEBEE 100%);
+}
+
+.nutrient-name {
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.nutrient-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.7rem;
+}
+
+.nutrient-current {
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.nutrient-unit {
+    font-size: 0.85rem;
+    color: var(--light-text);
+}
+
+.nutrient-recommended {
+    font-size: 0.85rem;
+    color: var(--light-text);
+}
+
+/* 進捗バー */
+.progress-bar-container {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--success-green);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-bar.warning {
+    background-color: var(--warning-yellow);
+}
+
+.progress-bar.danger {
+    background-color: var(--danger-red);
+}
+
+.nutrient-percentage {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+}
+
+.nutrient-over {
+    color: var(--danger-red);
+    font-weight: 600;
+}
+
+/* ===== レスポンシブデザイン ===== */
+@media (max-width: 600px) {
+    .main-container {
+        padding: 1rem;
+    }
+
+    section {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-content {
+        padding: 0 1rem;
+    }
+
+    .app-title {
+        font-size: 1.5rem;
+    }
+
+    .meal-type-tabs {
+        gap: 0.3rem;
+    }
+
+    .tab-button {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .meal-item {
+        flex-direction: column;
+    }
+
+    .meal-item-delete {
+        margin-left: 0;
+        margin-top: 0.8rem;
+        align-self: flex-start;
+    }
+
+    .nutrients-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== 非表示クラス ===== */
+.hidden {
+    display: none !important;
+}
+
+/* ===== 量の行レイアウト ===== */
+.quantity-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.quantity-input {
+    flex: 1;
+}
+
+.unit-select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--white);
+    transition: border-color 0.3s ease;
+}
+
+.unit-select:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.1);
+}
+
+/* ===== 履歴セクション ===== */
+.history-section {
+    margin-bottom: 1rem;
+}
+
+.history-label {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.history-list {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.history-chip {
+    flex-shrink: 0;
+    padding: 0.5rem 0.8rem;
+    background-color: var(--primary-pink);
+    border: 1px solid var(--accent-pink);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.history-chip:hover {
+    background-color: var(--accent-pink);
+    color: var(--white);
+}
+
+.history-chip-text {
+    cursor: pointer;
+}
+
+.history-chip-delete {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    padding: 0 0.2rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.history-chip-delete:hover {
+    color: var(--danger-red);
+}
+
+/* ===== スクロール ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #FAFAFA;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #BBDEFB;
+}
+
+/* ===== 食材構成リスト ===== */
+.ingredients-list {
+    background-color: #FFF8E1;
+    border: 1px solid #FFE082;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.ingredients-list.hidden {
+    display: none;
+}
+
+.ingredients-label {
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.ingredients-list ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
+}
+
+.ingredients-list li {
+    color: var(--light-text);
+    padding: 0.2rem 0;
+}
+
+.dish-tag {
+    background-color: #FFE082;
+    color: #F57F17;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-left: 0.3rem;
+}
+
+/* ===== 食材エディタ ===== */
+.ingredient-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.ingredient-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.ingredient-name {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--dark-text);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ingredient-amount-input {
+    width: 80px;
+    padding: 0.3rem 0.4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.ingredient-amount-input:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+}
+
+.ingredient-remove-btn {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 0.3rem;
+    line-height: 1;
+}
+
+.ingredient-remove-btn:hover {
+    color: var(--danger-red);
+}
+
+.ingredient-add-row {
+    position: relative;
+    margin-top: 0.5rem;
+}
+
+.ingredient-add-input {
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border: 1px dashed var(--border-color);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    background-color: var(--white);
+}
+
+.ingredient-add-input:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+}
+
+.ingredient-add-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 4px 4px;
+    z-index: 11;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ingredient-add-suggestions.hidden {
+    display: none;
+}
+
+.ingredient-add-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ingredient-add-item:hover {
+    background-color: var(--primary-pink);
+}
+
+.ingredient-add-item:last-child {
+    border-bottom: none;
+}
+
+/* ===== 食事一覧の食材構成 ===== */
+.meal-item-ingredients {
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.meal-item-ingredients summary {
+    color: var(--accent-pink);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.meal-item-ingredients ul {
+    list-style: none;
+    padding: 0.3rem 0 0 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.1rem;
+}
+
+.meal-item-ingredients li {
+    color: var(--light-text);
+}
+
+/* ===== モーダル ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: var(--white);
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--light-text);
+    padding: 0 0.3rem;
+}
+
+.modal-close:hover {
+    color: var(--danger-red);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-hint {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-bottom: 0.8rem;
+    padding: 0.5rem;
+    background-color: #F5F5F5;
+    border-radius: 4px;
+}
+
+.nutrient-input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.nutrient-input-grid .form-group {
+    margin-bottom: 0.5rem;
+}
+
+.nutrient-input-grid label {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+}
+
+.nutrient-input-grid input {
+    padding: 0.5rem;
+}
+
+/* ===== オリジナル食品セクション ===== */
+.section-description {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 1rem;
+    margin-top: -0.5rem;
+}
+
+.btn-outline {
+    padding: 0.75rem 1.5rem;
+    border: 2px dashed var(--accent-green);
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--accent-green);
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-green);
+    border-style: solid;
+}
+
+.custom-foods-list {
+    margin-top: 1rem;
+}
+
+.custom-foods-empty {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.custom-food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-food-item:last-child {
+    border-bottom: none;
+}
+
+.custom-food-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.custom-food-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.custom-food-cal {
+    font-size: 0.8rem;
+    color: var(--light-text);
+}
+
+.custom-food-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.btn-edit {
+    background-color: var(--accent-green);
+    color: var(--white);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-edit:hover {
+    background-color: #81C784;
+}
+
+/* ===== オリジナル食品モーダル: モード切替タブ ===== */
+.custom-mode-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.custom-mode-tab {
+    flex: 1;
+    padding: 0.6rem 0.3rem;
+    border: none;
+    background-color: var(--white);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--light-text);
+    transition: all 0.2s ease;
+    border-right: 1px solid var(--border-color);
+}
+
+.custom-mode-tab:last-child {
+    border-right: none;
+}
+
+.custom-mode-tab:hover {
+    background-color: var(--primary-green);
+}
+
+.custom-mode-tab.active {
+    background-color: var(--accent-green);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.custom-mode-panel {
+    margin-bottom: 1rem;
+}
+
+.custom-mode-panel.hidden {
+    display: none;
+}
+
+/* ===== 類似食品から推定モード ===== */
+.lookup-result {
+    background-color: var(--primary-green);
+    border: 1px solid var(--accent-green);
+    border-radius: 6px;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.lookup-result.hidden {
+    display: none;
+}
+
+.lookup-result-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark-text);
+}
+
+.lookup-nutrients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin-bottom: 0.5rem;
+}
+
+.lookup-nutrients strong {
+    color: var(--dark-text);
+}
+
+.btn-apply {
+    background-color: var(--accent-green);
+    color: var(--white);
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-apply:hover {
+    background-color: #81C784;
+}
+
+/* ===== 食材から計算モード ===== */
+.recipe-ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.recipe-ingredient-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #FAFAFA;
+    padding: 0.4rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.recipe-ingredient-name {
+    flex: 1;
+    font-size: 0.85rem;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recipe-ingredient-amount {
+    width: 70px;
+    padding: 0.3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.recipe-ingredient-unit {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    width: 12px;
+}
+
+.recipe-ingredient-remove {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 0.2rem;
+    line-height: 1;
+}
+
+.recipe-ingredient-remove:hover {
+    color: var(--danger-red);
+}
+
+.recipe-nutrient-preview {
+    background-color: #E8F5E9;
+    border: 1px solid var(--accent-green);
+    border-radius: 6px;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.recipe-nutrient-preview.hidden {
+    display: none;
+}
+
+/* ===== レシピ貼り付けモード ===== */
+.paste-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.paste-textarea:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.1);
+}
+
+.btn-analyze {
+    background-color: #7E57C2;
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-analyze:hover {
+    background-color: #673AB7;
+}
+
+.paste-status {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--light-text);
+    padding: 0.3rem 0;
+}
+
+.paste-status.hidden {
+    display: none;
+}
+
+.paste-result-preview {
+    margin-top: 0.8rem;
+    background-color: #F5F5F5;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.8rem;
+}
+
+.paste-result-preview.hidden {
+    display: none;
+}
+
+.paste-result-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.paste-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.paste-result-item.matched {
+    background-color: #E8F5E9;
+}
+
+.paste-result-item.unmatched {
+    background-color: #FFF3E0;
+}
+
+.paste-result-item-info {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.paste-result-name {
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+.paste-result-quantity {
+    font-size: 0.8rem;
+    color: var(--light-text);
+}
+
+.paste-result-actions {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.paste-result-remove {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 0.3rem;
+    line-height: 1;
+}
+
+.paste-result-remove:hover {
+    color: var(--danger-red);
+}
+
+.match-badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.match-badge.match-ok {
+    background-color: var(--accent-green);
+    color: var(--white);
+}
+
+.match-badge.match-ng {
+    background-color: #FFB74D;
+    color: var(--white);
+}
+
+.paste-unmatched-warning {
+    background-color: #FFF3E0;
+    border-left: 3px solid #FFB74D;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+    color: #E65100;
+    border-radius: 0 4px 4px 0;
+    margin-top: 0.5rem;
+}
+
+.paste-unmatched-warning.hidden {
+    display: none;
+}
+
+/* ===== API設定セクション ===== */
+.api-settings-section {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.api-settings-details {
+    width: 100%;
+}
+
+.api-settings-summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--light-text);
+    padding: 0.3rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.api-settings-summary::before {
+    content: '\25B6';
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+}
+
+.api-settings-details[open] > .api-settings-summary::before {
+    transform: rotate(90deg);
+}
+
+.api-settings-summary::-webkit-details-marker {
+    display: none;
+}
+
+.api-settings-body {
+    padding-top: 0.8rem;
+}
+
+.api-settings-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-delete-key {
+    background-color: #B0BEC5;
+    color: var(--white);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-delete-key:hover {
+    background-color: #90A4AE;
+}
+
+.api-key-status {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+/* ===== ナビゲーションタブ ===== */
+.nav-tabs {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--white);
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 72px;
+    z-index: 99;
+}
+
+.nav-tab {
+    flex: 1;
+    padding: 0.9rem 0.5rem;
+    border: none;
+    background-color: var(--white);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--light-text);
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.nav-tab:hover {
+    color: var(--dark-text);
+    background-color: var(--primary-pink);
+}
+
+.nav-tab.active {
+    color: var(--dark-text);
+    border-bottom-color: var(--accent-pink);
+}
+
+/* ===== タブコンテンツ切替 ===== */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ===== 妊娠週数表示 ===== */
+.pregnancy-week-display {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.8rem;
+    background-color: var(--primary-pink);
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* ===== 体重管理セクション ===== */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    margin-bottom: 1rem;
+}
+
+.chart-period-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.period-tab {
+    flex: 1;
+    padding: 0.5rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--light-text);
+    transition: all 0.2s ease;
+}
+
+.period-tab:hover {
+    border-color: var(--accent-green);
+    background-color: var(--primary-green);
+}
+
+.period-tab.active {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+    color: var(--white);
+}
+
+/* ===== 体重記録一覧 ===== */
+.weight-record-item {
+    background-color: #FAFAFA;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.2s ease;
+}
+
+.weight-record-item:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.weight-record-info {
+    flex: 1;
+}
+
+.weight-record-date {
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.2rem;
+}
+
+.weight-record-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.weight-record-change {
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+}
+
+.weight-record-change.positive {
+    color: var(--danger-red);
+}
+
+.weight-record-change.negative {
+    color: #2196F3;
+}
+
+.weight-record-change.zero {
+    color: var(--light-text);
+}
+
+.weight-record-memo {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-top: 0.2rem;
+}
+
+.weight-record-week {
+    font-size: 0.8rem;
+    color: var(--accent-pink);
+    font-weight: 500;
+}
+
+.weight-record-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.weight-record-editing {
+    border-color: var(--accent-pink);
+    background-color: var(--primary-pink);
+}
+
+/* ===== 設定：BMI表示 ===== */
+.bmi-display {
+    background-color: var(--primary-green);
+    border-left: 4px solid var(--accent-green);
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.bmi-display p {
+    margin: 0;
+}
+
+.bmi-category {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-top: 0.3rem;
+}
+
+/* ===== 成功メッセージ ===== */
+.success-message {
+    background-color: #E8F5E9;
+    border-left: 4px solid var(--success-green);
+    padding: 0.75rem;
+    border-radius: 4px;
+    color: var(--success-green);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+.success-message.hidden {
+    display: none;
+}
+
+/* ===== 日付セレクター ===== */
+.meal-date-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.date-nav-btn {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border-color);
+    background-color: var(--white);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light-text);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-nav-btn:hover {
+    border-color: var(--accent-pink);
+    background-color: var(--primary-pink);
+    color: var(--dark-text);
+}
+
+.date-display-btn {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--white);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    transition: all 0.2s ease;
+    min-width: 180px;
+    text-align: center;
+}
+
+.date-display-btn:hover {
+    border-color: var(--accent-pink);
+    background-color: var(--primary-pink);
+}
+
+.date-display-btn.is-today {
+    border-color: var(--accent-pink);
+    background-color: var(--primary-pink);
+}
+
+.date-display-btn.is-future {
+    border-color: #FFE082;
+    background-color: #FFF8E1;
+}
+
+.date-picker-hidden {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* ===== 予定バナー ===== */
+.planned-banner {
+    background-color: #FFF8E1;
+    border: 1px solid #FFE082;
+    border-left: 4px solid #FFB74D;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #E65100;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.planned-banner.hidden {
+    display: none;
+}
+
+/* ===== 予定食事のスタイル ===== */
+.meal-item.planned {
+    border-left: 3px solid #FFE082;
+    background-color: #FFFDE7;
+    opacity: 0.85;
+}
+
+.meal-planned-badge {
+    display: inline-block;
+    background-color: #FFB74D;
+    color: var(--white);
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.meal-confirmed-badge {
+    display: inline-block;
+    background-color: var(--success-green);
+    color: var(--white);
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.btn-confirm {
+    background-color: var(--accent-green);
+    color: var(--white);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-confirm:hover {
+    background-color: #81C784;
+}
+
+/* ===== ダッシュボード ===== */
+.dashboard-week-info {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-green) 100%);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.dashboard-week-info .week-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+.dashboard-week-info .week-trimester {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-top: 0.2rem;
+}
+
+.dashboard-week-info .week-due-date {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-top: 0.3rem;
+}
+
+/* 週間栄養グリッド */
+.dashboard-weekly-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.weekly-nutrient-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.weekly-nutrient-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--dark-text);
+    display: flex;
+    justify-content: space-between;
+}
+
+.weekly-nutrient-label .weekly-avg {
+    font-weight: 500;
+    color: var(--light-text);
+}
+
+.weekly-bar-container {
+    display: flex;
+    gap: 3px;
+    height: 24px;
+}
+
+.weekly-day-bar {
+    flex: 1;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.weekly-day-fill {
+    width: 100%;
+    border-radius: 3px;
+    transition: height 0.3s ease;
+}
+
+.weekly-day-fill.good {
+    background-color: var(--accent-green);
+}
+
+.weekly-day-fill.warning {
+    background-color: var(--warning-yellow);
+}
+
+.weekly-day-fill.danger {
+    background-color: var(--danger-red);
+}
+
+.weekly-day-fill.empty {
+    background-color: #e0e0e0;
+}
+
+.weekly-day-labels {
+    display: flex;
+    gap: 3px;
+    margin-top: 0.2rem;
+}
+
+.weekly-day-label {
+    flex: 1;
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--light-text);
+}
+
+/* 総合コンディション */
+.dashboard-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.dashboard-summary-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.summary-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-icon.good {
+    background-color: #E8F5E9;
+}
+
+.summary-icon.warning {
+    background-color: #FFF8E1;
+}
+
+.summary-icon.danger {
+    background-color: #FFEBEE;
+}
+
+.summary-text {
+    flex: 1;
+}
+
+.summary-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--dark-text);
+}
+
+.summary-detail {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin-top: 0.1rem;
+}
+
+/* ===== レスポンシブ: ナビタブ ===== */
+@media (max-width: 600px) {
+    .nav-tabs {
+        top: 60px;
+    }
+
+    .nav-tab {
+        font-size: 0.8rem;
+        padding: 0.7rem 0.2rem;
+    }
+}
+
+/* ===== 免責表示 ===== */
+.disclaimer-link {
+    font-size: 0.75rem;
+    color: var(--light-text);
+    margin-top: 0.3rem;
+    opacity: 0.8;
+}
+
+/* ===== トースト通知 ===== */
+.toast-notification {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background-color: var(--dark-text);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 300;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    text-align: center;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ===== 不足栄養素の提案セクション ===== */
+.suggestion-section {
+    margin-bottom: 2rem;
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.suggestion-section.hidden {
+    display: none;
+}
+
+.suggestion-section h2 {
+    border-bottom: 2px solid var(--accent-green);
+    padding-bottom: 0.5rem;
+}
+
+.deficient-nutrients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.deficient-nutrient-card {
+    background-color: #FAFAFA;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.deficient-nutrient-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.deficient-nutrient-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.deficient-nutrient-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--dark-text);
+}
+
+.deficient-nutrient-detail {
+    font-size: 0.8rem;
+    color: var(--light-text);
+}
+
+.deficient-nutrient-rate {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+/* ===== 推奨食品リスト ===== */
+.recommended-foods {
+    margin-top: 0.8rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.8rem;
+}
+
+.recommended-foods-label {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.recommended-foods-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.recommended-food-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.recommended-food-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.recommended-food-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.recommended-food-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recommended-food-amount {
+    font-size: 0.75rem;
+    color: var(--light-text);
+}
+
+.recommended-food-needed {
+    font-size: 0.75rem;
+    color: var(--accent-green);
+    font-weight: 500;
+}
+
+.btn-add-recommended {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== 空状態ガイダンス ===== */
+.empty-state-guide {
+    padding: 2.5rem 1.5rem;
+}
+
+.empty-state-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--dark-text);
+    margin-bottom: 0.3rem;
+}
+
+.empty-state-hint {
+    font-size: 0.85rem;
+    color: var(--light-text);
+}
+
+/* ===== ダッシュボード: アクションリンク ===== */
+.summary-action-link {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--accent-pink);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.summary-action-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== レスポンシブ強化 ===== */
+
+/* タッチ操作しやすいボタンサイズ */
+@media (max-width: 600px) {
+    .btn {
+        min-height: 44px;
+    }
+
+    .btn-small {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .btn-delete, .btn-edit, .btn-confirm, .btn-apply {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 推奨食品カードの縦積みレイアウト */
+    .recommended-food-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .btn-add-recommended {
+        margin-left: 0;
+        align-self: flex-end;
+    }
+
+    /* ダッシュボード栄養バランスグリッドのモバイル対応 */
+    .dashboard-weekly-grid {
+        gap: 1rem;
+    }
+
+    .weekly-bar-container {
+        height: 28px;
+    }
+
+    /* 体重チャートのモバイル最適化 */
+    .chart-container {
+        height: 280px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 推奨食品カードのさらなるコンパクト化 */
+    .deficient-nutrient-card {
+        padding: 0.8rem;
+    }
+
+    .recommended-food-card {
+        padding: 0.5rem 0.6rem;
+    }
+
+    .deficient-nutrient-rate {
+        font-size: 1rem;
+    }
+
+    /* 期間タブ */
+    .chart-period-tabs {
+        gap: 0.3rem;
+    }
+
+    .period-tab {
+        padding: 0.5rem 0.3rem;
+        font-size: 0.85rem;
+    }
+
+    /* ナビタブを均等に */
+    .nav-tab {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.1rem;
+    }
+}

@@ -1,0 +1,7034 @@
+{
+  "foods": [
+    {
+      "foodId": "food-001",
+      "name": "ごはん（白米）",
+      "calories": 168,
+      "protein": 2.5,
+      "fat": 0.3,
+      "carbohydrate": 37.1,
+      "iron": 0.1,
+      "calcium": 3,
+      "folate": 3,
+      "category": "grain",
+      "nameKana": "ごはん（白米）",
+      "keywords": [
+        "ごはん（白米）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "chawan",
+          "label": "お茶碗",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "chawan"
+    },
+    {
+      "foodId": "food-002",
+      "name": "食パン",
+      "calories": 260,
+      "protein": 8.0,
+      "fat": 3.4,
+      "carbohydrate": 47.1,
+      "iron": 1.1,
+      "calcium": 28,
+      "folate": 46,
+      "category": "grain",
+      "nameKana": "食パン",
+      "keywords": [
+        "食パン"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-003",
+      "name": "うどん（ゆで）",
+      "calories": 95,
+      "protein": 2.6,
+      "fat": 0.2,
+      "carbohydrate": 21.0,
+      "iron": 0.2,
+      "calcium": 8,
+      "folate": 4,
+      "category": "grain",
+      "nameKana": "うどん（ゆで）",
+      "keywords": [
+        "うどん（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-004",
+      "name": "そば（ゆで）",
+      "calories": 99,
+      "protein": 4.8,
+      "fat": 0.1,
+      "carbohydrate": 21.0,
+      "iron": 0.5,
+      "calcium": 16,
+      "folate": 19,
+      "category": "grain",
+      "nameKana": "そば（ゆで）",
+      "keywords": [
+        "そば（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-005",
+      "name": "パスタ（ゆで）",
+      "calories": 113,
+      "protein": 3.6,
+      "fat": 0.4,
+      "carbohydrate": 24.3,
+      "iron": 0.2,
+      "calcium": 4,
+      "folate": 6,
+      "category": "grain",
+      "nameKana": "パスタ（ゆで）",
+      "keywords": [
+        "パスタ（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-006",
+      "name": "もち",
+      "calories": 235,
+      "protein": 4.1,
+      "fat": 1.2,
+      "carbohydrate": 50.8,
+      "iron": 0.2,
+      "calcium": 28,
+      "folate": 14,
+      "category": "grain",
+      "nameKana": "もち",
+      "keywords": [
+        "もち"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-007",
+      "name": "オートミール",
+      "calories": 389,
+      "protein": 13.7,
+      "fat": 6.5,
+      "carbohydrate": 66.3,
+      "iron": 4.3,
+      "calcium": 47,
+      "folate": 56,
+      "category": "grain",
+      "nameKana": "オートミール",
+      "keywords": [
+        "オートミール"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-008",
+      "name": "コーンフレーク",
+      "calories": 386,
+      "protein": 8.4,
+      "fat": 1.0,
+      "carbohydrate": 85.3,
+      "iron": 2.7,
+      "calcium": 9,
+      "folate": 4,
+      "category": "grain",
+      "nameKana": "コーンフレーク",
+      "keywords": [
+        "コーンフレーク"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-009",
+      "name": "鶏むね肉（皮なし）",
+      "calories": 108,
+      "protein": 22.3,
+      "fat": 1.5,
+      "carbohydrate": 0.0,
+      "iron": 0.3,
+      "calcium": 4,
+      "folate": 3,
+      "category": "protein",
+      "nameKana": "鶏むね肉（皮なし）",
+      "keywords": [
+        "鶏むね肉（皮なし）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 250
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-010",
+      "name": "鶏もも肉（皮なし）",
+      "calories": 127,
+      "protein": 20.8,
+      "fat": 4.5,
+      "carbohydrate": 0.0,
+      "iron": 0.5,
+      "calcium": 6,
+      "folate": 5,
+      "category": "protein",
+      "nameKana": "鶏もも肉（皮なし）",
+      "keywords": [
+        "鶏もも肉（皮なし）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 250
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-011",
+      "name": "豚ロース",
+      "calories": 263,
+      "protein": 19.3,
+      "fat": 20.7,
+      "carbohydrate": 0.1,
+      "iron": 0.3,
+      "calcium": 5,
+      "folate": 4,
+      "category": "protein",
+      "nameKana": "豚ロース",
+      "keywords": [
+        "豚ロース"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-012",
+      "name": "豚バラ肉",
+      "calories": 386,
+      "protein": 14.4,
+      "fat": 35.4,
+      "carbohydrate": 0.0,
+      "iron": 0.4,
+      "calcium": 6,
+      "folate": 2,
+      "category": "protein",
+      "nameKana": "豚バラ肉",
+      "keywords": [
+        "豚バラ肉"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚(薄切り)",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-013",
+      "name": "牛もも肉",
+      "calories": 246,
+      "protein": 20.7,
+      "fat": 17.9,
+      "carbohydrate": 0.3,
+      "iron": 2.0,
+      "calcium": 5,
+      "folate": 5,
+      "category": "protein",
+      "nameKana": "牛もも肉",
+      "keywords": [
+        "牛もも肉"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚(薄切り)",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-014",
+      "name": "ひき肉（合いびき）",
+      "calories": 289,
+      "protein": 17.9,
+      "fat": 23.4,
+      "carbohydrate": 0.0,
+      "iron": 1.7,
+      "calcium": 8,
+      "folate": 4,
+      "category": "protein",
+      "nameKana": "ひき肉（合いびき）",
+      "keywords": [
+        "ひき肉（合いびき）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "tbsp",
+          "label": "大さじ",
+          "gramsPerUnit": 15
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-015",
+      "name": "鶏ささみ",
+      "calories": 98,
+      "protein": 23.0,
+      "fat": 0.8,
+      "carbohydrate": 0.0,
+      "iron": 0.3,
+      "calcium": 3,
+      "folate": 2,
+      "category": "protein",
+      "nameKana": "鶏ささみ",
+      "keywords": [
+        "鶏ささみ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-016",
+      "name": "鶏レバー",
+      "calories": 111,
+      "protein": 18.0,
+      "fat": 3.7,
+      "carbohydrate": 0.5,
+      "iron": 9.0,
+      "calcium": 5,
+      "folate": 1300,
+      "category": "protein",
+      "nameKana": "鶏レバー",
+      "keywords": [
+        "鶏レバー"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 40
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-017",
+      "name": "鮭（焼き）",
+      "calories": 240,
+      "protein": 26.4,
+      "fat": 13.6,
+      "carbohydrate": 0.1,
+      "iron": 0.8,
+      "calcium": 12,
+      "folate": 3,
+      "category": "protein",
+      "nameKana": "鮭（焼き）",
+      "keywords": [
+        "鮭（焼き）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-018",
+      "name": "さば（水煮缶詰）",
+      "calories": 207,
+      "protein": 20.9,
+      "fat": 13.3,
+      "carbohydrate": 0.1,
+      "iron": 1.6,
+      "calcium": 38,
+      "folate": 8,
+      "category": "protein",
+      "nameKana": "さば（水煮缶詰）",
+      "keywords": [
+        "さば（水煮缶詰）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-019",
+      "name": "まぐろ（赤身、生）",
+      "calories": 125,
+      "protein": 26.4,
+      "fat": 0.9,
+      "carbohydrate": 0.0,
+      "iron": 1.1,
+      "calcium": 4,
+      "folate": 3,
+      "category": "protein",
+      "nameKana": "まぐろ（赤身、生）",
+      "keywords": [
+        "まぐろ（赤身、生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kire",
+          "label": "切れ",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "kire"
+    },
+    {
+      "foodId": "food-020",
+      "name": "ぶり（焼き）",
+      "calories": 256,
+      "protein": 25.8,
+      "fat": 16.2,
+      "carbohydrate": 0.0,
+      "iron": 0.9,
+      "calcium": 7,
+      "folate": 3,
+      "category": "protein",
+      "nameKana": "ぶり（焼き）",
+      "keywords": [
+        "ぶり（焼き）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kire",
+          "label": "切れ",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "kire"
+    },
+    {
+      "foodId": "food-021",
+      "name": "あじ（焼き）",
+      "calories": 222,
+      "protein": 23.5,
+      "fat": 13.6,
+      "carbohydrate": 0.0,
+      "iron": 0.9,
+      "calcium": 33,
+      "folate": 5,
+      "category": "protein",
+      "nameKana": "あじ（焼き）",
+      "keywords": [
+        "あじ（焼き）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kire",
+          "label": "切れ",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "kire"
+    },
+    {
+      "foodId": "food-022",
+      "name": "しらす干し",
+      "calories": 255,
+      "protein": 40.5,
+      "fat": 8.1,
+      "carbohydrate": 0.0,
+      "iron": 3.1,
+      "calcium": 520,
+      "folate": 28,
+      "category": "protein",
+      "nameKana": "しらす干し",
+      "keywords": [
+        "しらす干し"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-023",
+      "name": "えび（ゆで）",
+      "calories": 99,
+      "protein": 21.5,
+      "fat": 0.3,
+      "carbohydrate": 0.0,
+      "iron": 0.4,
+      "calcium": 76,
+      "folate": 48,
+      "category": "protein",
+      "nameKana": "えび（ゆで）",
+      "keywords": [
+        "えび（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-024",
+      "name": "たら（焼き）",
+      "calories": 95,
+      "protein": 20.9,
+      "fat": 0.3,
+      "carbohydrate": 0.0,
+      "iron": 0.2,
+      "calcium": 7,
+      "folate": 2,
+      "category": "protein",
+      "nameKana": "たら（焼き）",
+      "keywords": [
+        "たら（焼き）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-025",
+      "name": "卵（全卵、ゆで）",
+      "calories": 155,
+      "protein": 13.3,
+      "fat": 11.2,
+      "carbohydrate": 1.1,
+      "iron": 1.8,
+      "calcium": 51,
+      "folate": 44,
+      "category": "dairy",
+      "nameKana": "卵（全卵、ゆで）",
+      "keywords": [
+        "卵（全卵、ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-026",
+      "name": "牛乳",
+      "calories": 67,
+      "protein": 3.6,
+      "fat": 3.8,
+      "carbohydrate": 4.8,
+      "iron": 0.0,
+      "calcium": 110,
+      "folate": 5,
+      "category": "dairy",
+      "nameKana": "牛乳",
+      "keywords": [
+        "牛乳"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "コップ",
+          "gramsPerUnit": 200
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 15
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 5
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-027",
+      "name": "ヨーグルト（プレーン）",
+      "calories": 59,
+      "protein": 3.6,
+      "fat": 3.0,
+      "carbohydrate": 4.9,
+      "iron": 0.0,
+      "calcium": 120,
+      "folate": 8,
+      "category": "dairy",
+      "nameKana": "ヨーグルト（プレーン）",
+      "keywords": [
+        "ヨーグルト（プレーン）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-028",
+      "name": "チーズ（プロセス）",
+      "calories": 313,
+      "protein": 22.7,
+      "fat": 24.3,
+      "carbohydrate": 1.3,
+      "iron": 0.2,
+      "calcium": 630,
+      "folate": 12,
+      "category": "dairy",
+      "nameKana": "チーズ（プロセス）",
+      "keywords": [
+        "チーズ（プロセス）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 18
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-029",
+      "name": "豆乳",
+      "calories": 45,
+      "protein": 1.9,
+      "fat": 2.0,
+      "carbohydrate": 3.1,
+      "iron": 1.2,
+      "calcium": 15,
+      "folate": 30,
+      "category": "dairy",
+      "nameKana": "豆乳",
+      "keywords": [
+        "豆乳"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-030",
+      "name": "木綿豆腐",
+      "calories": 72,
+      "protein": 6.6,
+      "fat": 4.2,
+      "carbohydrate": 1.6,
+      "iron": 2.7,
+      "calcium": 120,
+      "folate": 61,
+      "category": "protein",
+      "nameKana": "木綿豆腐",
+      "keywords": [
+        "木綿豆腐"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "丁",
+          "gramsPerUnit": 300
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-031",
+      "name": "絹ごし豆腐",
+      "calories": 56,
+      "protein": 4.9,
+      "fat": 3.0,
+      "carbohydrate": 2.0,
+      "iron": 1.3,
+      "calcium": 75,
+      "folate": 38,
+      "category": "protein",
+      "nameKana": "絹ごし豆腐",
+      "keywords": [
+        "絹ごし豆腐"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "丁",
+          "gramsPerUnit": 300
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-032",
+      "name": "納豆",
+      "calories": 176,
+      "protein": 16.5,
+      "fat": 10.3,
+      "carbohydrate": 5.4,
+      "iron": 3.3,
+      "calcium": 90,
+      "folate": 240,
+      "category": "protein",
+      "nameKana": "納豆",
+      "keywords": [
+        "納豆"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "pack",
+          "label": "パック",
+          "gramsPerUnit": 45
+        }
+      ],
+      "defaultUnit": "pack"
+    },
+    {
+      "foodId": "food-033",
+      "name": "油揚げ",
+      "calories": 386,
+      "protein": 18.6,
+      "fat": 33.8,
+      "carbohydrate": 2.4,
+      "iron": 2.3,
+      "calcium": 270,
+      "folate": 55,
+      "category": "protein",
+      "nameKana": "油揚げ",
+      "keywords": [
+        "油揚げ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-034",
+      "name": "ほうれん草（ゆで）",
+      "calories": 20,
+      "protein": 2.8,
+      "fat": 0.2,
+      "carbohydrate": 0.3,
+      "iron": 2.0,
+      "calcium": 49,
+      "folate": 110,
+      "category": "vegetable",
+      "nameKana": "ほうれん草（ゆで）",
+      "keywords": [
+        "ほうれん草（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bundle",
+          "label": "束",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "bundle"
+    },
+    {
+      "foodId": "food-035",
+      "name": "ブロッコリー（ゆで）",
+      "calories": 27,
+      "protein": 3.6,
+      "fat": 0.1,
+      "carbohydrate": 5.2,
+      "iron": 0.8,
+      "calcium": 40,
+      "folate": 120,
+      "category": "vegetable",
+      "nameKana": "ブロッコリー（ゆで）",
+      "keywords": [
+        "ブロッコリー（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bundle",
+          "label": "束",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "bundle"
+    },
+    {
+      "foodId": "food-036",
+      "name": "にんじん（ゆで）",
+      "calories": 28,
+      "protein": 0.8,
+      "fat": 0.1,
+      "carbohydrate": 6.9,
+      "iron": 0.3,
+      "calcium": 23,
+      "folate": 16,
+      "category": "vegetable",
+      "nameKana": "にんじん（ゆで）",
+      "keywords": [
+        "にんじん（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-037",
+      "name": "トマト",
+      "calories": 19,
+      "protein": 0.7,
+      "fat": 0.2,
+      "carbohydrate": 3.7,
+      "iron": 0.2,
+      "calcium": 7,
+      "folate": 20,
+      "category": "vegetable",
+      "nameKana": "トマト",
+      "keywords": [
+        "トマト"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-038",
+      "name": "キャベツ",
+      "calories": 23,
+      "protein": 1.3,
+      "fat": 0.2,
+      "carbohydrate": 5.2,
+      "iron": 0.3,
+      "calcium": 43,
+      "folate": 78,
+      "category": "vegetable",
+      "nameKana": "キャベツ",
+      "keywords": [
+        "キャベツ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-039",
+      "name": "小松菜（ゆで）",
+      "calories": 11,
+      "protein": 2.0,
+      "fat": 0.0,
+      "carbohydrate": 0.4,
+      "iron": 2.8,
+      "calcium": 150,
+      "folate": 110,
+      "category": "vegetable",
+      "nameKana": "小松菜（ゆで）",
+      "keywords": [
+        "小松菜（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-040",
+      "name": "かぼちゃ",
+      "calories": 91,
+      "protein": 1.9,
+      "fat": 1.3,
+      "carbohydrate": 20.6,
+      "iron": 0.5,
+      "calcium": 20,
+      "folate": 42,
+      "category": "vegetable",
+      "nameKana": "かぼちゃ",
+      "keywords": [
+        "かぼちゃ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-041",
+      "name": "さつまいも",
+      "calories": 132,
+      "protein": 1.2,
+      "fat": 0.2,
+      "carbohydrate": 31.5,
+      "iron": 0.3,
+      "calcium": 27,
+      "folate": 33,
+      "category": "vegetable",
+      "nameKana": "さつまいも",
+      "keywords": [
+        "さつまいも"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-042",
+      "name": "じゃがいも",
+      "calories": 76,
+      "protein": 1.6,
+      "fat": 0.1,
+      "carbohydrate": 17.3,
+      "iron": 0.4,
+      "calcium": 4,
+      "folate": 20,
+      "category": "vegetable",
+      "nameKana": "じゃがいも",
+      "keywords": [
+        "じゃがいも"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-043",
+      "name": "玉ねぎ",
+      "calories": 33,
+      "protein": 1.0,
+      "fat": 0.1,
+      "carbohydrate": 7.9,
+      "iron": 0.1,
+      "calcium": 21,
+      "folate": 16,
+      "category": "vegetable",
+      "nameKana": "玉ねぎ",
+      "keywords": [
+        "玉ねぎ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-044",
+      "name": "大根",
+      "calories": 18,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 4.1,
+      "iron": 0.2,
+      "calcium": 24,
+      "folate": 34,
+      "category": "vegetable",
+      "nameKana": "大根",
+      "keywords": [
+        "大根"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-045",
+      "name": "きゅうり",
+      "calories": 14,
+      "protein": 1.0,
+      "fat": 0.1,
+      "carbohydrate": 3.0,
+      "iron": 0.3,
+      "calcium": 26,
+      "folate": 21,
+      "category": "vegetable",
+      "nameKana": "きゅうり",
+      "keywords": [
+        "きゅうり"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-046",
+      "name": "ピーマン",
+      "calories": 22,
+      "protein": 0.9,
+      "fat": 0.2,
+      "carbohydrate": 5.1,
+      "iron": 0.3,
+      "calcium": 14,
+      "folate": 38,
+      "category": "vegetable",
+      "nameKana": "ピーマン",
+      "keywords": [
+        "ピーマン"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-047",
+      "name": "アスパラガス（ゆで）",
+      "calories": 22,
+      "protein": 2.6,
+      "fat": 0.1,
+      "carbohydrate": 3.7,
+      "iron": 0.7,
+      "calcium": 19,
+      "folate": 180,
+      "category": "vegetable",
+      "nameKana": "アスパラガス（ゆで）",
+      "keywords": [
+        "アスパラガス（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-048",
+      "name": "枝豆（ゆで）",
+      "calories": 111,
+      "protein": 11.5,
+      "fat": 5.3,
+      "carbohydrate": 8.0,
+      "iron": 2.7,
+      "calcium": 41,
+      "folate": 335,
+      "category": "vegetable",
+      "nameKana": "枝豆（ゆで）",
+      "keywords": [
+        "枝豆（ゆで）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-049",
+      "name": "バナナ",
+      "calories": 86,
+      "protein": 1.1,
+      "fat": 0.2,
+      "carbohydrate": 22.5,
+      "iron": 0.3,
+      "calcium": 6,
+      "folate": 26,
+      "category": "fruit",
+      "nameKana": "バナナ",
+      "keywords": [
+        "バナナ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-050",
+      "name": "りんご",
+      "calories": 54,
+      "protein": 0.2,
+      "fat": 0.1,
+      "carbohydrate": 14.1,
+      "iron": 0.3,
+      "calcium": 3,
+      "folate": 3,
+      "category": "fruit",
+      "nameKana": "りんご",
+      "keywords": [
+        "りんご"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 250
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-051",
+      "name": "みかん",
+      "calories": 45,
+      "protein": 0.7,
+      "fat": 0.3,
+      "carbohydrate": 11.0,
+      "iron": 0.3,
+      "calcium": 21,
+      "folate": 22,
+      "category": "fruit",
+      "nameKana": "みかん",
+      "keywords": [
+        "みかん"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-052",
+      "name": "いちご",
+      "calories": 34,
+      "protein": 0.9,
+      "fat": 0.1,
+      "carbohydrate": 8.5,
+      "iron": 0.4,
+      "calcium": 62,
+      "folate": 90,
+      "category": "fruit",
+      "nameKana": "いちご",
+      "keywords": [
+        "いちご"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "粒",
+          "gramsPerUnit": 15
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-053",
+      "name": "キウイ",
+      "calories": 69,
+      "protein": 1.0,
+      "fat": 0.3,
+      "carbohydrate": 17.6,
+      "iron": 0.3,
+      "calcium": 33,
+      "folate": 38,
+      "category": "fruit",
+      "nameKana": "キウイ",
+      "keywords": [
+        "キウイ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-054",
+      "name": "アボカド",
+      "calories": 187,
+      "protein": 2.6,
+      "fat": 18.7,
+      "carbohydrate": 6.2,
+      "iron": 0.7,
+      "calcium": 12,
+      "folate": 84,
+      "category": "fruit",
+      "nameKana": "アボカド",
+      "keywords": [
+        "アボカド"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-055",
+      "name": "ぶどう",
+      "calories": 59,
+      "protein": 0.6,
+      "fat": 0.2,
+      "carbohydrate": 15.2,
+      "iron": 0.4,
+      "calcium": 7,
+      "folate": 4,
+      "category": "fruit",
+      "nameKana": "ぶどう",
+      "keywords": [
+        "ぶどう"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-056",
+      "name": "オリーブオイル",
+      "calories": 921,
+      "protein": 0.0,
+      "fat": 100.0,
+      "carbohydrate": 0.0,
+      "iron": 0.0,
+      "calcium": 0,
+      "folate": 0,
+      "category": "oil",
+      "nameKana": "オリーブオイル",
+      "keywords": [
+        "オリーブオイル"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 12
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 4
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-057",
+      "name": "バター",
+      "calories": 717,
+      "protein": 0.6,
+      "fat": 81.0,
+      "carbohydrate": 0.1,
+      "iron": 0.0,
+      "calcium": 15,
+      "folate": 1,
+      "category": "oil",
+      "nameKana": "バター",
+      "keywords": [
+        "バター"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 12
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 4
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-058",
+      "name": "マヨネーズ",
+      "calories": 703,
+      "protein": 2.7,
+      "fat": 75.4,
+      "carbohydrate": 2.4,
+      "iron": 0.1,
+      "calcium": 14,
+      "folate": 24,
+      "category": "oil",
+      "nameKana": "マヨネーズ",
+      "keywords": [
+        "マヨネーズ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 12
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 4
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-059",
+      "name": "味噌",
+      "calories": 217,
+      "protein": 12.7,
+      "fat": 11.3,
+      "carbohydrate": 5.4,
+      "iron": 8.3,
+      "calcium": 92,
+      "folate": 45,
+      "category": "oil",
+      "nameKana": "味噌",
+      "keywords": [
+        "味噌"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 18
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 6
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-060",
+      "name": "醤油",
+      "calories": 71,
+      "protein": 7.7,
+      "fat": 0.1,
+      "carbohydrate": 9.7,
+      "iron": 1.6,
+      "calcium": 36,
+      "folate": 2,
+      "category": "oil",
+      "nameKana": "醤油",
+      "keywords": [
+        "醤油"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 18
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 6
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-061",
+      "name": "わかめ（生）",
+      "calories": 45,
+      "protein": 3.1,
+      "fat": 0.6,
+      "carbohydrate": 9.2,
+      "iron": 2.3,
+      "calcium": 150,
+      "folate": 520,
+      "category": "vegetable",
+      "nameKana": "わかめ（生）",
+      "keywords": [
+        "わかめ（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-062",
+      "name": "ひじき（生）",
+      "calories": 61,
+      "protein": 6.2,
+      "fat": 0.4,
+      "carbohydrate": 13.9,
+      "iron": 55.0,
+      "calcium": 1400,
+      "folate": 240,
+      "category": "vegetable",
+      "nameKana": "ひじき（生）",
+      "keywords": [
+        "ひじき（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-063",
+      "name": "しめじ",
+      "calories": 18,
+      "protein": 2.7,
+      "fat": 0.1,
+      "carbohydrate": 1.3,
+      "iron": 1.3,
+      "calcium": 6,
+      "folate": 47,
+      "category": "vegetable",
+      "nameKana": "しめじ",
+      "keywords": [
+        "しめじ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-064",
+      "name": "えのき",
+      "calories": 19,
+      "protein": 2.7,
+      "fat": 0.3,
+      "carbohydrate": 0.9,
+      "iron": 1.7,
+      "calcium": 5,
+      "folate": 58,
+      "category": "vegetable",
+      "nameKana": "えのき",
+      "keywords": [
+        "えのき"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-065",
+      "name": "しいたけ（生）",
+      "calories": 18,
+      "protein": 2.4,
+      "fat": 0.1,
+      "carbohydrate": 3.3,
+      "iron": 1.1,
+      "calcium": 3,
+      "folate": 44,
+      "category": "vegetable",
+      "nameKana": "しいたけ（生）",
+      "keywords": [
+        "しいたけ（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-066",
+      "name": "牛乳（低脂肪）",
+      "calories": 46,
+      "protein": 3.6,
+      "fat": 0.5,
+      "carbohydrate": 5.2,
+      "iron": 0.0,
+      "calcium": 113,
+      "folate": 5,
+      "category": "dairy",
+      "nameKana": "牛乳（低脂肪）",
+      "keywords": [
+        "牛乳（低脂肪）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "コップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-067",
+      "name": "プレーンヨーグルト（無糖）",
+      "calories": 50,
+      "protein": 3.6,
+      "fat": 2.0,
+      "carbohydrate": 3.6,
+      "iron": 0.0,
+      "calcium": 110,
+      "folate": 6,
+      "category": "dairy",
+      "nameKana": "プレーンヨーグルト（無糖）",
+      "keywords": [
+        "プレーンヨーグルト（無糖）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-068",
+      "name": "モッツァレラチーズ",
+      "calories": 280,
+      "protein": 25.0,
+      "fat": 20.0,
+      "carbohydrate": 1.0,
+      "iron": 0.3,
+      "calcium": 550,
+      "folate": 10,
+      "category": "dairy",
+      "nameKana": "モッツァレラチーズ",
+      "keywords": [
+        "モッツァレラチーズ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 18
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-069",
+      "name": "鶏卵（生）",
+      "calories": 151,
+      "protein": 12.3,
+      "fat": 10.3,
+      "carbohydrate": 0.3,
+      "iron": 2.7,
+      "calcium": 53,
+      "folate": 47,
+      "category": "dairy",
+      "nameKana": "鶏卵（生）",
+      "keywords": [
+        "鶏卵（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-070",
+      "name": "いわし（焼き）",
+      "calories": 280,
+      "protein": 32.0,
+      "fat": 16.0,
+      "carbohydrate": 0.0,
+      "iron": 2.8,
+      "calcium": 440,
+      "folate": 12,
+      "category": "protein",
+      "nameKana": "いわし（焼き）",
+      "keywords": [
+        "いわし（焼き）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-071",
+      "name": "かき（牡蠣）",
+      "calories": 60,
+      "protein": 6.3,
+      "fat": 1.4,
+      "carbohydrate": 4.7,
+      "iron": 5.2,
+      "calcium": 88,
+      "folate": 150,
+      "category": "protein",
+      "nameKana": "かき（牡蠣）",
+      "keywords": [
+        "かき（牡蠣）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-072",
+      "name": "あさり",
+      "calories": 30,
+      "protein": 3.1,
+      "fat": 0.3,
+      "carbohydrate": 1.3,
+      "iron": 3.8,
+      "calcium": 45,
+      "folate": 19,
+      "category": "protein",
+      "nameKana": "あさり",
+      "keywords": [
+        "あさり"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-073",
+      "name": "しじみ",
+      "calories": 30,
+      "protein": 3.4,
+      "fat": 0.3,
+      "carbohydrate": 0.6,
+      "iron": 5.3,
+      "calcium": 65,
+      "folate": 38,
+      "category": "protein",
+      "nameKana": "しじみ",
+      "keywords": [
+        "しじみ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-074",
+      "name": "豚レバー",
+      "calories": 128,
+      "protein": 18.9,
+      "fat": 5.6,
+      "carbohydrate": 0.0,
+      "iron": 13.0,
+      "calcium": 4,
+      "folate": 810,
+      "category": "protein",
+      "nameKana": "豚レバー",
+      "keywords": [
+        "豚レバー"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-075",
+      "name": "牛レバー",
+      "calories": 132,
+      "protein": 19.6,
+      "fat": 5.3,
+      "carbohydrate": 3.7,
+      "iron": 4.0,
+      "calcium": 4,
+      "folate": 1000,
+      "category": "protein",
+      "nameKana": "牛レバー",
+      "keywords": [
+        "牛レバー"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-076",
+      "name": "グリーンアスパラガス",
+      "calories": 27,
+      "protein": 3.2,
+      "fat": 0.1,
+      "carbohydrate": 5.0,
+      "iron": 0.8,
+      "calcium": 20,
+      "folate": 180,
+      "category": "vegetable",
+      "nameKana": "グリーンアスパラガス",
+      "keywords": [
+        "グリーンアスパラガス"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-077",
+      "name": "ほうれん草（生）",
+      "calories": 20,
+      "protein": 2.7,
+      "fat": 0.2,
+      "carbohydrate": 3.1,
+      "iron": 2.7,
+      "calcium": 49,
+      "folate": 210,
+      "category": "vegetable",
+      "nameKana": "ほうれん草（生）",
+      "keywords": [
+        "ほうれん草（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bundle",
+          "label": "束",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "bundle"
+    },
+    {
+      "foodId": "food-078",
+      "name": "レタス",
+      "calories": 12,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 2.9,
+      "iron": 0.3,
+      "calcium": 22,
+      "folate": 73,
+      "category": "vegetable",
+      "nameKana": "レタス",
+      "keywords": [
+        "レタス"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-079",
+      "name": "スイカ",
+      "calories": 37,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 9.5,
+      "iron": 0.2,
+      "calcium": 4,
+      "folate": 15,
+      "category": "fruit",
+      "nameKana": "スイカ",
+      "keywords": [
+        "スイカ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-080",
+      "name": "メロン",
+      "calories": 42,
+      "protein": 1.0,
+      "fat": 0.1,
+      "carbohydrate": 10.3,
+      "iron": 0.3,
+      "calcium": 8,
+      "folate": 32,
+      "category": "fruit",
+      "nameKana": "メロン",
+      "keywords": [
+        "メロン"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-081",
+      "name": "ラッキョウ（漬物）",
+      "calories": 16,
+      "protein": 0.8,
+      "fat": 0.1,
+      "carbohydrate": 3.0,
+      "iron": 1.2,
+      "calcium": 20,
+      "folate": 8,
+      "category": "oil",
+      "nameKana": "ラッキョウ（漬物）",
+      "keywords": [
+        "ラッキョウ（漬物）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-082",
+      "name": "昆布（生）",
+      "calories": 140,
+      "protein": 7.5,
+      "fat": 1.3,
+      "carbohydrate": 30.0,
+      "iron": 150.0,
+      "calcium": 2100,
+      "folate": 180,
+      "category": "vegetable",
+      "nameKana": "昆布（生）",
+      "keywords": [
+        "昆布（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-083",
+      "name": "干しぶどう",
+      "calories": 299,
+      "protein": 2.7,
+      "fat": 0.3,
+      "carbohydrate": 79.5,
+      "iron": 0.9,
+      "calcium": 50,
+      "folate": 4,
+      "category": "fruit",
+      "nameKana": "干しぶどう",
+      "keywords": [
+        "干しぶどう"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-084",
+      "name": "アーモンド",
+      "calories": 598,
+      "protein": 18.6,
+      "fat": 54.2,
+      "carbohydrate": 20.3,
+      "iron": 3.7,
+      "calcium": 264,
+      "folate": 45,
+      "category": "oil",
+      "nameKana": "アーモンド",
+      "keywords": [
+        "アーモンド"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-085",
+      "name": "くるみ",
+      "calories": 674,
+      "protein": 14.6,
+      "fat": 68.8,
+      "carbohydrate": 13.6,
+      "iron": 2.7,
+      "calcium": 99,
+      "folate": 98,
+      "category": "oil",
+      "nameKana": "くるみ",
+      "keywords": [
+        "くるみ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-086",
+      "name": "そらまめ（生）",
+      "calories": 108,
+      "protein": 11.7,
+      "fat": 0.4,
+      "carbohydrate": 18.8,
+      "iron": 1.7,
+      "calcium": 69,
+      "folate": 240,
+      "category": "vegetable",
+      "nameKana": "そらまめ（生）",
+      "keywords": [
+        "そらまめ（生）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-087",
+      "name": "黒豆",
+      "calories": 154,
+      "protein": 11.0,
+      "fat": 1.7,
+      "carbohydrate": 27.6,
+      "iron": 3.4,
+      "calcium": 100,
+      "folate": 220,
+      "category": "protein",
+      "nameKana": "黒豆",
+      "keywords": [
+        "黒豆"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-088",
+      "name": "うずら卵（全卵）",
+      "calories": 159,
+      "protein": 13.1,
+      "fat": 11.0,
+      "carbohydrate": 1.1,
+      "iron": 3.0,
+      "calcium": 54,
+      "folate": 38,
+      "category": "dairy",
+      "nameKana": "うずら卵（全卵）",
+      "keywords": [
+        "うずら卵（全卵）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-089",
+      "name": "グリーンピース",
+      "calories": 78,
+      "protein": 5.4,
+      "fat": 0.2,
+      "carbohydrate": 14.0,
+      "iron": 2.0,
+      "calcium": 27,
+      "folate": 65,
+      "category": "vegetable",
+      "nameKana": "グリーンピース",
+      "keywords": [
+        "グリーンピース"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-090",
+      "name": "とうもろこし",
+      "calories": 92,
+      "protein": 3.6,
+      "fat": 1.7,
+      "carbohydrate": 17.1,
+      "iron": 0.5,
+      "calcium": 3,
+      "folate": 46,
+      "category": "vegetable",
+      "nameKana": "とうもろこし",
+      "keywords": [
+        "とうもろこし"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-091",
+      "name": "鮎（焼き）",
+      "calories": 198,
+      "protein": 26.8,
+      "fat": 9.6,
+      "carbohydrate": 0.0,
+      "iron": 1.6,
+      "calcium": 350,
+      "folate": 8,
+      "category": "protein",
+      "nameKana": "鮎（焼き）",
+      "keywords": [
+        "鮎（焼き）"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-092",
+      "name": "穴子",
+      "calories": 161,
+      "protein": 19.2,
+      "fat": 8.8,
+      "carbohydrate": 0.0,
+      "iron": 1.5,
+      "calcium": 70,
+      "folate": 5,
+      "category": "protein",
+      "nameKana": "穴子",
+      "keywords": [
+        "穴子"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-093",
+      "name": "しゅうまい",
+      "calories": 84,
+      "protein": 3.5,
+      "fat": 3.9,
+      "carbohydrate": 9.5,
+      "iron": 0.3,
+      "calcium": 10,
+      "folate": 8,
+      "category": "protein",
+      "nameKana": "しゅうまい",
+      "keywords": [
+        "しゅうまい"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-094",
+      "name": "豆板醤",
+      "calories": 147,
+      "protein": 7.6,
+      "fat": 8.2,
+      "carbohydrate": 12.1,
+      "iron": 3.8,
+      "calcium": 82,
+      "folate": 28,
+      "category": "oil",
+      "nameKana": "豆板醤",
+      "keywords": [
+        "豆板醤"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-095",
+      "name": "はちみつ",
+      "calories": 294,
+      "protein": 0.3,
+      "fat": 0.0,
+      "carbohydrate": 79.7,
+      "iron": 0.3,
+      "calcium": 4,
+      "folate": 0,
+      "category": "oil",
+      "nameKana": "はちみつ",
+      "keywords": [
+        "はちみつ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ooaji",
+          "label": "大さじ",
+          "gramsPerUnit": 21
+        },
+        {
+          "name": "koaji",
+          "label": "小さじ",
+          "gramsPerUnit": 7
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-096",
+      "name": "黒ゴマ",
+      "calories": 599,
+      "protein": 19.8,
+      "fat": 50.0,
+      "carbohydrate": 21.4,
+      "iron": 16.3,
+      "calcium": 975,
+      "folate": 250,
+      "category": "oil",
+      "nameKana": "黒ゴマ",
+      "keywords": [
+        "黒ゴマ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-097",
+      "name": "白ゴマ",
+      "calories": 599,
+      "protein": 17.3,
+      "fat": 50.0,
+      "carbohydrate": 20.9,
+      "iron": 8.9,
+      "calcium": 1200,
+      "folate": 150,
+      "category": "oil",
+      "nameKana": "白ゴマ",
+      "keywords": [
+        "白ゴマ"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-098",
+      "name": "ナッツバター",
+      "calories": 588,
+      "protein": 24.0,
+      "fat": 50.0,
+      "carbohydrate": 20.0,
+      "iron": 1.5,
+      "calcium": 95,
+      "folate": 30,
+      "category": "oil",
+      "nameKana": "ナッツバター",
+      "keywords": [
+        "ナッツバター"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-099",
+      "name": "ココアパウダー",
+      "calories": 374,
+      "protein": 24.0,
+      "fat": 26.0,
+      "carbohydrate": 37.0,
+      "iron": 14.0,
+      "calcium": 140,
+      "folate": 8,
+      "category": "oil",
+      "nameKana": "ココアパウダー",
+      "keywords": [
+        "ココアパウダー"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-100",
+      "name": "抹茶パウダー",
+      "calories": 396,
+      "protein": 26.2,
+      "fat": 15.6,
+      "carbohydrate": 38.0,
+      "iron": 10.0,
+      "calcium": 1300,
+      "folate": 520,
+      "category": "oil",
+      "nameKana": "抹茶パウダー",
+      "keywords": [
+        "抹茶パウダー"
+      ],
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-101",
+      "name": "玄米ごはん",
+      "nameKana": "げんまいごはん",
+      "keywords": [
+        "玄米",
+        "げんまい",
+        "ゲンマイ",
+        "玄米ご飯",
+        "玄米ごはん"
+      ],
+      "calories": 152,
+      "protein": 3.0,
+      "fat": 1.0,
+      "carbohydrate": 32.6,
+      "iron": 0.8,
+      "calcium": 7,
+      "folate": 27,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "chawan",
+          "label": "お茶碗",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "chawan"
+    },
+    {
+      "foodId": "food-102",
+      "name": "雑穀米ごはん",
+      "nameKana": "ざっこくまいごはん",
+      "keywords": [
+        "雑穀米",
+        "ざっこくまい",
+        "ザッコクマイ",
+        "雑穀"
+      ],
+      "calories": 160,
+      "protein": 3.2,
+      "fat": 0.8,
+      "carbohydrate": 34.2,
+      "iron": 1.5,
+      "calcium": 12,
+      "folate": 32,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "chawan",
+          "label": "お茶碗",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "chawan"
+    },
+    {
+      "foodId": "food-103",
+      "name": "ロールパン",
+      "nameKana": "ろーるぱん",
+      "keywords": [
+        "ロールパン",
+        "ろーる",
+        "ロール",
+        "パン"
+      ],
+      "calories": 299,
+      "protein": 8.5,
+      "fat": 9.3,
+      "carbohydrate": 42.1,
+      "iron": 1.2,
+      "calcium": 35,
+      "folate": 52,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-104",
+      "name": "クロワッサン",
+      "nameKana": "くろわっさん",
+      "keywords": [
+        "クロワッサン",
+        "くろわっさん",
+        "クロ",
+        "デニッシュ"
+      ],
+      "calories": 448,
+      "protein": 8.0,
+      "fat": 24.5,
+      "carbohydrate": 50.0,
+      "iron": 1.1,
+      "calcium": 22,
+      "folate": 32,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-105",
+      "name": "ホットケーキ",
+      "nameKana": "ほっとけーき",
+      "keywords": [
+        "ホットケーキ",
+        "ほっとけーき",
+        "パンケーキ",
+        "pancake"
+      ],
+      "calories": 303,
+      "protein": 7.5,
+      "fat": 10.2,
+      "carbohydrate": 46.3,
+      "iron": 1.0,
+      "calcium": 92,
+      "folate": 38,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 85
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-106",
+      "name": "中華めん（ゆで）",
+      "nameKana": "ちゅうかめん",
+      "keywords": [
+        "中華めん",
+        "ちゅうかめん",
+        "チューカメン",
+        "ラーメン",
+        "中華"
+      ],
+      "calories": 149,
+      "protein": 4.9,
+      "fat": 3.5,
+      "carbohydrate": 26.1,
+      "iron": 0.3,
+      "calcium": 6,
+      "folate": 8,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-107",
+      "name": "焼きそば麺",
+      "nameKana": "やきそばめん",
+      "keywords": [
+        "焼きそば",
+        "やきそば",
+        "ヤキソバ",
+        "焼そば"
+      ],
+      "calories": 149,
+      "protein": 4.6,
+      "fat": 3.3,
+      "carbohydrate": 27.2,
+      "iron": 0.3,
+      "calcium": 5,
+      "folate": 7,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-108",
+      "name": "お好み焼き",
+      "nameKana": "おこのみやき",
+      "keywords": [
+        "お好み焼き",
+        "おこのみやき",
+        "オコノミヤキ",
+        "こなもん"
+      ],
+      "calories": 282,
+      "protein": 10.5,
+      "fat": 14.6,
+      "carbohydrate": 27.3,
+      "iron": 1.2,
+      "calcium": 48,
+      "folate": 35,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "枚",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-109",
+      "name": "シリアル（グラノーラ）",
+      "nameKana": "しりある",
+      "keywords": [
+        "シリアル",
+        "しりある",
+        "グラノーラ",
+        "穀類"
+      ],
+      "calories": 408,
+      "protein": 10.2,
+      "fat": 12.8,
+      "carbohydrate": 68.5,
+      "iron": 8.5,
+      "calcium": 180,
+      "folate": 85,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-110",
+      "name": "米粉パン",
+      "nameKana": "こめこぱん",
+      "keywords": [
+        "米粉パン",
+        "こめこぱん",
+        "コメコパン",
+        "グルテンフリー"
+      ],
+      "calories": 280,
+      "protein": 6.5,
+      "fat": 3.8,
+      "carbohydrate": 54.2,
+      "iron": 1.0,
+      "calcium": 25,
+      "folate": 38,
+      "category": "grain",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-111",
+      "name": "豚ヒレ肉",
+      "nameKana": "ぶたひれにく",
+      "keywords": [
+        "豚ヒレ",
+        "ぶたひれ",
+        "ブタヒレ",
+        "豚肉"
+      ],
+      "calories": 188,
+      "protein": 22.8,
+      "fat": 10.2,
+      "carbohydrate": 0.0,
+      "iron": 0.3,
+      "calcium": 4,
+      "folate": 4,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚（薄切り）",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-112",
+      "name": "鶏レバー",
+      "nameKana": "とりればー",
+      "keywords": [
+        "鶏レバー",
+        "とりレバー",
+        "トリレバー",
+        "鶏肝"
+      ],
+      "calories": 111,
+      "protein": 18.0,
+      "fat": 3.7,
+      "carbohydrate": 0.5,
+      "iron": 9.0,
+      "calcium": 5,
+      "folate": 1300,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 40
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-113",
+      "name": "牛すじ",
+      "nameKana": "ぎゅうすじ",
+      "keywords": [
+        "牛すじ",
+        "ぎゅうすじ",
+        "ギュウスジ",
+        "スジ肉"
+      ],
+      "calories": 215,
+      "protein": 26.3,
+      "fat": 11.2,
+      "carbohydrate": 0.0,
+      "iron": 2.5,
+      "calcium": 11,
+      "folate": 6,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-114",
+      "name": "ベーコン",
+      "nameKana": "べーこん",
+      "keywords": [
+        "ベーコン",
+        "べーこん",
+        "bacon"
+      ],
+      "calories": 405,
+      "protein": 13.4,
+      "fat": 40.2,
+      "carbohydrate": 0.0,
+      "iron": 1.2,
+      "calcium": 3,
+      "folate": 1,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 20
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-115",
+      "name": "ハム",
+      "nameKana": "はむ",
+      "keywords": [
+        "ハム",
+        "はむ",
+        "ham"
+      ],
+      "calories": 186,
+      "protein": 13.5,
+      "fat": 14.0,
+      "carbohydrate": 1.3,
+      "iron": 0.8,
+      "calcium": 12,
+      "folate": 2,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 20
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-116",
+      "name": "ウインナー",
+      "nameKana": "うぃんなー",
+      "keywords": [
+        "ウインナー",
+        "うぃんなー",
+        "ウインナーソーセージ",
+        "ソーセージ"
+      ],
+      "calories": 320,
+      "protein": 12.3,
+      "fat": 30.0,
+      "carbohydrate": 0.4,
+      "iron": 0.8,
+      "calcium": 11,
+      "folate": 2,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "本",
+          "gramsPerUnit": 55
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-117",
+      "name": "鶏手羽元",
+      "nameKana": "とりてわもと",
+      "keywords": [
+        "鶏手羽元",
+        "とり手羽",
+        "トリテワ",
+        "手羽元"
+      ],
+      "calories": 194,
+      "protein": 19.5,
+      "fat": 12.3,
+      "carbohydrate": 0.0,
+      "iron": 0.6,
+      "calcium": 10,
+      "folate": 4,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "本",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-118",
+      "name": "鶏手羽先",
+      "nameKana": "とりてわさき",
+      "keywords": [
+        "鶏手羽先",
+        "とり手羽",
+        "トリテワ",
+        "手羽先"
+      ],
+      "calories": 211,
+      "protein": 18.5,
+      "fat": 15.1,
+      "carbohydrate": 0.0,
+      "iron": 0.7,
+      "calcium": 12,
+      "folate": 5,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "本",
+          "gramsPerUnit": 40
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-119",
+      "name": "ラム肉",
+      "nameKana": "らむにく",
+      "keywords": [
+        "ラム肉",
+        "らむにく",
+        "ラムチョップ",
+        "羊肉"
+      ],
+      "calories": 298,
+      "protein": 20.5,
+      "fat": 24.2,
+      "carbohydrate": 0.0,
+      "iron": 3.8,
+      "calcium": 8,
+      "folate": 5,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 120
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-120",
+      "name": "ローストビーフ",
+      "nameKana": "ろーすとびーふ",
+      "keywords": [
+        "ローストビーフ",
+        "ろーすとびーふ",
+        "ローストビーフ"
+      ],
+      "calories": 278,
+      "protein": 25.2,
+      "fat": 19.8,
+      "carbohydrate": 0.0,
+      "iron": 2.8,
+      "calcium": 6,
+      "folate": 4,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-121",
+      "name": "さんま（焼き）",
+      "nameKana": "さんま",
+      "keywords": [
+        "さんま",
+        "サンマ",
+        "秋刀魚"
+      ],
+      "calories": 307,
+      "protein": 27.0,
+      "fat": 22.1,
+      "carbohydrate": 0.0,
+      "iron": 1.5,
+      "calcium": 59,
+      "folate": 8,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kire",
+          "label": "切れ",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "kire"
+    },
+    {
+      "foodId": "food-122",
+      "name": "いわし（焼き）",
+      "nameKana": "いわし",
+      "keywords": [
+        "いわし",
+        "イワシ",
+        "鰯"
+      ],
+      "calories": 280,
+      "protein": 32.0,
+      "fat": 16.0,
+      "carbohydrate": 0.0,
+      "iron": 2.8,
+      "calcium": 440,
+      "folate": 12,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "匹",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-123",
+      "name": "カツオ（焼き）",
+      "nameKana": "かつお",
+      "keywords": [
+        "カツオ",
+        "かつお",
+        "鰹"
+      ],
+      "calories": 165,
+      "protein": 26.0,
+      "fat": 6.5,
+      "carbohydrate": 0.0,
+      "iron": 1.0,
+      "calcium": 8,
+      "folate": 2,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kire",
+          "label": "切れ",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "kire"
+    },
+    {
+      "foodId": "food-124",
+      "name": "たこ（ゆで）",
+      "nameKana": "たこ",
+      "keywords": [
+        "たこ",
+        "タコ",
+        "蛸"
+      ],
+      "calories": 99,
+      "protein": 21.3,
+      "fat": 0.7,
+      "carbohydrate": 0.0,
+      "iron": 0.8,
+      "calcium": 53,
+      "folate": 8,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-125",
+      "name": "いか（ゆで）",
+      "nameKana": "いか",
+      "keywords": [
+        "いか",
+        "イカ",
+        "烏賊"
+      ],
+      "calories": 88,
+      "protein": 17.9,
+      "fat": 0.3,
+      "carbohydrate": 0.0,
+      "iron": 0.3,
+      "calcium": 10,
+      "folate": 5,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-126",
+      "name": "ほたて（生）",
+      "nameKana": "ほたて",
+      "keywords": [
+        "ほたて",
+        "ホタテ",
+        "帆立"
+      ],
+      "calories": 72,
+      "protein": 13.0,
+      "fat": 1.2,
+      "carbohydrate": 1.5,
+      "iron": 2.7,
+      "calcium": 38,
+      "folate": 19,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 35
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-127",
+      "name": "あさり（生）",
+      "nameKana": "あさり",
+      "keywords": [
+        "あさり",
+        "アサリ",
+        "浅蜊"
+      ],
+      "calories": 30,
+      "protein": 3.1,
+      "fat": 0.3,
+      "carbohydrate": 1.3,
+      "iron": 3.8,
+      "calcium": 45,
+      "folate": 19,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ninmae",
+          "label": "人前",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "ninmae"
+    },
+    {
+      "foodId": "food-128",
+      "name": "牡蠣（かき）",
+      "nameKana": "かき",
+      "keywords": [
+        "牡蠣",
+        "かき",
+        "カキ",
+        "殻付き"
+      ],
+      "calories": 60,
+      "protein": 6.3,
+      "fat": 1.4,
+      "carbohydrate": 4.7,
+      "iron": 5.2,
+      "calcium": 88,
+      "folate": 150,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 20
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-129",
+      "name": "うなぎ（かば焼き）",
+      "nameKana": "うなぎ",
+      "keywords": [
+        "うなぎ",
+        "ウナギ",
+        "鰻"
+      ],
+      "calories": 255,
+      "protein": 23.8,
+      "fat": 15.8,
+      "carbohydrate": 3.1,
+      "iron": 2.0,
+      "calcium": 150,
+      "folate": 14,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kire",
+          "label": "切れ",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "kire"
+    },
+    {
+      "foodId": "food-130",
+      "name": "ししゃも（焼き）",
+      "nameKana": "ししゃも",
+      "keywords": [
+        "ししゃも",
+        "シシャモ",
+        "柳葉魚"
+      ],
+      "calories": 177,
+      "protein": 25.8,
+      "fat": 8.5,
+      "carbohydrate": 0.2,
+      "iron": 2.8,
+      "calcium": 370,
+      "folate": 8,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "匹",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-131",
+      "name": "ツナ缶（水煮）",
+      "nameKana": "つなかん",
+      "keywords": [
+        "ツナ",
+        "つな",
+        "ツナ缶",
+        "まぐろ缶"
+      ],
+      "calories": 71,
+      "protein": 16.0,
+      "fat": 0.3,
+      "carbohydrate": 0.0,
+      "iron": 0.5,
+      "calcium": 6,
+      "folate": 3,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kan",
+          "label": "缶",
+          "gramsPerUnit": 70
+        }
+      ],
+      "defaultUnit": "kan"
+    },
+    {
+      "foodId": "food-132",
+      "name": "ツナ缶（油漬け）",
+      "nameKana": "つなかんあぶらづけ",
+      "keywords": [
+        "ツナ",
+        "つな",
+        "油漬け",
+        "あぶらづけ"
+      ],
+      "calories": 210,
+      "protein": 16.0,
+      "fat": 16.5,
+      "carbohydrate": 0.0,
+      "iron": 0.5,
+      "calcium": 6,
+      "folate": 2,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kan",
+          "label": "缶",
+          "gramsPerUnit": 70
+        }
+      ],
+      "defaultUnit": "kan"
+    },
+    {
+      "foodId": "food-133",
+      "name": "サバ缶（水煮）",
+      "nameKana": "さばかん",
+      "keywords": [
+        "サバ",
+        "さば",
+        "サバ缶",
+        "鯖缶"
+      ],
+      "calories": 142,
+      "protein": 17.3,
+      "fat": 7.2,
+      "carbohydrate": 0.0,
+      "iron": 1.5,
+      "calcium": 280,
+      "folate": 6,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "kan",
+          "label": "缶",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "kan"
+    },
+    {
+      "foodId": "food-134",
+      "name": "鮭フレーク",
+      "nameKana": "さけふれーく",
+      "keywords": [
+        "鮭フレーク",
+        "さけふれーく",
+        "鮭",
+        "さけ"
+      ],
+      "calories": 180,
+      "protein": 26.0,
+      "fat": 8.0,
+      "carbohydrate": 0.0,
+      "iron": 0.6,
+      "calcium": 12,
+      "folate": 3,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sp",
+          "label": "大さじ",
+          "gramsPerUnit": 15
+        }
+      ],
+      "defaultUnit": "sp"
+    },
+    {
+      "foodId": "food-135",
+      "name": "温泉卵",
+      "nameKana": "おんせんたまご",
+      "keywords": [
+        "温泉卵",
+        "おんせんたまご",
+        "温泉玉子"
+      ],
+      "calories": 145,
+      "protein": 12.0,
+      "fat": 10.5,
+      "carbohydrate": 0.5,
+      "iron": 2.0,
+      "calcium": 48,
+      "folate": 42,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-136",
+      "name": "ゆで卵",
+      "nameKana": "ゆでたまご",
+      "keywords": [
+        "ゆで卵",
+        "ゆでたまご",
+        "卵",
+        "玉子"
+      ],
+      "calories": 155,
+      "protein": 13.3,
+      "fat": 11.2,
+      "carbohydrate": 1.1,
+      "iron": 1.8,
+      "calcium": 51,
+      "folate": 44,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-137",
+      "name": "スクランブルエッグ",
+      "nameKana": "すくらんぶるえっぐ",
+      "keywords": [
+        "スクランブルエッグ",
+        "すくらんぶるえっぐ",
+        "卵焼き"
+      ],
+      "calories": 165,
+      "protein": 13.0,
+      "fat": 12.2,
+      "carbohydrate": 1.5,
+      "iron": 1.8,
+      "calcium": 50,
+      "folate": 40,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "人前",
+          "gramsPerUnit": 80
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-138",
+      "name": "低脂肪牛乳",
+      "nameKana": "ていしぼうぎゅうにゅう",
+      "keywords": [
+        "低脂肪牛乳",
+        "ていしぼう",
+        "低脂肪",
+        "牛乳"
+      ],
+      "calories": 46,
+      "protein": 3.6,
+      "fat": 0.5,
+      "carbohydrate": 5.2,
+      "iron": 0.0,
+      "calcium": 113,
+      "folate": 5,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "コップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-139",
+      "name": "生クリーム",
+      "nameKana": "なまくりーむ",
+      "keywords": [
+        "生クリーム",
+        "なまくりーむ",
+        "クリーム"
+      ],
+      "calories": 345,
+      "protein": 2.2,
+      "fat": 35.7,
+      "carbohydrate": 3.4,
+      "iron": 0.1,
+      "calcium": 81,
+      "folate": 9,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sp",
+          "label": "大さじ",
+          "gramsPerUnit": 12
+        }
+      ],
+      "defaultUnit": "sp"
+    },
+    {
+      "foodId": "food-140",
+      "name": "カッテージチーズ",
+      "nameKana": "かってじちーず",
+      "keywords": [
+        "カッテージチーズ",
+        "かってじ",
+        "チーズ"
+      ],
+      "calories": 105,
+      "protein": 13.0,
+      "fat": 5.1,
+      "carbohydrate": 3.2,
+      "iron": 0.5,
+      "calcium": 170,
+      "folate": 8,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sp",
+          "label": "大さじ",
+          "gramsPerUnit": 20
+        }
+      ],
+      "defaultUnit": "sp"
+    },
+    {
+      "foodId": "food-141",
+      "name": "モッツァレラチーズ",
+      "nameKana": "もっつぁれらちーず",
+      "keywords": [
+        "モッツァレラチーズ",
+        "もっつぁれら",
+        "チーズ"
+      ],
+      "calories": 280,
+      "protein": 25.0,
+      "fat": 20.0,
+      "carbohydrate": 1.0,
+      "iron": 0.3,
+      "calcium": 550,
+      "folate": 10,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-142",
+      "name": "クリームチーズ",
+      "nameKana": "くりーむちーず",
+      "keywords": [
+        "クリームチーズ",
+        "くりーむ",
+        "チーズ"
+      ],
+      "calories": 342,
+      "protein": 7.0,
+      "fat": 34.4,
+      "carbohydrate": 4.3,
+      "iron": 0.5,
+      "calcium": 98,
+      "folate": 12,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sp",
+          "label": "大さじ",
+          "gramsPerUnit": 15
+        }
+      ],
+      "defaultUnit": "sp"
+    },
+    {
+      "foodId": "food-143",
+      "name": "飲むヨーグルト",
+      "nameKana": "のむよーぐると",
+      "keywords": [
+        "飲むヨーグルト",
+        "のむ",
+        "ドリンク"
+      ],
+      "calories": 67,
+      "protein": 3.5,
+      "fat": 1.5,
+      "carbohydrate": 10.5,
+      "iron": 0.1,
+      "calcium": 120,
+      "folate": 8,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "pack",
+          "label": "パック",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "pack"
+    },
+    {
+      "foodId": "food-144",
+      "name": "アイスクリーム",
+      "nameKana": "あいすくりーむ",
+      "keywords": [
+        "アイスクリーム",
+        "あいす",
+        "アイス"
+      ],
+      "calories": 180,
+      "protein": 3.5,
+      "fat": 10.2,
+      "carbohydrate": 20.5,
+      "iron": 0.1,
+      "calcium": 120,
+      "folate": 5,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-145",
+      "name": "厚揚げ",
+      "nameKana": "あつあげ",
+      "keywords": [
+        "厚揚げ",
+        "あつあげ",
+        "厚揚"
+      ],
+      "calories": 197,
+      "protein": 14.7,
+      "fat": 14.7,
+      "carbohydrate": 1.5,
+      "iron": 2.1,
+      "calcium": 240,
+      "folate": 45,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-146",
+      "name": "がんもどき",
+      "nameKana": "がんもどき",
+      "keywords": [
+        "がんもどき",
+        "ガンモドキ",
+        "丸め"
+      ],
+      "calories": 197,
+      "protein": 14.3,
+      "fat": 12.8,
+      "carbohydrate": 6.0,
+      "iron": 2.5,
+      "calcium": 235,
+      "folate": 50,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 70
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-147",
+      "name": "おから",
+      "nameKana": "おから",
+      "keywords": [
+        "おから",
+        "オカラ",
+        "豆かす"
+      ],
+      "calories": 111,
+      "protein": 6.1,
+      "fat": 3.6,
+      "carbohydrate": 13.8,
+      "iron": 2.7,
+      "calcium": 100,
+      "folate": 42,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-148",
+      "name": "高野豆腐",
+      "nameKana": "こうやどうふ",
+      "keywords": [
+        "高野豆腐",
+        "こうやどうふ",
+        "凍り豆腐"
+      ],
+      "calories": 526,
+      "protein": 49.4,
+      "fat": 33.8,
+      "carbohydrate": 10.0,
+      "iron": 3.2,
+      "calcium": 880,
+      "folate": 120,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 15
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-149",
+      "name": "きな粉",
+      "nameKana": "きなこ",
+      "keywords": [
+        "きな粉",
+        "きなこ",
+        "キナコ"
+      ],
+      "calories": 434,
+      "protein": 36.3,
+      "fat": 20.3,
+      "carbohydrate": 33.4,
+      "iron": 4.2,
+      "calcium": 250,
+      "folate": 150,
+      "category": "protein",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sp",
+          "label": "大さじ",
+          "gramsPerUnit": 8
+        }
+      ],
+      "defaultUnit": "sp"
+    },
+    {
+      "foodId": "food-150",
+      "name": "調製豆乳",
+      "nameKana": "ちょうせいとうにゅう",
+      "keywords": [
+        "調製豆乳",
+        "ちょうせい",
+        "豆乳"
+      ],
+      "calories": 64,
+      "protein": 3.2,
+      "fat": 3.6,
+      "carbohydrate": 2.9,
+      "iron": 1.5,
+      "calcium": 30,
+      "folate": 50,
+      "category": "dairy",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-151",
+      "name": "もやし",
+      "nameKana": "もやし",
+      "keywords": [
+        "もやし",
+        "モヤシ",
+        "豆もやし"
+      ],
+      "calories": 15,
+      "protein": 1.5,
+      "fat": 0.1,
+      "carbohydrate": 2.6,
+      "iron": 0.8,
+      "calcium": 20,
+      "folate": 58,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bag",
+          "label": "袋",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "bag"
+    },
+    {
+      "foodId": "food-152",
+      "name": "レタス",
+      "nameKana": "れたす",
+      "keywords": [
+        "レタス",
+        "れたす",
+        "レタス菜"
+      ],
+      "calories": 12,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 2.9,
+      "iron": 0.3,
+      "calcium": 22,
+      "folate": 73,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-153",
+      "name": "白菜",
+      "nameKana": "はくさい",
+      "keywords": [
+        "白菜",
+        "はくさい",
+        "ハクサイ",
+        "はくさい菜"
+      ],
+      "calories": 14,
+      "protein": 0.8,
+      "fat": 0.1,
+      "carbohydrate": 3.2,
+      "iron": 0.3,
+      "calcium": 43,
+      "folate": 61,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-154",
+      "name": "なす",
+      "nameKana": "なす",
+      "keywords": [
+        "なす",
+        "ナス",
+        "茄子"
+      ],
+      "calories": 22,
+      "protein": 1.1,
+      "fat": 0.1,
+      "carbohydrate": 5.1,
+      "iron": 0.3,
+      "calcium": 18,
+      "folate": 26,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 180
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-155",
+      "name": "ごぼう",
+      "nameKana": "ごぼう",
+      "keywords": [
+        "ごぼう",
+        "ゴボウ",
+        "牛蒡"
+      ],
+      "calories": 65,
+      "protein": 1.8,
+      "fat": 0.1,
+      "carbohydrate": 15.4,
+      "iron": 0.7,
+      "calcium": 40,
+      "folate": 71,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-156",
+      "name": "れんこん",
+      "nameKana": "れんこん",
+      "keywords": [
+        "れんこん",
+        "レンコン",
+        "蓮根"
+      ],
+      "calories": 66,
+      "protein": 1.9,
+      "fat": 0.1,
+      "carbohydrate": 13.5,
+      "iron": 0.5,
+      "calcium": 40,
+      "folate": 79,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "suraisu",
+          "label": "スライス",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "suraisu"
+    },
+    {
+      "foodId": "food-157",
+      "name": "里芋",
+      "nameKana": "さといも",
+      "keywords": [
+        "里芋",
+        "さといも",
+        "サトイモ"
+      ],
+      "calories": 58,
+      "protein": 2.0,
+      "fat": 0.1,
+      "carbohydrate": 12.0,
+      "iron": 0.5,
+      "calcium": 12,
+      "folate": 39,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-158",
+      "name": "長芋",
+      "nameKana": "ながいも",
+      "keywords": [
+        "長芋",
+        "ながいも",
+        "ナガイモ",
+        "山芋"
+      ],
+      "calories": 65,
+      "protein": 2.2,
+      "fat": 0.2,
+      "carbohydrate": 13.8,
+      "iron": 0.3,
+      "calcium": 14,
+      "folate": 36,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-159",
+      "name": "にら",
+      "nameKana": "にら",
+      "keywords": [
+        "にら",
+        "ニラ",
+        "韮"
+      ],
+      "calories": 21,
+      "protein": 2.1,
+      "fat": 0.3,
+      "carbohydrate": 3.1,
+      "iron": 0.8,
+      "calcium": 70,
+      "folate": 120,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bundle",
+          "label": "束",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "bundle"
+    },
+    {
+      "foodId": "food-160",
+      "name": "春菊",
+      "nameKana": "しゅんぎく",
+      "keywords": [
+        "春菊",
+        "しゅんぎく",
+        "シュンギク"
+      ],
+      "calories": 22,
+      "protein": 2.3,
+      "fat": 0.3,
+      "carbohydrate": 3.9,
+      "iron": 1.7,
+      "calcium": 120,
+      "folate": 190,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bundle",
+          "label": "束",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "bundle"
+    },
+    {
+      "foodId": "food-161",
+      "name": "水菜",
+      "nameKana": "みずな",
+      "keywords": [
+        "水菜",
+        "みずな",
+        "ミズナ"
+      ],
+      "calories": 23,
+      "protein": 2.2,
+      "fat": 0.2,
+      "carbohydrate": 4.3,
+      "iron": 1.1,
+      "calcium": 130,
+      "folate": 110,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bundle",
+          "label": "束",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "bundle"
+    },
+    {
+      "foodId": "food-162",
+      "name": "大葉",
+      "nameKana": "おおば",
+      "keywords": [
+        "大葉",
+        "おおば",
+        "オオバ",
+        "青しそ"
+      ],
+      "calories": 37,
+      "protein": 3.7,
+      "fat": 0.1,
+      "carbohydrate": 7.1,
+      "iron": 3.3,
+      "calcium": 240,
+      "folate": 100,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 3
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-163",
+      "name": "パプリカ（赤）",
+      "nameKana": "ぱぷりか",
+      "keywords": [
+        "パプリカ",
+        "ぱぷりか",
+        "赤ピーマン"
+      ],
+      "calories": 30,
+      "protein": 1.0,
+      "fat": 0.3,
+      "carbohydrate": 6.8,
+      "iron": 0.5,
+      "calcium": 16,
+      "folate": 48,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-164",
+      "name": "ズッキーニ",
+      "nameKana": "ずっきーに",
+      "keywords": [
+        "ズッキーニ",
+        "ずっきーに",
+        "ズッキーニ"
+      ],
+      "calories": 14,
+      "protein": 1.2,
+      "fat": 0.1,
+      "carbohydrate": 2.8,
+      "iron": 0.4,
+      "calcium": 14,
+      "folate": 32,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-165",
+      "name": "セロリ",
+      "nameKana": "せろり",
+      "keywords": [
+        "セロリ",
+        "せろり",
+        "セロリ"
+      ],
+      "calories": 15,
+      "protein": 0.9,
+      "fat": 0.1,
+      "carbohydrate": 3.2,
+      "iron": 0.2,
+      "calcium": 39,
+      "folate": 30,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-166",
+      "name": "オクラ",
+      "nameKana": "おくら",
+      "keywords": [
+        "オクラ",
+        "おくら",
+        "秋葵"
+      ],
+      "calories": 33,
+      "protein": 2.1,
+      "fat": 0.2,
+      "carbohydrate": 7.2,
+      "iron": 0.6,
+      "calcium": 82,
+      "folate": 110,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "本",
+          "gramsPerUnit": 10
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-167",
+      "name": "かいわれ大根",
+      "nameKana": "かいわれだいこん",
+      "keywords": [
+        "かいわれ",
+        "かいわれ大根",
+        "スプラウト"
+      ],
+      "calories": 20,
+      "protein": 2.1,
+      "fat": 0.2,
+      "carbohydrate": 3.7,
+      "iron": 0.9,
+      "calcium": 36,
+      "folate": 160,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "pack",
+          "label": "パック",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "pack"
+    },
+    {
+      "foodId": "food-168",
+      "name": "もも",
+      "nameKana": "もも",
+      "keywords": [
+        "もも",
+        "モモ",
+        "桃"
+      ],
+      "calories": 57,
+      "protein": 0.9,
+      "fat": 0.1,
+      "carbohydrate": 14.2,
+      "iron": 0.2,
+      "calcium": 6,
+      "folate": 7,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 250
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-169",
+      "name": "なし",
+      "nameKana": "なし",
+      "keywords": [
+        "なし",
+        "ナシ",
+        "梨"
+      ],
+      "calories": 42,
+      "protein": 0.3,
+      "fat": 0.1,
+      "carbohydrate": 10.4,
+      "iron": 0.2,
+      "calcium": 4,
+      "folate": 5,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 300
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-170",
+      "name": "ぶどう",
+      "nameKana": "ぶどう",
+      "keywords": [
+        "ぶどう",
+        "ブドウ",
+        "葡萄"
+      ],
+      "calories": 59,
+      "protein": 0.6,
+      "fat": 0.2,
+      "carbohydrate": 15.2,
+      "iron": 0.4,
+      "calcium": 7,
+      "folate": 4,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "myu",
+          "label": "房",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "myu"
+    },
+    {
+      "foodId": "food-171",
+      "name": "スイカ",
+      "nameKana": "すいか",
+      "keywords": [
+        "スイカ",
+        "すいか",
+        "西瓜"
+      ],
+      "calories": 37,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 9.5,
+      "iron": 0.2,
+      "calcium": 4,
+      "folate": 15,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "warisaki",
+          "label": "切れ",
+          "gramsPerUnit": 300
+        }
+      ],
+      "defaultUnit": "warisaki"
+    },
+    {
+      "foodId": "food-172",
+      "name": "メロン",
+      "nameKana": "めろん",
+      "keywords": [
+        "メロン",
+        "めろん"
+      ],
+      "calories": 42,
+      "protein": 1.0,
+      "fat": 0.1,
+      "carbohydrate": 10.3,
+      "iron": 0.3,
+      "calcium": 8,
+      "folate": 32,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 1500
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-173",
+      "name": "グレープフルーツ",
+      "nameKana": "ぐれーぷふるーつ",
+      "keywords": [
+        "グレープフルーツ",
+        "ぐれーぷ",
+        "ポメロ"
+      ],
+      "calories": 38,
+      "protein": 0.8,
+      "fat": 0.1,
+      "carbohydrate": 9.0,
+      "iron": 0.2,
+      "calcium": 19,
+      "folate": 24,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "han",
+          "label": "個",
+          "gramsPerUnit": 300
+        }
+      ],
+      "defaultUnit": "han"
+    },
+    {
+      "foodId": "food-174",
+      "name": "レモン",
+      "nameKana": "れもん",
+      "keywords": [
+        "レモン",
+        "れもん"
+      ],
+      "calories": 54,
+      "protein": 1.0,
+      "fat": 0.3,
+      "carbohydrate": 12.0,
+      "iron": 0.6,
+      "calcium": 100,
+      "folate": 22,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-175",
+      "name": "マンゴー",
+      "nameKana": "まんごー",
+      "keywords": [
+        "マンゴー",
+        "まんごー"
+      ],
+      "calories": 64,
+      "protein": 0.6,
+      "fat": 0.3,
+      "carbohydrate": 16.0,
+      "iron": 0.2,
+      "calcium": 12,
+      "folate": 28,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 300
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-176",
+      "name": "パイナップル",
+      "nameKana": "ぱいなっぷる",
+      "keywords": [
+        "パイナップル",
+        "ぱいなっぷる",
+        "パイン"
+      ],
+      "calories": 51,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 13.6,
+      "iron": 0.2,
+      "calcium": 13,
+      "folate": 13,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "warisaki",
+          "label": "切れ",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "warisaki"
+    },
+    {
+      "foodId": "food-177",
+      "name": "さくらんぼ",
+      "nameKana": "さくらんぼ",
+      "keywords": [
+        "さくらんぼ",
+        "サクランボ",
+        "桜桃"
+      ],
+      "calories": 66,
+      "protein": 1.0,
+      "fat": 0.2,
+      "carbohydrate": 17.0,
+      "iron": 0.3,
+      "calcium": 11,
+      "folate": 15,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "粒",
+          "gramsPerUnit": 8
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-178",
+      "name": "柿",
+      "nameKana": "かき",
+      "keywords": [
+        "柿",
+        "かき",
+        "カキ"
+      ],
+      "calories": 60,
+      "protein": 0.4,
+      "fat": 0.2,
+      "carbohydrate": 15.9,
+      "iron": 0.2,
+      "calcium": 8,
+      "folate": 3,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-179",
+      "name": "プルーン（ドライ）",
+      "nameKana": "ぷるーん",
+      "keywords": [
+        "プルーン",
+        "ぷるーん",
+        "干し梅"
+      ],
+      "calories": 213,
+      "protein": 2.3,
+      "fat": 0.5,
+      "carbohydrate": 56.4,
+      "iron": 1.1,
+      "calcium": 50,
+      "folate": 4,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "粒",
+          "gramsPerUnit": 12
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-180",
+      "name": "レーズン",
+      "nameKana": "れーずん",
+      "keywords": [
+        "レーズン",
+        "れーずん",
+        "干し葡萄"
+      ],
+      "calories": 299,
+      "protein": 2.7,
+      "fat": 0.3,
+      "carbohydrate": 79.5,
+      "iron": 0.9,
+      "calcium": 50,
+      "folate": 4,
+      "category": "fruit",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sp",
+          "label": "大さじ",
+          "gramsPerUnit": 12
+        }
+      ],
+      "defaultUnit": "sp"
+    },
+    {
+      "foodId": "food-181",
+      "name": "のり（焼きのり）",
+      "nameKana": "のり",
+      "keywords": [
+        "のり",
+        "ノリ",
+        "焼きのり",
+        "海苔"
+      ],
+      "calories": 188,
+      "protein": 36.2,
+      "fat": 4.2,
+      "carbohydrate": 5.2,
+      "iron": 11.4,
+      "calcium": 170,
+      "folate": 1900,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "mai",
+          "label": "枚",
+          "gramsPerUnit": 3
+        }
+      ],
+      "defaultUnit": "mai"
+    },
+    {
+      "foodId": "food-182",
+      "name": "もずく",
+      "nameKana": "もずく",
+      "keywords": [
+        "もずく",
+        "モズク",
+        "水雲"
+      ],
+      "calories": 4,
+      "protein": 0.5,
+      "fat": 0.1,
+      "carbohydrate": 1.4,
+      "iron": 0.3,
+      "calcium": 25,
+      "folate": 37,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "pack",
+          "label": "パック",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "pack"
+    },
+    {
+      "foodId": "food-183",
+      "name": "めかぶ",
+      "nameKana": "めかぶ",
+      "keywords": [
+        "めかぶ",
+        "メカブ",
+        "芽株"
+      ],
+      "calories": 5,
+      "protein": 0.7,
+      "fat": 0.1,
+      "carbohydrate": 1.8,
+      "iron": 0.5,
+      "calcium": 42,
+      "folate": 48,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "pack",
+          "label": "パック",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "pack"
+    },
+    {
+      "foodId": "food-184",
+      "name": "まいたけ",
+      "nameKana": "まいたけ",
+      "keywords": [
+        "まいたけ",
+        "マイタケ",
+        "舞茸"
+      ],
+      "calories": 16,
+      "protein": 3.0,
+      "fat": 0.3,
+      "carbohydrate": 0.7,
+      "iron": 1.0,
+      "calcium": 10,
+      "folate": 50,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bo",
+          "label": "株",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "bo"
+    },
+    {
+      "foodId": "food-185",
+      "name": "エリンギ",
+      "nameKana": "えりんぎ",
+      "keywords": [
+        "エリンギ",
+        "えりんぎ",
+        "キングトリュフ"
+      ],
+      "calories": 24,
+      "protein": 3.0,
+      "fat": 0.5,
+      "carbohydrate": 2.2,
+      "iron": 1.2,
+      "calcium": 8,
+      "folate": 64,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "hon",
+          "label": "本",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "hon"
+    },
+    {
+      "foodId": "food-186",
+      "name": "なめこ",
+      "nameKana": "なめこ",
+      "keywords": [
+        "なめこ",
+        "ナメコ",
+        "滑子"
+      ],
+      "calories": 15,
+      "protein": 1.9,
+      "fat": 0.1,
+      "carbohydrate": 2.5,
+      "iron": 1.3,
+      "calcium": 8,
+      "folate": 46,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "pack",
+          "label": "パック",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "pack"
+    },
+    {
+      "foodId": "food-187",
+      "name": "きくらげ",
+      "nameKana": "きくらげ",
+      "keywords": [
+        "きくらげ",
+        "キクラゲ",
+        "木耳"
+      ],
+      "calories": 13,
+      "protein": 0.5,
+      "fat": 0.2,
+      "carbohydrate": 3.2,
+      "iron": 3.6,
+      "calcium": 8,
+      "folate": 28,
+      "category": "vegetable",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 10
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-188",
+      "name": "カレーライス",
+      "nameKana": "かれーらいす",
+      "keywords": [
+        "カレーライス",
+        "かれー",
+        "カレー"
+      ],
+      "calories": 302,
+      "protein": 12.5,
+      "fat": 10.8,
+      "carbohydrate": 38.5,
+      "iron": 1.2,
+      "calcium": 45,
+      "folate": 28,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 400
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "ごはん（白米）",
+          "amount": "250g"
+        },
+        {
+          "name": "豚肉",
+          "amount": "60g"
+        },
+        {
+          "name": "じゃがいも",
+          "amount": "50g"
+        },
+        {
+          "name": "にんじん",
+          "amount": "30g"
+        },
+        {
+          "name": "玉ねぎ",
+          "amount": "50g"
+        },
+        {
+          "name": "カレールウ",
+          "amount": "20g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "5g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-189",
+      "name": "親子丼",
+      "nameKana": "おやこどん",
+      "keywords": [
+        "親子丼",
+        "おやこどん",
+        "親子"
+      ],
+      "calories": 280,
+      "protein": 18.5,
+      "fat": 11.2,
+      "carbohydrate": 26.8,
+      "iron": 1.5,
+      "calcium": 52,
+      "folate": 38,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 350
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "ごはん（白米）",
+          "amount": "250g"
+        },
+        {
+          "name": "鶏肉",
+          "amount": "80g"
+        },
+        {
+          "name": "卵",
+          "amount": "50g"
+        },
+        {
+          "name": "玉ねぎ",
+          "amount": "60g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "5g"
+        },
+        {
+          "name": "醤油",
+          "amount": "10g"
+        },
+        {
+          "name": "みりん",
+          "amount": "5g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-190",
+      "name": "味噌汁",
+      "nameKana": "みそしる",
+      "keywords": [
+        "味噌汁",
+        "みそしる",
+        "味噌"
+      ],
+      "calories": 48,
+      "protein": 3.5,
+      "fat": 1.8,
+      "carbohydrate": 4.2,
+      "iron": 1.2,
+      "calcium": 42,
+      "folate": 24,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bowl",
+          "label": "杯",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "bowl",
+      "ingredients": [
+        {
+          "name": "味噌",
+          "amount": "20g"
+        },
+        {
+          "name": "絹ごし豆腐",
+          "amount": "100g"
+        },
+        {
+          "name": "わかめ（乾）",
+          "amount": "3g"
+        },
+        {
+          "name": "だし昆布",
+          "amount": "3g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-191",
+      "name": "豚汁",
+      "nameKana": "ぶたじる",
+      "keywords": [
+        "豚汁",
+        "ぶたじる",
+        "豚"
+      ],
+      "calories": 125,
+      "protein": 8.5,
+      "fat": 6.2,
+      "carbohydrate": 10.5,
+      "iron": 1.8,
+      "calcium": 68,
+      "folate": 42,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "bowl",
+          "label": "杯",
+          "gramsPerUnit": 250
+        }
+      ],
+      "defaultUnit": "bowl",
+      "ingredients": [
+        {
+          "name": "豚肉",
+          "amount": "50g"
+        },
+        {
+          "name": "さつまいも",
+          "amount": "60g"
+        },
+        {
+          "name": "にんじん",
+          "amount": "30g"
+        },
+        {
+          "name": "大根",
+          "amount": "50g"
+        },
+        {
+          "name": "こんにゃく",
+          "amount": "30g"
+        },
+        {
+          "name": "ねぎ",
+          "amount": "20g"
+        },
+        {
+          "name": "味噌",
+          "amount": "20g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-192",
+      "name": "おにぎり（鮭）",
+      "nameKana": "おにぎり",
+      "keywords": [
+        "おにぎり",
+        "オニギリ",
+        "鮭",
+        "さけ"
+      ],
+      "calories": 188,
+      "protein": 6.5,
+      "fat": 2.8,
+      "carbohydrate": 35.2,
+      "iron": 0.2,
+      "calcium": 8,
+      "folate": 8,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-193",
+      "name": "おにぎり（梅）",
+      "nameKana": "おにぎりうめ",
+      "keywords": [
+        "おにぎり",
+        "梅",
+        "うめ"
+      ],
+      "calories": 172,
+      "protein": 3.8,
+      "fat": 1.2,
+      "carbohydrate": 36.5,
+      "iron": 0.3,
+      "calcium": 12,
+      "folate": 6,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-194",
+      "name": "サンドイッチ",
+      "nameKana": "さんどいっち",
+      "keywords": [
+        "サンドイッチ",
+        "さんど",
+        "sandwich"
+      ],
+      "calories": 256,
+      "protein": 9.5,
+      "fat": 12.5,
+      "carbohydrate": 28.5,
+      "iron": 1.2,
+      "calcium": 95,
+      "folate": 48,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "ko",
+      "ingredients": [
+        {
+          "name": "食パン",
+          "amount": "60g"
+        },
+        {
+          "name": "ハム",
+          "amount": "20g"
+        },
+        {
+          "name": "チーズ",
+          "amount": "15g"
+        },
+        {
+          "name": "レタス",
+          "amount": "20g"
+        },
+        {
+          "name": "トマト",
+          "amount": "20g"
+        },
+        {
+          "name": "マヨネーズ",
+          "amount": "10g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-195",
+      "name": "ハンバーグ",
+      "nameKana": "はんばーぐ",
+      "keywords": [
+        "ハンバーグ",
+        "はんばーぐ",
+        "hamburg"
+      ],
+      "calories": 256,
+      "protein": 18.5,
+      "fat": 17.2,
+      "carbohydrate": 6.8,
+      "iron": 1.5,
+      "calcium": 48,
+      "folate": 16,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 120
+        }
+      ],
+      "defaultUnit": "ko",
+      "ingredients": [
+        {
+          "name": "牛豚合いびき肉",
+          "amount": "100g"
+        },
+        {
+          "name": "パン粉",
+          "amount": "15g"
+        },
+        {
+          "name": "卵",
+          "amount": "25g"
+        },
+        {
+          "name": "玉ねぎ",
+          "amount": "40g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "10g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-196",
+      "name": "餃子",
+      "nameKana": "ぎょうざ",
+      "keywords": [
+        "餃子",
+        "ぎょうざ",
+        "ギョウザ"
+      ],
+      "calories": 149,
+      "protein": 6.8,
+      "fat": 8.5,
+      "carbohydrate": 11.8,
+      "iron": 0.8,
+      "calcium": 32,
+      "folate": 24,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "ko",
+      "ingredients": [
+        {
+          "name": "豚肉",
+          "amount": "60g"
+        },
+        {
+          "name": "キャベツ",
+          "amount": "70g"
+        },
+        {
+          "name": "にんにく",
+          "amount": "3g"
+        },
+        {
+          "name": "生姜",
+          "amount": "3g"
+        },
+        {
+          "name": "餃子の皮",
+          "amount": "30g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "5g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-197",
+      "name": "唐揚げ",
+      "nameKana": "からあげ",
+      "keywords": [
+        "唐揚げ",
+        "からあげ",
+        "から揚げ"
+      ],
+      "calories": 316,
+      "protein": 23.8,
+      "fat": 22.5,
+      "carbohydrate": 5.2,
+      "iron": 1.2,
+      "calcium": 24,
+      "folate": 8,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 30
+        }
+      ],
+      "defaultUnit": "ko",
+      "ingredients": [
+        {
+          "name": "鶏肉",
+          "amount": "120g"
+        },
+        {
+          "name": "醤油",
+          "amount": "10g"
+        },
+        {
+          "name": "みりん",
+          "amount": "5g"
+        },
+        {
+          "name": "にんにく",
+          "amount": "3g"
+        },
+        {
+          "name": "生姜",
+          "amount": "3g"
+        },
+        {
+          "name": "片栗粉",
+          "amount": "15g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "100g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-198",
+      "name": "コロッケ",
+      "nameKana": "ころっけ",
+      "keywords": [
+        "コロッケ",
+        "ころっけ"
+      ],
+      "calories": 183,
+      "protein": 5.2,
+      "fat": 12.5,
+      "carbohydrate": 14.8,
+      "iron": 0.5,
+      "calcium": 28,
+      "folate": 12,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 70
+        }
+      ],
+      "defaultUnit": "ko",
+      "ingredients": [
+        {
+          "name": "じゃがいも",
+          "amount": "100g"
+        },
+        {
+          "name": "牛肉",
+          "amount": "30g"
+        },
+        {
+          "name": "玉ねぎ",
+          "amount": "30g"
+        },
+        {
+          "name": "パン粉",
+          "amount": "20g"
+        },
+        {
+          "name": "卵",
+          "amount": "15g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "100g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-199",
+      "name": "肉じゃが",
+      "nameKana": "にくじゃが",
+      "keywords": [
+        "肉じゃが",
+        "にくじゃが",
+        "肉"
+      ],
+      "calories": 142,
+      "protein": 9.5,
+      "fat": 7.8,
+      "carbohydrate": 10.2,
+      "iron": 1.0,
+      "calcium": 42,
+      "folate": 18,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "牛肉",
+          "amount": "60g"
+        },
+        {
+          "name": "じゃがいも",
+          "amount": "80g"
+        },
+        {
+          "name": "玉ねぎ",
+          "amount": "60g"
+        },
+        {
+          "name": "にんじん",
+          "amount": "30g"
+        },
+        {
+          "name": "こんにゃく",
+          "amount": "30g"
+        },
+        {
+          "name": "砂糖",
+          "amount": "5g"
+        },
+        {
+          "name": "醤油",
+          "amount": "10g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-200",
+      "name": "ポテトサラダ",
+      "nameKana": "ぽてとさらだ",
+      "keywords": [
+        "ポテトサラダ",
+        "ぽてと",
+        "じゃがいもサラダ"
+      ],
+      "calories": 178,
+      "protein": 3.8,
+      "fat": 14.2,
+      "carbohydrate": 10.5,
+      "iron": 0.4,
+      "calcium": 28,
+      "folate": 22,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "じゃがいも",
+          "amount": "100g"
+        },
+        {
+          "name": "きゅうり",
+          "amount": "30g"
+        },
+        {
+          "name": "にんじん",
+          "amount": "20g"
+        },
+        {
+          "name": "ハム",
+          "amount": "20g"
+        },
+        {
+          "name": "マヨネーズ",
+          "amount": "20g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-201",
+      "name": "野菜サラダ",
+      "nameKana": "やさいさらだ",
+      "keywords": [
+        "野菜サラダ",
+        "やさい",
+        "サラダ"
+      ],
+      "calories": 68,
+      "protein": 2.5,
+      "fat": 4.8,
+      "carbohydrate": 5.2,
+      "iron": 0.8,
+      "calcium": 48,
+      "folate": 85,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "トマト",
+          "amount": "100g"
+        },
+        {
+          "name": "きゅうり",
+          "amount": "50g"
+        },
+        {
+          "name": "レタス",
+          "amount": "50g"
+        },
+        {
+          "name": "にんじん",
+          "amount": "20g"
+        },
+        {
+          "name": "オリーブオイル",
+          "amount": "5g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-202",
+      "name": "冷奴",
+      "nameKana": "ひややっこ",
+      "keywords": [
+        "冷奴",
+        "ひややっこ",
+        "冷や奴"
+      ],
+      "calories": 72,
+      "protein": 6.6,
+      "fat": 4.2,
+      "carbohydrate": 1.6,
+      "iron": 2.7,
+      "calcium": 120,
+      "folate": 61,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 150
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "絹ごし豆腐",
+          "amount": "150g"
+        },
+        {
+          "name": "醤油",
+          "amount": "5g"
+        },
+        {
+          "name": "みりん",
+          "amount": "2g"
+        },
+        {
+          "name": "ねぎ",
+          "amount": "10g"
+        },
+        {
+          "name": "かつお節",
+          "amount": "2g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-203",
+      "name": "野菜炒め",
+      "nameKana": "やさいいため",
+      "keywords": [
+        "野菜炒め",
+        "やさいいため",
+        "炒め"
+      ],
+      "calories": 118,
+      "protein": 4.8,
+      "fat": 8.5,
+      "carbohydrate": 8.2,
+      "iron": 1.2,
+      "calcium": 65,
+      "folate": 72,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "キャベツ",
+          "amount": "100g"
+        },
+        {
+          "name": "にんじん",
+          "amount": "40g"
+        },
+        {
+          "name": "ピーマン",
+          "amount": "40g"
+        },
+        {
+          "name": "豚肉",
+          "amount": "50g"
+        },
+        {
+          "name": "サラダ油",
+          "amount": "10g"
+        },
+        {
+          "name": "醤油",
+          "amount": "5g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-204",
+      "name": "焼き魚定食",
+      "nameKana": "やきさかなていしょく",
+      "keywords": [
+        "焼き魚",
+        "やきさかな",
+        "定食"
+      ],
+      "calories": 285,
+      "protein": 28.5,
+      "fat": 12.8,
+      "carbohydrate": 18.2,
+      "iron": 1.8,
+      "calcium": 95,
+      "folate": 58,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "sara",
+          "label": "人前",
+          "gramsPerUnit": 400
+        }
+      ],
+      "defaultUnit": "sara",
+      "ingredients": [
+        {
+          "name": "さけ",
+          "amount": "120g"
+        },
+        {
+          "name": "ごはん（白米）",
+          "amount": "250g"
+        },
+        {
+          "name": "大根おろし",
+          "amount": "100g"
+        },
+        {
+          "name": "レモン",
+          "amount": "10g"
+        }
+      ]
+    },
+    {
+      "foodId": "food-205",
+      "name": "麦茶",
+      "nameKana": "むぎちゃ",
+      "keywords": [
+        "麦茶",
+        "むぎちゃ",
+        "ムギチャ"
+      ],
+      "calories": 2,
+      "protein": 0.0,
+      "fat": 0.0,
+      "carbohydrate": 0.5,
+      "iron": 0.0,
+      "calcium": 0,
+      "folate": 0,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-206",
+      "name": "ルイボスティー",
+      "nameKana": "るいぼすてぃー",
+      "keywords": [
+        "ルイボスティー",
+        "るいぼす"
+      ],
+      "calories": 2,
+      "protein": 0.0,
+      "fat": 0.0,
+      "carbohydrate": 0.5,
+      "iron": 0.2,
+      "calcium": 0,
+      "folate": 0,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-207",
+      "name": "100%オレンジジュース",
+      "nameKana": "おれんじじゅーす",
+      "keywords": [
+        "オレンジジュース",
+        "おれんじ",
+        "ジュース"
+      ],
+      "calories": 46,
+      "protein": 0.6,
+      "fat": 0.1,
+      "carbohydrate": 11.2,
+      "iron": 0.1,
+      "calcium": 10,
+      "folate": 28,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-208",
+      "name": "野菜ジュース",
+      "nameKana": "やさいじゅーす",
+      "keywords": [
+        "野菜ジュース",
+        "やさい",
+        "ジュース"
+      ],
+      "calories": 36,
+      "protein": 1.0,
+      "fat": 0.0,
+      "carbohydrate": 8.2,
+      "iron": 0.4,
+      "calcium": 28,
+      "folate": 18,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "カップ",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-209",
+      "name": "甘酒",
+      "nameKana": "あまざけ",
+      "keywords": [
+        "甘酒",
+        "あまざけ",
+        "あま酒"
+      ],
+      "calories": 81,
+      "protein": 1.5,
+      "fat": 0.1,
+      "carbohydrate": 18.5,
+      "iron": 0.2,
+      "calcium": 5,
+      "folate": 12,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ml",
+          "label": "ml",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "cup",
+          "label": "杯",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "cup"
+    },
+    {
+      "foodId": "food-210",
+      "name": "焼き芋",
+      "nameKana": "やきいも",
+      "keywords": [
+        "焼き芋",
+        "やきいも",
+        "さつまいも"
+      ],
+      "calories": 163,
+      "protein": 1.5,
+      "fat": 0.3,
+      "carbohydrate": 38.2,
+      "iron": 0.4,
+      "calcium": 33,
+      "folate": 40,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 200
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-211",
+      "name": "干し芋",
+      "nameKana": "ほしいも",
+      "keywords": [
+        "干し芋",
+        "ほしいも",
+        "ほし芋"
+      ],
+      "calories": 134,
+      "protein": 1.0,
+      "fat": 0.1,
+      "carbohydrate": 31.5,
+      "iron": 0.5,
+      "calcium": 30,
+      "folate": 28,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "本",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-212",
+      "name": "おせんべい",
+      "nameKana": "おせんべい",
+      "keywords": [
+        "おせんべい",
+        "おせんべ",
+        "煎餅"
+      ],
+      "calories": 387,
+      "protein": 7.5,
+      "fat": 8.8,
+      "carbohydrate": 72.5,
+      "iron": 0.8,
+      "calcium": 16,
+      "folate": 14,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "枚",
+          "gramsPerUnit": 15
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-213",
+      "name": "ビスケット",
+      "nameKana": "びすけっと",
+      "keywords": [
+        "ビスケット",
+        "びすけっと",
+        "biscuit"
+      ],
+      "calories": 453,
+      "protein": 8.5,
+      "fat": 18.2,
+      "carbohydrate": 68.5,
+      "iron": 0.6,
+      "calcium": 28,
+      "folate": 8,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "枚",
+          "gramsPerUnit": 12
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-214",
+      "name": "カステラ",
+      "nameKana": "かすてら",
+      "keywords": [
+        "カステラ",
+        "かすてら",
+        "castella"
+      ],
+      "calories": 319,
+      "protein": 6.2,
+      "fat": 15.8,
+      "carbohydrate": 38.2,
+      "iron": 1.2,
+      "calcium": 48,
+      "folate": 24,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "suraisu",
+          "label": "切れ",
+          "gramsPerUnit": 50
+        }
+      ],
+      "defaultUnit": "suraisu"
+    },
+    {
+      "foodId": "food-215",
+      "name": "ゼリー",
+      "nameKana": "ぜりー",
+      "keywords": [
+        "ゼリー",
+        "ぜりー",
+        "jelly"
+      ],
+      "calories": 65,
+      "protein": 0.5,
+      "fat": 0.0,
+      "carbohydrate": 16.2,
+      "iron": 0.1,
+      "calcium": 6,
+      "folate": 2,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-216",
+      "name": "プリン",
+      "nameKana": "ぷりん",
+      "keywords": [
+        "プリン",
+        "ぷりん",
+        "purin"
+      ],
+      "calories": 126,
+      "protein": 3.5,
+      "fat": 4.5,
+      "carbohydrate": 18.2,
+      "iron": 0.2,
+      "calcium": 105,
+      "folate": 12,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 100
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-217",
+      "name": "蒸しパン",
+      "nameKana": "むしぱん",
+      "keywords": [
+        "蒸しパン",
+        "むしぱん",
+        "蒸し菓子"
+      ],
+      "calories": 218,
+      "protein": 5.2,
+      "fat": 6.5,
+      "carbohydrate": 36.8,
+      "iron": 0.8,
+      "calcium": 68,
+      "folate": 32,
+      "category": "other",
+      "units": [
+        {
+          "name": "g",
+          "label": "g",
+          "gramsPerUnit": 1
+        },
+        {
+          "name": "ko",
+          "label": "個",
+          "gramsPerUnit": 60
+        }
+      ],
+      "defaultUnit": "ko"
+    },
+    {
+      "foodId": "food-seasoning-001",
+      "name": "塩",
+      "calories": 0,
+      "protein": 0,
+      "fat": 0,
+      "carbohydrate": 0,
+      "iron": 0,
+      "calcium": 2,
+      "folate": 0,
+      "category": "other",
+      "nameKana": "しお",
+      "keywords": ["塩", "しお", "食塩"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ", "gramsPerUnit": 5 },
+        { "name": "osaji", "label": "大さじ", "gramsPerUnit": 15 }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-seasoning-002",
+      "name": "砂糖（上白糖）",
+      "calories": 384,
+      "protein": 0,
+      "fat": 0,
+      "carbohydrate": 99.3,
+      "iron": 0,
+      "calcium": 1,
+      "folate": 0,
+      "category": "other",
+      "nameKana": "さとう",
+      "keywords": ["砂糖", "さとう", "上白糖", "シュガー"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (3g)", "gramsPerUnit": 3 },
+        { "name": "osaji", "label": "大さじ (9g)", "gramsPerUnit": 9 }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-seasoning-003",
+      "name": "みりん",
+      "calories": 241,
+      "protein": 0.3,
+      "fat": 0,
+      "carbohydrate": 54.9,
+      "iron": 0.1,
+      "calcium": 2,
+      "folate": 0,
+      "category": "other",
+      "nameKana": "みりん",
+      "keywords": ["みりん", "味醂", "本みりん"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (6g)", "gramsPerUnit": 6 },
+        { "name": "osaji", "label": "大さじ (18g)", "gramsPerUnit": 18 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-004",
+      "name": "料理酒",
+      "calories": 109,
+      "protein": 0.3,
+      "fat": 0,
+      "carbohydrate": 4.9,
+      "iron": 0,
+      "calcium": 2,
+      "folate": 0,
+      "category": "other",
+      "nameKana": "りょうりしゅ",
+      "keywords": ["料理酒", "酒", "りょうりしゅ", "さけ", "日本酒"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (5g)", "gramsPerUnit": 5 },
+        { "name": "osaji", "label": "大さじ (15g)", "gramsPerUnit": 15 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-005",
+      "name": "酢",
+      "calories": 25,
+      "protein": 0.1,
+      "fat": 0,
+      "carbohydrate": 2.4,
+      "iron": 0.1,
+      "calcium": 2,
+      "folate": 0,
+      "category": "other",
+      "nameKana": "す",
+      "keywords": ["酢", "す", "米酢", "穀物酢"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (5g)", "gramsPerUnit": 5 },
+        { "name": "osaji", "label": "大さじ (15g)", "gramsPerUnit": 15 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-006",
+      "name": "サラダ油",
+      "calories": 921,
+      "protein": 0,
+      "fat": 100,
+      "carbohydrate": 0,
+      "iron": 0,
+      "calcium": 0,
+      "folate": 0,
+      "category": "oil",
+      "nameKana": "さらだあぶら",
+      "keywords": ["サラダ油", "さらだあぶら", "植物油", "食用油"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (4g)", "gramsPerUnit": 4 },
+        { "name": "osaji", "label": "大さじ (12g)", "gramsPerUnit": 12 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-007",
+      "name": "ごま油",
+      "calories": 921,
+      "protein": 0,
+      "fat": 100,
+      "carbohydrate": 0,
+      "iron": 0,
+      "calcium": 0,
+      "folate": 0,
+      "category": "oil",
+      "nameKana": "ごまあぶら",
+      "keywords": ["ごま油", "ゴマ油", "ごまあぶら", "胡麻油"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (4g)", "gramsPerUnit": 4 },
+        { "name": "osaji", "label": "大さじ (12g)", "gramsPerUnit": 12 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-008",
+      "name": "ケチャップ",
+      "calories": 119,
+      "protein": 1.7,
+      "fat": 0.2,
+      "carbohydrate": 27.6,
+      "iron": 0.5,
+      "calcium": 15,
+      "folate": 6,
+      "category": "other",
+      "nameKana": "けちゃっぷ",
+      "keywords": ["ケチャップ", "けちゃっぷ", "トマトケチャップ"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (5g)", "gramsPerUnit": 5 },
+        { "name": "osaji", "label": "大さじ (15g)", "gramsPerUnit": 15 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-009",
+      "name": "ソース（中濃）",
+      "calories": 132,
+      "protein": 0.8,
+      "fat": 0.1,
+      "carbohydrate": 30.9,
+      "iron": 0.9,
+      "calcium": 19,
+      "folate": 3,
+      "category": "other",
+      "nameKana": "そーす",
+      "keywords": ["ソース", "そーす", "中濃ソース", "ウスターソース"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (6g)", "gramsPerUnit": 6 },
+        { "name": "osaji", "label": "大さじ (18g)", "gramsPerUnit": 18 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-010",
+      "name": "小麦粉（薄力粉）",
+      "calories": 367,
+      "protein": 8.3,
+      "fat": 1.5,
+      "carbohydrate": 75.8,
+      "iron": 0.5,
+      "calcium": 20,
+      "folate": 9,
+      "category": "grain",
+      "nameKana": "こむぎこ",
+      "keywords": ["小麦粉", "こむぎこ", "薄力粉", "はくりきこ"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (3g)", "gramsPerUnit": 3 },
+        { "name": "osaji", "label": "大さじ (9g)", "gramsPerUnit": 9 }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-seasoning-011",
+      "name": "片栗粉",
+      "calories": 330,
+      "protein": 0.1,
+      "fat": 0.1,
+      "carbohydrate": 81.6,
+      "iron": 0.1,
+      "calcium": 2,
+      "folate": 0,
+      "category": "grain",
+      "nameKana": "かたくりこ",
+      "keywords": ["片栗粉", "かたくりこ"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (3g)", "gramsPerUnit": 3 },
+        { "name": "osaji", "label": "大さじ (9g)", "gramsPerUnit": 9 }
+      ],
+      "defaultUnit": "g"
+    },
+    {
+      "foodId": "food-seasoning-012",
+      "name": "こしょう",
+      "calories": 371,
+      "protein": 11.0,
+      "fat": 6.2,
+      "carbohydrate": 68.3,
+      "iron": 11.2,
+      "calcium": 44,
+      "folate": 10,
+      "category": "other",
+      "nameKana": "こしょう",
+      "keywords": ["こしょう", "コショウ", "胡椒", "ペッパー"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "furi", "label": "振り", "gramsPerUnit": 0.2 }
+      ],
+      "defaultUnit": "furi"
+    },
+    {
+      "foodId": "food-seasoning-013",
+      "name": "めんつゆ（3倍濃縮）",
+      "calories": 98,
+      "protein": 3.6,
+      "fat": 0,
+      "carbohydrate": 20.5,
+      "iron": 0.5,
+      "calcium": 11,
+      "folate": 6,
+      "category": "other",
+      "nameKana": "めんつゆ",
+      "keywords": ["めんつゆ", "メンツユ", "麺つゆ"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (6g)", "gramsPerUnit": 6 },
+        { "name": "osaji", "label": "大さじ (18g)", "gramsPerUnit": 18 }
+      ],
+      "defaultUnit": "osaji"
+    },
+    {
+      "foodId": "food-seasoning-014",
+      "name": "鶏がらスープの素",
+      "calories": 225,
+      "protein": 28.5,
+      "fat": 3.2,
+      "carbohydrate": 20.8,
+      "iron": 0.5,
+      "calcium": 23,
+      "folate": 5,
+      "category": "other",
+      "nameKana": "とりがらすーぷのもと",
+      "keywords": ["鶏がらスープの素", "鶏ガラ", "とりがら", "中華スープの素"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (3g)", "gramsPerUnit": 3 },
+        { "name": "osaji", "label": "大さじ (9g)", "gramsPerUnit": 9 }
+      ],
+      "defaultUnit": "kosaji"
+    },
+    {
+      "foodId": "food-seasoning-015",
+      "name": "コンソメ（顆粒）",
+      "calories": 235,
+      "protein": 7.2,
+      "fat": 4.3,
+      "carbohydrate": 41.8,
+      "iron": 0.8,
+      "calcium": 32,
+      "folate": 5,
+      "category": "other",
+      "nameKana": "こんそめ",
+      "keywords": ["コンソメ", "こんそめ", "顆粒コンソメ"],
+      "units": [
+        { "name": "g", "label": "g", "gramsPerUnit": 1 },
+        { "name": "kosaji", "label": "小さじ (3g)", "gramsPerUnit": 3 },
+        { "name": "osaji", "label": "大さじ (9g)", "gramsPerUnit": 9 }
+      ],
+      "defaultUnit": "kosaji"
+    }
+  ]
+}

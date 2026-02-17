@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マタニティ栄養ナビ - 妊婦向け栄養管理アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ===== ヘッダー ===== -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="app-title">マタニティ栄養ナビ</h1>
+            <p class="today-date" id="todayDate"></p>
+            <p class="disclaimer-link">※栄養情報は参考値です。医師の指導を優先してください。</p>
+        </div>
+    </header>
+
+    <!-- ===== ナビゲーションタブ ===== -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-tab="meals">食事記録</button>
+        <button class="nav-tab" data-tab="weight">体重記録</button>
+        <button class="nav-tab" data-tab="dashboard">管理</button>
+        <button class="nav-tab" data-tab="settings">設定</button>
+    </nav>
+
+    <!-- ===== メインコンテンツ ===== -->
+    <main class="main-container">
+
+        <!-- =============== 食事記録タブ =============== -->
+        <div id="tab-meals" class="tab-content active">
+
+        <!-- ===== 日付セレクター ===== -->
+        <div class="meal-date-selector">
+            <button type="button" id="mealDatePrev" class="date-nav-btn">&lt;</button>
+            <button type="button" id="mealDateDisplay" class="date-display-btn"></button>
+            <button type="button" id="mealDateNext" class="date-nav-btn">&gt;</button>
+            <input type="date" id="mealDatePicker" class="date-picker-hidden">
+        </div>
+        <div id="plannedBanner" class="planned-banner hidden">
+            この日の食事は予定です。確定するには各食事の「確定」を押してください。
+        </div>
+
+        <!-- ===== 食事記録フォーム ===== -->
+        <section class="form-section">
+            <h2>食事を記録</h2>
+
+            <!-- 食事タイプタブ -->
+            <div class="meal-type-tabs">
+                <button class="tab-button active" data-type="breakfast">朝食</button>
+                <button class="tab-button" data-type="lunch">昼食</button>
+                <button class="tab-button" data-type="dinner">夕食</button>
+                <button class="tab-button" data-type="snack">間食</button>
+            </div>
+
+            <!-- 食品検索・入力フォーム -->
+            <form id="mealForm" class="meal-form">
+                <!-- 最近の食事（履歴） -->
+                <div id="historySection" class="history-section hidden">
+                    <p class="history-label">最近の食事から選ぶ</p>
+                    <div id="historyList" class="history-list">
+                        <!-- 動的に生成: 横スクロールのチップ形式 -->
+                    </div>
+                </div>
+
+                <!-- 食品検索エリア -->
+                <div class="form-group">
+                    <label for="foodSearch">食品名を検索</label>
+                    <div class="search-container">
+                        <input
+                            type="text"
+                            id="foodSearch"
+                            class="food-search-input"
+                            placeholder="1文字以上で検索..."
+                            autocomplete="off"
+                        >
+                        <div id="foodSuggestions" class="food-suggestions hidden"></div>
+                    </div>
+                    <span class="input-hint">検索して食品を選択するか、直接入力してください</span>
+                </div>
+
+                <!-- 選択された食品表示 -->
+                <div id="selectedFoodDisplay" class="selected-food-display hidden">
+                    <p>選択食品: <strong id="selectedFoodName"></strong></p>
+                    <button type="button" class="btn-small btn-clear" id="clearFoodBtn">変更</button>
+                </div>
+
+                <!-- 食材構成表示 -->
+                <div id="ingredientsList" class="ingredients-list hidden"></div>
+
+                <!-- 摂取量入力エリア -->
+                <div class="form-group">
+                    <label for="quantity">摂取量</label>
+                    <div class="quantity-row">
+                        <input
+                            type="number"
+                            id="quantity"
+                            class="quantity-input"
+                            placeholder="数量"
+                            min="0.1"
+                            max="9999"
+                            step="any"
+                        >
+                        <select id="unitSelect" class="unit-select">
+                            <option value="g">g</option>
+                        </select>
+                    </div>
+                    <span class="input-hint" id="quantityHint">数量を入力してください</span>
+                </div>
+
+                <!-- 追加ボタン -->
+                <button type="submit" class="btn btn-primary btn-add">食事を追加</button>
+
+                <!-- エラーメッセージ表示 -->
+                <div id="formErrorMessage" class="error-message hidden"></div>
+            </form>
+        </section>
+
+        <!-- ===== 食事一覧セクション ===== -->
+        <section class="meals-list-section">
+            <h2 id="mealsListTitle">今日の食事一覧</h2>
+
+            <!-- 食事が空の場合のメッセージ -->
+            <div id="emptyMealsMessage" class="empty-message empty-state-guide">
+                <p class="empty-state-icon">🍽️</p>
+                <p class="empty-state-title">まだ食事が記録されていません</p>
+                <p class="empty-state-hint">上のフォームから食品を検索して、今日の食事を記録してみましょう</p>
+            </div>
+
+            <!-- 食事一覧表示エリア -->
+            <div id="mealsList" class="meals-list-container"></div>
+        </section>
+
+        <!-- ===== 栄養素サマリーセクション ===== -->
+        <section class="summary-section">
+            <h2>1日の栄養摂取状況</h2>
+            <p id="pregnancyWeekDisplay" class="pregnancy-week-display hidden"></p>
+
+            <!-- 栄養素カード -->
+            <div class="nutrients-grid" id="nutrientsGrid">
+                <!-- JavaScript で動的に生成される -->
+            </div>
+
+            <!-- リセットボタン -->
+            <button id="resetButton" class="btn btn-secondary btn-reset">本日の記録をリセット</button>
+        </section>
+
+        <!-- ===== 不足栄養素の提案セクション ===== -->
+        <section id="suggestionSection" class="suggestion-section hidden">
+            <h2>おすすめ食品</h2>
+            <p class="section-description">不足している栄養素を補える食品を提案します</p>
+            <div id="deficientNutrientsList" class="deficient-nutrients-list">
+                <!-- JSで動的に生成 -->
+            </div>
+        </section>
+
+        <!-- ===== オリジナル食品登録セクション ===== -->
+        <section class="custom-food-section">
+            <h2>オリジナル食品を登録</h2>
+            <p class="section-description">よく食べる食品やお気に入りの食品を登録できます</p>
+
+            <button type="button" id="openCustomFoodBtn" class="btn btn-outline">
+                + 新しい食品を登録
+            </button>
+
+            <!-- 登録済みのオリジナル食品一覧 -->
+            <div id="customFoodsList" class="custom-foods-list"></div>
+        </section>
+        <!-- ===== API設定セクション ===== -->
+        <section class="api-settings-section">
+            <details class="api-settings-details">
+                <summary class="api-settings-summary">AI解析設定（Claude API）</summary>
+                <div class="api-settings-body">
+                    <p class="modal-hint">Claude APIキーを設定すると、レシピ貼り付け時にAIによる高精度な食材解析が利用できます。未設定の場合はローカル解析（正規表現）を使用します。</p>
+                    <div class="form-group">
+                        <label for="claudeApiKeyInput">APIキー</label>
+                        <input type="password" id="claudeApiKeyInput" placeholder="sk-ant-..." autocomplete="off">
+                    </div>
+                    <div class="api-settings-buttons">
+                        <button type="button" id="saveApiKeyBtn" class="btn btn-small btn-apply">保存</button>
+                        <button type="button" id="deleteApiKeyBtn" class="btn btn-small btn-delete-key">削除</button>
+                    </div>
+                    <p id="apiKeyStatus" class="api-key-status"></p>
+                </div>
+            </details>
+        </section>
+
+        </div><!-- /tab-meals -->
+
+        <!-- =============== 体重記録タブ =============== -->
+        <div id="tab-weight" class="tab-content">
+
+        <!-- ===== 体重記録フォーム ===== -->
+        <section class="form-section">
+            <h2 id="weightFormTitle">体重を記録</h2>
+            <form id="weightForm" class="meal-form">
+                <div class="form-group">
+                    <label for="weightDate">測定日</label>
+                    <input type="date" id="weightDate" class="quantity-input" style="width:100%">
+                </div>
+                <div class="form-group">
+                    <label for="weightValue">体重 (kg)</label>
+                    <input type="number" id="weightValue" class="quantity-input" placeholder="例: 55.0" min="40" max="200" step="0.1" style="width:100%">
+                </div>
+                <div class="form-group">
+                    <label for="weightMemo">メモ（任意）</label>
+                    <input type="text" id="weightMemo" class="food-search-input" placeholder="例: 検診日" style="width:100%">
+                </div>
+                <button type="submit" id="weightSubmitBtn" class="btn btn-primary btn-add">体重を記録</button>
+                <button type="button" id="cancelWeightEditBtn" class="btn btn-secondary btn-add hidden" style="margin-top:0.5rem">キャンセル</button>
+                <div id="weightFormError" class="error-message hidden"></div>
+            </form>
+        </section>
+
+        <!-- ===== 体重記録一覧 ===== -->
+        <section class="meals-list-section">
+            <h2>体重記録一覧</h2>
+            <div id="emptyWeightMessage" class="empty-message empty-state-guide">
+                <p class="empty-state-icon">⚖️</p>
+                <p class="empty-state-title">まだ体重が記録されていません</p>
+                <p class="empty-state-hint">定期的な体重記録で、健康的な体重管理を始めましょう</p>
+            </div>
+            <div id="weightRecordsList" class="meals-list-container"></div>
+        </section>
+
+        </div><!-- /tab-weight -->
+
+        <!-- =============== 食事・体重管理（ダッシュボード）タブ =============== -->
+        <div id="tab-dashboard" class="tab-content">
+
+        <!-- ===== 妊娠週数サマリー ===== -->
+        <section class="form-section">
+            <h2>健康管理ダッシュボード</h2>
+            <div id="dashboardProfileNotice" class="empty-message hidden">
+                <p>設定タブでプロフィールを入力すると、より詳しい分析が表示されます。</p>
+            </div>
+            <div id="dashboardWeekInfo" class="dashboard-week-info hidden"></div>
+        </section>
+
+        <!-- ===== 体重推移グラフ ===== -->
+        <section class="form-section">
+            <h2>体重推移</h2>
+            <div id="weightChartNotice" class="empty-message hidden">
+                <p>設定タブで妊娠開始日・妊娠前体重・身長を入力すると、推奨増加範囲が表示されます。</p>
+            </div>
+            <div class="chart-period-tabs">
+                <button class="period-tab" data-period="30">30日</button>
+                <button class="period-tab" data-period="90">90日</button>
+                <button class="period-tab active" data-period="all">全期間</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="weightChart"></canvas>
+            </div>
+        </section>
+
+        <!-- ===== 栄養バランス推移 ===== -->
+        <section class="form-section">
+            <h2>直近7日間の栄養バランス</h2>
+            <div id="nutritionWeeklyGrid" class="dashboard-weekly-grid">
+                <!-- JSで動的に生成 -->
+            </div>
+        </section>
+
+        <!-- ===== 総合評価 ===== -->
+        <section class="form-section">
+            <h2>総合コンディション</h2>
+            <div id="dashboardSummary" class="dashboard-summary">
+                <!-- JSで動的に生成 -->
+            </div>
+        </section>
+
+        </div><!-- /tab-dashboard -->
+
+        <!-- =============== 設定タブ =============== -->
+        <div id="tab-settings" class="tab-content">
+
+        <section class="form-section">
+            <h2>プロフィール設定</h2>
+            <p class="section-description">体重管理と栄養推奨量の計算に必要な情報を入力してください</p>
+            <form id="profileForm" class="meal-form">
+                <p class="input-hint" style="margin-bottom:1rem">妊娠開始日・出産予定日のどちらか一方を入力すると、もう一方が自動計算されます。</p>
+                <div class="form-group">
+                    <label for="pregnancyStartDate">妊娠開始日（最終月経初日）</label>
+                    <input type="date" id="pregnancyStartDate" class="quantity-input" style="width:100%">
+                </div>
+                <div class="form-group">
+                    <label for="dueDate">出産予定日</label>
+                    <input type="date" id="dueDate" class="quantity-input" style="width:100%">
+                </div>
+                <div id="pregnancyCalcDisplay" class="bmi-display hidden">
+                    <p id="pregnancyCalcText"></p>
+                </div>
+                <div class="form-group">
+                    <label for="prePregnancyWeight">妊娠前体重 (kg)</label>
+                    <input type="number" id="prePregnancyWeight" class="quantity-input" placeholder="例: 52.0" min="30" max="200" step="0.1" style="width:100%">
+                </div>
+                <div class="form-group">
+                    <label for="userHeight">身長 (cm)</label>
+                    <input type="number" id="userHeight" class="quantity-input" placeholder="例: 158.0" min="100" max="220" step="0.1" style="width:100%">
+                </div>
+                <div id="bmiDisplay" class="bmi-display hidden">
+                    <p>BMI: <strong id="bmiValue"></strong></p>
+                    <p id="bmiCategory" class="bmi-category"></p>
+                </div>
+                <button type="submit" class="btn btn-primary btn-add">保存</button>
+                <div id="profileSaveMessage" class="success-message hidden">保存しました</div>
+            </form>
+        </section>
+
+        </div><!-- /tab-settings -->
+
+    </main>
+
+    <!-- ===== オリジナル食品登録モーダル ===== -->
+    <div id="customFoodModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>オリジナル食品を登録</h3>
+                <button type="button" id="closeModalBtn" class="modal-close">&times;</button>
+            </div>
+            <form id="customFoodForm" class="modal-body">
+                <!-- 食品名 -->
+                <div class="form-group">
+                    <label for="customFoodName">食品名 *</label>
+                    <input type="text" id="customFoodName" placeholder="例: 手作りグラノーラ" required>
+                </div>
+                <!-- カテゴリ -->
+                <div class="form-group">
+                    <label>カテゴリ</label>
+                    <select id="customFoodCategory" class="unit-select" style="width:100%">
+                        <option value="grain">穀類</option>
+                        <option value="protein">タンパク質</option>
+                        <option value="vegetable">野菜</option>
+                        <option value="fruit">果物</option>
+                        <option value="dairy">乳製品</option>
+                        <option value="oil">油脂</option>
+                        <option value="other" selected>その他</option>
+                    </select>
+                </div>
+
+                <!-- 登録モード切替タブ -->
+                <div class="custom-mode-tabs">
+                    <button type="button" class="custom-mode-tab active" data-mode="lookup">類似食品から推定</button>
+                    <button type="button" class="custom-mode-tab" data-mode="recipe">食材から計算</button>
+                    <button type="button" class="custom-mode-tab" data-mode="paste">レシピ貼り付け</button>
+                    <button type="button" class="custom-mode-tab" data-mode="manual">手動入力</button>
+                </div>
+
+                <!-- モード1: 類似食品から栄養素を推定 -->
+                <div id="modeLookup" class="custom-mode-panel">
+                    <p class="modal-hint">食品名で検索して、近い食品の栄養素を自動で取り込めます</p>
+                    <div class="form-group">
+                        <div class="search-container">
+                            <input type="text" id="lookupSearch" class="food-search-input" placeholder="類似食品を検索..." autocomplete="off">
+                            <div id="lookupSuggestions" class="food-suggestions hidden"></div>
+                        </div>
+                    </div>
+                    <div id="lookupResult" class="lookup-result hidden">
+                        <p class="lookup-result-title">選択中: <strong id="lookupFoodName"></strong></p>
+                        <div class="lookup-nutrients">
+                            <span>カロリー: <strong id="lookupCal"></strong>kcal</span>
+                            <span>タンパク質: <strong id="lookupPro"></strong>g</span>
+                            <span>脂質: <strong id="lookupFat"></strong>g</span>
+                            <span>炭水化物: <strong id="lookupCarb"></strong>g</span>
+                            <span>鉄: <strong id="lookupIron"></strong>mg</span>
+                            <span>Ca: <strong id="lookupCalcium"></strong>mg</span>
+                            <span>葉酸: <strong id="lookupFolate"></strong>μg</span>
+                        </div>
+                        <button type="button" id="applyLookupBtn" class="btn btn-small btn-apply">この栄養素を使う</button>
+                    </div>
+                </div>
+
+                <!-- モード2: 食材から計算 -->
+                <div id="modeRecipe" class="custom-mode-panel hidden">
+                    <p class="modal-hint">食材と分量を追加して、合計の栄養素を自動計算します</p>
+                    <div id="recipeIngredients" class="recipe-ingredients"></div>
+                    <div class="form-group" style="margin-top:0.5rem">
+                        <div class="search-container">
+                            <input type="text" id="recipeAddSearch" class="food-search-input" placeholder="食材を検索して追加..." autocomplete="off">
+                            <div id="recipeAddSuggestions" class="food-suggestions hidden"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>何人前のレシピですか？</label>
+                        <input type="number" id="recipeServings" value="1" min="1" max="20" step="1" style="width:80px">
+                    </div>
+                    <div id="recipeNutrientPreview" class="recipe-nutrient-preview hidden">
+                        <p class="ingredients-label">1人前あたりの栄養素（100gあたりに換算）:</p>
+                        <div class="lookup-nutrients" id="recipeNutrientValues"></div>
+                    </div>
+                </div>
+
+                <!-- モード3: レシピ貼り付け -->
+                <div id="modePaste" class="custom-mode-panel hidden">
+                    <p class="modal-hint">レシピサイトやSNSからレシピテキストを貼り付けて、食材・分量を自動解析します</p>
+                    <div class="form-group">
+                        <textarea id="pasteRecipeText" class="paste-textarea" rows="6" placeholder="レシピテキストを貼り付けてください&#10;&#10;例:&#10;鶏もも肉 300g&#10;玉ねぎ 1個&#10;醤油 大さじ2&#10;砂糖 大さじ1"></textarea>
+                    </div>
+                    <button type="button" id="analyzeRecipeBtn" class="btn btn-small btn-analyze">解析する</button>
+                    <div id="pasteAnalyzeStatus" class="paste-status hidden"></div>
+                    <div id="pasteResultPreview" class="paste-result-preview hidden">
+                        <p class="ingredients-label">解析結果:</p>
+                        <div id="pasteResultList" class="paste-result-list"></div>
+                        <div id="pasteUnmatchedWarning" class="paste-unmatched-warning hidden"></div>
+                        <div class="form-group" style="margin-top:0.5rem">
+                            <label>何人前のレシピですか？</label>
+                            <input type="number" id="pasteServings" value="1" min="1" max="20" step="1" style="width:80px">
+                        </div>
+                        <button type="button" id="applyPasteResultBtn" class="btn btn-small btn-apply">この食材で登録に進む</button>
+                    </div>
+                </div>
+
+                <!-- モード4: 手動入力 -->
+                <div id="modeManual" class="custom-mode-panel hidden">
+                    <p class="modal-hint">栄養素は100gあたりの値を入力してください。わからない項目は0のままでOK</p>
+                </div>
+
+                <!-- 栄養素入力欄（全モード共通、手動モードとlookup適用後に表示） -->
+                <div class="nutrient-input-grid" id="nutrientInputGrid">
+                    <div class="form-group">
+                        <label for="customCalories">カロリー (kcal)</label>
+                        <input type="number" id="customCalories" value="0" min="0" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="customProtein">タンパク質 (g)</label>
+                        <input type="number" id="customProtein" value="0" min="0" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="customFat">脂質 (g)</label>
+                        <input type="number" id="customFat" value="0" min="0" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="customCarb">炭水化物 (g)</label>
+                        <input type="number" id="customCarb" value="0" min="0" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="customIron">鉄 (mg)</label>
+                        <input type="number" id="customIron" value="0" min="0" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="customCalcium">カルシウム (mg)</label>
+                        <input type="number" id="customCalcium" value="0" min="0" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="customFolate">葉酸 (μg)</label>
+                        <input type="number" id="customFolate" value="0" min="0" step="any">
+                    </div>
+                </div>
+
+                <!-- 単位（共通） -->
+                <div class="form-group">
+                    <label>よく使う単位（任意）</label>
+                    <div class="quantity-row">
+                        <input type="text" id="customUnitLabel" placeholder="例: 杯、個、枚">
+                        <input type="number" id="customUnitGrams" placeholder="1単位のg数" min="1" step="any">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">登録する</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== JavaScript ===== -->
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- nutrition.js を先に読み込む（栄養計算ロジック） -->
+    <script src="js/nutrition.js"></script>
+    <!-- weight.js 体重管理機能 -->
+    <script src="js/weight.js"></script>
+    <!-- app.js がメインのアプリロジック -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "nutrients": [
+    {
+      "nutrientId": "calories",
+      "name": "エネルギー",
+      "unit": "kcal",
+      "baseRecommended": 2000,
+      "firstTrimester": 2050,
+      "secondTrimester": 2250,
+      "thirdTrimester": 2450,
+      "description": "妊娠中のエネルギー必要量。各時期により異なる"
+    },
+    {
+      "nutrientId": "protein",
+      "name": "タンパク質",
+      "unit": "g",
+      "baseRecommended": 50,
+      "firstTrimester": 50,
+      "secondTrimester": 55,
+      "thirdTrimester": 75,
+      "description": "胎児と母体の組織形成に必要。後期に大きく増加"
+    },
+    {
+      "nutrientId": "fat",
+      "name": "脂質",
+      "unit": "g",
+      "baseRecommended": 55,
+      "firstTrimester": 55,
+      "secondTrimester": 55,
+      "thirdTrimester": 55,
+      "description": "エネルギー源と脂溶性ビタミンの吸収に必要"
+    },
+    {
+      "nutrientId": "carbohydrate",
+      "name": "炭水化物",
+      "unit": "g",
+      "baseRecommended": 300,
+      "firstTrimester": 300,
+      "secondTrimester": 300,
+      "thirdTrimester": 300,
+      "description": "主要なエネルギー源。全妊娠期間で変わらない"
+    },
+    {
+      "nutrientId": "iron",
+      "name": "鉄",
+      "unit": "mg",
+      "baseRecommended": 6.5,
+      "firstTrimester": 9,
+      "secondTrimester": 16,
+      "thirdTrimester": 16,
+      "description": "血液増加と胎児発育に必須。特に中後期に重要"
+    },
+    {
+      "nutrientId": "calcium",
+      "name": "カルシウム",
+      "unit": "mg",
+      "baseRecommended": 650,
+      "firstTrimester": 650,
+      "secondTrimester": 650,
+      "thirdTrimester": 650,
+      "description": "骨形成と神経伝達に必要。全期間で推奨量は一定"
+    },
+    {
+      "nutrientId": "folate",
+      "name": "葉酸",
+      "unit": "μg",
+      "baseRecommended": 240,
+      "firstTrimester": 480,
+      "secondTrimester": 480,
+      "thirdTrimester": 480,
+      "description": "神経管閉鎖障害の予防に最も重要。妊娠中は基本量の2倍必要"
+    }
+  ]
+}
