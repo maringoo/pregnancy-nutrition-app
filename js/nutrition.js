@@ -34,6 +34,10 @@ function getPregnancyWeek(pregnancyStartDate, referenceDate) {
  * @returns {string} "first" | "second" | "third"
  */
 function getTrimester(week) {
+    // 産後モードチェック
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    if (profile.mode === 'postpartum') return 'postpartum';
+
     if (week === null || week === undefined || week < 0) return 'second'; // デフォルト中期
     if (week <= 15) return 'first';
     if (week <= 27) return 'second';
@@ -47,11 +51,13 @@ function getTrimester(week) {
  * @returns {string} 日本語ラベル
  */
 function getTrimesterLabel(trimester) {
-    const labels = {
-        first: '初期',
-        second: '中期',
-        third: '後期'
-    };
+    if (trimester === 'postpartum') {
+        const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+        const feedingLabels = { breastfeeding: '完全母乳', mixed: '混合', formula: '完全ミルク' };
+        const feedingType = profile.feedingType || 'breastfeeding';
+        return `産後（${feedingLabels[feedingType]}）`;
+    }
+    const labels = { first: '初期', second: '中期', third: '後期' };
     return labels[trimester] || '中期';
 }
 
@@ -82,7 +88,13 @@ function calculateNutrients(food, quantity) {
     carbohydrate: Math.round(food.carbohydrate * ratio * 10) / 10, // 炭水化物(g)
     iron: Math.round(food.iron * ratio * 100) / 100,            // 鉄(mg)
     calcium: Math.round(food.calcium * ratio * 10) / 10,        // カルシウム(mg)
-    folate: Math.round(food.folate * ratio * 10) / 10           // 葉酸(μg)
+    folate: Math.round(food.folate * ratio * 10) / 10,          // 葉酸(μg)
+    vitaminD: Math.round((food.vitaminD || 0) * ratio * 100) / 100,   // ビタミンD(μg)
+    vitaminB6: Math.round((food.vitaminB6 || 0) * ratio * 100) / 100, // ビタミンB6(mg)
+    vitaminB12: Math.round((food.vitaminB12 || 0) * ratio * 100) / 100, // ビタミンB12(μg)
+    zinc: Math.round((food.zinc || 0) * ratio * 100) / 100,     // 亜鉛(mg)
+    fiber: Math.round((food.fiber || 0) * ratio * 10) / 10,     // 食物繊維(g)
+    dha: Math.round((food.dha || 0) * ratio * 10) / 10          // DHA(mg)
   };
 }
 
@@ -118,7 +130,13 @@ function calculateDailyTotal(meals, foodsData) {
     carbohydrate: 0,
     iron: 0,
     calcium: 0,
-    folate: 0
+    folate: 0,
+    vitaminD: 0,
+    vitaminB6: 0,
+    vitaminB12: 0,
+    zinc: 0,
+    fiber: 0,
+    dha: 0
   };
 
   // 各食事記録について計算
@@ -143,6 +161,12 @@ function calculateDailyTotal(meals, foodsData) {
       dailyTotal.iron += mealNutrients.iron;
       dailyTotal.calcium += mealNutrients.calcium;
       dailyTotal.folate += mealNutrients.folate;
+      dailyTotal.vitaminD += mealNutrients.vitaminD;
+      dailyTotal.vitaminB6 += mealNutrients.vitaminB6;
+      dailyTotal.vitaminB12 += mealNutrients.vitaminB12;
+      dailyTotal.zinc += mealNutrients.zinc;
+      dailyTotal.fiber += mealNutrients.fiber;
+      dailyTotal.dha += mealNutrients.dha;
     }
   });
 
@@ -154,7 +178,13 @@ function calculateDailyTotal(meals, foodsData) {
     carbohydrate: Math.round(dailyTotal.carbohydrate * 10) / 10,
     iron: Math.round(dailyTotal.iron * 100) / 100,
     calcium: Math.round(dailyTotal.calcium * 10) / 10,
-    folate: Math.round(dailyTotal.folate * 10) / 10
+    folate: Math.round(dailyTotal.folate * 10) / 10,
+    vitaminD: Math.round(dailyTotal.vitaminD * 100) / 100,
+    vitaminB6: Math.round(dailyTotal.vitaminB6 * 100) / 100,
+    vitaminB12: Math.round(dailyTotal.vitaminB12 * 100) / 100,
+    zinc: Math.round(dailyTotal.zinc * 100) / 100,
+    fiber: Math.round(dailyTotal.fiber * 10) / 10,
+    dha: Math.round(dailyTotal.dha * 10) / 10
   };
 }
 
@@ -181,14 +211,22 @@ function calculateAchievementRate(dailyTotal, trimester, nutrientsData) {
   }
 
   // 妊娠時期の検証
-  const validTrimesters = ['first', 'second', 'third'];
+  const validTrimesters = ['first', 'second', 'third', 'postpartum'];
   if (!validTrimesters.includes(trimester)) {
-    console.error('妊娠時期は "first", "second", "third" のいずれかを指定してください。');
+    console.error('妊娠時期は "first", "second", "third", "postpartum" のいずれかを指定してください。');
     return null;
   }
 
   // 時期に応じた推奨量キーを決定
-  const recommendedKey = `${trimester}Trimester`;
+  let recommendedKey;
+  if (trimester === 'postpartum') {
+      const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+      const feedingType = profile.feedingType || 'breastfeeding';
+      const feedingKeyMap = { breastfeeding: 'postpartumBreastfeeding', mixed: 'postpartumMixed', formula: 'postpartumFormula' };
+      recommendedKey = feedingKeyMap[feedingType] || 'postpartumBreastfeeding';
+  } else {
+      recommendedKey = `${trimester}Trimester`;
+  }
 
   // 達成率を計算
   const achievementRate = {};
@@ -238,7 +276,15 @@ function getDeficientNutrients(achievementRate, dailyTotal, trimester, nutrients
     return [];
   }
 
-  const recommendedKey = `${trimester}Trimester`;
+  let recommendedKey;
+  if (trimester === 'postpartum') {
+      const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+      const feedingType = profile.feedingType || 'breastfeeding';
+      const feedingKeyMap = { breastfeeding: 'postpartumBreastfeeding', mixed: 'postpartumMixed', formula: 'postpartumFormula' };
+      recommendedKey = feedingKeyMap[feedingType] || 'postpartumBreastfeeding';
+  } else {
+      recommendedKey = `${trimester}Trimester`;
+  }
   const deficientNutrients = [];
 
   // 達成率が100%未満の栄養素のみを抽出

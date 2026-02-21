@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4708F"/>
+      <stop offset="100%" style="stop-color:#C4607F"/>
+    </linearGradient>
+  </defs>
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- ボウル（中央やや左） -->
+  <g transform="translate(350, 180) scale(1.8)">
+    <!-- 湯気 -->
+    <path d="M32 42 C30 35 36 32 34 25 C32 18 38 15 36 9"
+      stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M50 38 C48 30 54 27 52 19 C50 12 56 9 54 3"
+      stroke="rgba(255,255,255,0.45)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <path d="M68 42 C66 35 72 32 70 25 C68 18 74 15 72 9"
+      stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- ボウル本体 -->
+    <path d="M15 48 Q15 53 20 62 Q30 78 50 80 Q70 78 80 62 Q85 53 85 48Z"
+      fill="rgba(255,255,255,0.85)"/>
+    <!-- リム -->
+    <path d="M10 44 Q10 52 50 52 Q90 52 90 44 Q90 38 50 38 Q10 38 10 44Z"
+      fill="rgba(255,255,255,0.95)"/>
+    <!-- 茎 -->
+    <path d="M58 72 C62 65 68 58 70 52"
+      stroke="#5AB87A" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- 左葉 -->
+    <ellipse cx="63" cy="51" rx="7" ry="5.5" transform="rotate(-15 63 51)" fill="#5AB87A"/>
+    <!-- 右葉 -->
+    <ellipse cx="74" cy="49" rx="7" ry="5.5" transform="rotate(40 74 49)" fill="#6BC98B"/>
+  </g>
+
+  <!-- mamori テキスト -->
+  <text x="600" y="480" text-anchor="middle"
+    font-family="'Helvetica Neue', Arial, sans-serif"
+    font-size="72" font-weight="700" letter-spacing="6"
+    fill="rgba(255,255,255,0.95)">mamori</text>
+
+  <!-- サブタイトル -->
+  <text x="600" y="540" text-anchor="middle"
+    font-family="'Helvetica Neue', Arial, sans-serif"
+    font-size="28" font-weight="400" letter-spacing="2"
+    fill="rgba(255,255,255,0.7)">マタニティ栄養サポート</text>
+</svg>

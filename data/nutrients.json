@@ -8,6 +8,9 @@
       "firstTrimester": 2050,
       "secondTrimester": 2250,
       "thirdTrimester": 2450,
+      "postpartumBreastfeeding": 2350,
+      "postpartumMixed": 2175,
+      "postpartumFormula": 2000,
       "description": "妊娠中のエネルギー必要量。各時期により異なる"
     },
     {
@@ -18,6 +21,9 @@
       "firstTrimester": 50,
       "secondTrimester": 55,
       "thirdTrimester": 75,
+      "postpartumBreastfeeding": 70,
+      "postpartumMixed": 60,
+      "postpartumFormula": 50,
       "description": "胎児と母体の組織形成に必要。後期に大きく増加"
     },
     {
@@ -28,6 +34,9 @@
       "firstTrimester": 55,
       "secondTrimester": 55,
       "thirdTrimester": 55,
+      "postpartumBreastfeeding": 55,
+      "postpartumMixed": 55,
+      "postpartumFormula": 55,
       "description": "エネルギー源と脂溶性ビタミンの吸収に必要"
     },
     {
@@ -38,6 +47,9 @@
       "firstTrimester": 300,
       "secondTrimester": 300,
       "thirdTrimester": 300,
+      "postpartumBreastfeeding": 300,
+      "postpartumMixed": 300,
+      "postpartumFormula": 300,
       "description": "主要なエネルギー源。全妊娠期間で変わらない"
     },
     {
@@ -48,6 +60,9 @@
       "firstTrimester": 9,
       "secondTrimester": 16,
       "thirdTrimester": 16,
+      "postpartumBreastfeeding": 9,
+      "postpartumMixed": 7.5,
+      "postpartumFormula": 6.5,
       "description": "血液増加と胎児発育に必須。特に中後期に重要"
     },
     {
@@ -58,6 +73,9 @@
       "firstTrimester": 650,
       "secondTrimester": 650,
       "thirdTrimester": 650,
+      "postpartumBreastfeeding": 650,
+      "postpartumMixed": 650,
+      "postpartumFormula": 650,
       "description": "骨形成と神経伝達に必要。全期間で推奨量は一定"
     },
     {
@@ -68,7 +86,88 @@
       "firstTrimester": 480,
       "secondTrimester": 480,
       "thirdTrimester": 480,
+      "postpartumBreastfeeding": 340,
+      "postpartumMixed": 290,
+      "postpartumFormula": 240,
       "description": "神経管閉鎖障害の予防に最も重要。妊娠中は基本量の2倍必要"
+    },
+    {
+      "nutrientId": "vitaminD",
+      "name": "ビタミンD",
+      "unit": "μg",
+      "baseRecommended": 8.5,
+      "firstTrimester": 8.5,
+      "secondTrimester": 8.5,
+      "thirdTrimester": 8.5,
+      "postpartumBreastfeeding": 8.5,
+      "postpartumMixed": 8.5,
+      "postpartumFormula": 8.5,
+      "description": "カルシウム吸収を促進し、胎児の骨格発達に不可欠"
+    },
+    {
+      "nutrientId": "vitaminB6",
+      "name": "ビタミンB6",
+      "unit": "mg",
+      "baseRecommended": 1.1,
+      "firstTrimester": 1.2,
+      "secondTrimester": 1.4,
+      "thirdTrimester": 1.4,
+      "postpartumBreastfeeding": 1.4,
+      "postpartumMixed": 1.3,
+      "postpartumFormula": 1.1,
+      "description": "つわり軽減やタンパク質代謝に関与。中後期に必要量が増加"
+    },
+    {
+      "nutrientId": "vitaminB12",
+      "name": "ビタミンB12",
+      "unit": "μg",
+      "baseRecommended": 2.4,
+      "firstTrimester": 2.8,
+      "secondTrimester": 2.8,
+      "thirdTrimester": 2.8,
+      "postpartumBreastfeeding": 3.2,
+      "postpartumMixed": 2.8,
+      "postpartumFormula": 2.4,
+      "description": "神経管発達と赤血球形成に重要。貧血予防にも寄与"
+    },
+    {
+      "nutrientId": "zinc",
+      "name": "亜鉛",
+      "unit": "mg",
+      "baseRecommended": 8,
+      "firstTrimester": 10,
+      "secondTrimester": 10,
+      "thirdTrimester": 10,
+      "postpartumBreastfeeding": 12,
+      "postpartumMixed": 10,
+      "postpartumFormula": 8,
+      "description": "細胞分裂・免疫機能に不可欠。胎児の成長に重要"
+    },
+    {
+      "nutrientId": "fiber",
+      "name": "食物繊維",
+      "unit": "g",
+      "baseRecommended": 18,
+      "firstTrimester": 18,
+      "secondTrimester": 18,
+      "thirdTrimester": 18,
+      "postpartumBreastfeeding": 18,
+      "postpartumMixed": 18,
+      "postpartumFormula": 18,
+      "description": "便秘予防に重要。妊娠中は便秘になりやすいため意識的な摂取が必要"
+    },
+    {
+      "nutrientId": "dha",
+      "name": "DHA",
+      "unit": "mg",
+      "baseRecommended": 1000,
+      "firstTrimester": 1000,
+      "secondTrimester": 1000,
+      "thirdTrimester": 1000,
+      "postpartumBreastfeeding": 1000,
+      "postpartumMixed": 1000,
+      "postpartumFormula": 1000,
+      "description": "胎児の脳・網膜発達に重要。EPA+DHAとして1日1000mg推奨"
     }
   ]
 }

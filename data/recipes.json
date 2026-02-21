@@ -1,0 +1,2231 @@
+[
+  {
+    "recipeId": "recipe-001",
+    "name": "ほうれん草と鶏むねのごま和え",
+    "description": "鉄・葉酸・タンパク質を一度に補える作り置きおかず",
+    "cookTime": "15分",
+    "servings": 4,
+    "storageInfo": "冷蔵3日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "葉酸"
+    ],
+    "targetNutrients": [
+      "iron",
+      "folate",
+      "protein",
+      "vitaminB6"
+    ],
+    "ingredients": [
+      {
+        "name": "ほうれん草",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "鶏むね肉",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "すりごま",
+        "amount": "大さじ2",
+        "grams": 18
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "砂糖",
+        "amount": "小さじ1",
+        "grams": 3
+      }
+    ],
+    "steps": [
+      "ほうれん草を茹でて水気を切り、3cm幅に切る",
+      "鶏むね肉を茹でてほぐす",
+      "すりごま・しょうゆ・砂糖を混ぜてたれを作る",
+      "全ての材料を和える"
+    ],
+    "nutrientsPerServing": {
+      "calories": 120,
+      "protein": 18,
+      "fat": 3.5,
+      "carbohydrate": 4,
+      "iron": 2.5,
+      "calcium": 60,
+      "folate": 110,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.35,
+      "vitaminB12": 0.1,
+      "zinc": 0.8,
+      "fiber": 3,
+      "dha": 5
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-002",
+    "name": "小松菜としらすの煮浸し",
+    "description": "カルシウムと鉄分を手軽に補える定番作り置き",
+    "cookTime": "10分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "iron",
+      "folate",
+      "vitaminD",
+      "vitaminB12"
+    ],
+    "ingredients": [
+      {
+        "name": "小松菜",
+        "amount": "300g",
+        "grams": 300
+      },
+      {
+        "name": "しらす",
+        "amount": "40g",
+        "grams": 40
+      },
+      {
+        "name": "だし汁",
+        "amount": "100ml",
+        "grams": 100
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1",
+        "grams": 18
+      }
+    ],
+    "steps": [
+      "小松菜を3cm幅に切る",
+      "だし汁・しょうゆ・みりんを煮立てる",
+      "小松菜を加えてさっと煮る",
+      "しらすを加えて混ぜ、冷ます"
+    ],
+    "nutrientsPerServing": {
+      "calories": 45,
+      "protein": 5,
+      "fat": 0.8,
+      "carbohydrate": 4,
+      "iron": 2.2,
+      "calcium": 145,
+      "folate": 88,
+      "vitaminD": 5,
+      "vitaminB6": 0.1,
+      "vitaminB12": 1,
+      "zinc": 0.3,
+      "fiber": 2.5,
+      "dha": 50
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-003",
+    "name": "ひじきと大豆の煮物",
+    "description": "鉄分・カルシウム・食物繊維が豊富な和の定番作り置き",
+    "cookTime": "25分",
+    "servings": 5,
+    "storageInfo": "冷蔵5日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "iron",
+      "calcium",
+      "fiber"
+    ],
+    "ingredients": [
+      {
+        "name": "乾燥ひじき",
+        "amount": "20g",
+        "grams": 20
+      },
+      {
+        "name": "大豆（水煮）",
+        "amount": "150g",
+        "grams": 150
+      },
+      {
+        "name": "にんじん",
+        "amount": "1/2本",
+        "grams": 80
+      },
+      {
+        "name": "油揚げ",
+        "amount": "1枚",
+        "grams": 30
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ2",
+        "grams": 36
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1",
+        "grams": 9
+      },
+      {
+        "name": "だし汁",
+        "amount": "200ml",
+        "grams": 200
+      }
+    ],
+    "steps": [
+      "ひじきを水で戻す",
+      "にんじん・油揚げを細切りにする",
+      "鍋に油を熱し、ひじき・にんじん・油揚げを炒める",
+      "大豆・だし汁・調味料を加えて煮汁がなくなるまで煮る"
+    ],
+    "nutrientsPerServing": {
+      "calories": 95,
+      "protein": 6,
+      "fat": 3,
+      "carbohydrate": 11,
+      "iron": 3.2,
+      "calcium": 72,
+      "folate": 35,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 1.3,
+      "fiber": 7.3,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-004",
+    "name": "レバーのしぐれ煮",
+    "description": "鉄分補給の王道。甘辛味で食べやすい作り置き",
+    "cookTime": "20分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "iron",
+      "protein",
+      "vitaminB6",
+      "vitaminB12",
+      "zinc"
+    ],
+    "ingredients": [
+      {
+        "name": "鶏レバー",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "しょうが",
+        "amount": "1片",
+        "grams": 10
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ2",
+        "grams": 36
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1",
+        "grams": 9
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "酒",
+        "amount": "大さじ1",
+        "grams": 15
+      }
+    ],
+    "steps": [
+      "レバーを一口大に切り、水に浸けて血抜きする",
+      "しょうがを千切りにする",
+      "鍋に調味料としょうがを煮立て、レバーを加える",
+      "弱火で10分ほど煮詰める"
+    ],
+    "nutrientsPerServing": {
+      "calories": 85,
+      "protein": 12,
+      "fat": 2.5,
+      "carbohydrate": 5,
+      "iron": 4.5,
+      "calcium": 8,
+      "folate": 165,
+      "vitaminD": 0.1,
+      "vitaminB6": 0.4,
+      "vitaminB12": 15,
+      "zinc": 2.5,
+      "fiber": 1,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-005",
+    "name": "切り干し大根と桜えびの煮物",
+    "description": "カルシウムと鉄分を効率的に補える乾物レシピ",
+    "cookTime": "20分",
+    "servings": 4,
+    "storageInfo": "冷蔵5日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "切り干し大根",
+        "amount": "30g",
+        "grams": 30
+      },
+      {
+        "name": "桜えび",
+        "amount": "10g",
+        "grams": 10
+      },
+      {
+        "name": "にんじん",
+        "amount": "1/3本",
+        "grams": 50
+      },
+      {
+        "name": "だし汁",
+        "amount": "200ml",
+        "grams": 200
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1.5",
+        "grams": 27
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1",
+        "grams": 18
+      }
+    ],
+    "steps": [
+      "切り干し大根を水で戻してざく切りにする",
+      "にんじんを細切りにする",
+      "鍋にだし汁と切り干し大根・にんじんを入れて煮る",
+      "調味料と桜えびを加えて煮汁がなくなるまで煮る"
+    ],
+    "nutrientsPerServing": {
+      "calories": 55,
+      "protein": 3,
+      "fat": 0.5,
+      "carbohydrate": 10,
+      "iron": 1.8,
+      "calcium": 120,
+      "folate": 25,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 0.5,
+      "fiber": 1.8,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-006",
+    "name": "ブロッコリーとツナのサラダ",
+    "description": "葉酸・ビタミンC豊富。タンパク質も補える簡単おかず",
+    "cookTime": "10分",
+    "servings": 3,
+    "storageInfo": "冷蔵3日",
+    "tags": [
+      "作り置き",
+      "葉酸",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "folate",
+      "protein",
+      "vitaminB6",
+      "vitaminB12",
+      "dha"
+    ],
+    "ingredients": [
+      {
+        "name": "ブロッコリー",
+        "amount": "1株",
+        "grams": 250
+      },
+      {
+        "name": "ツナ缶（水煮）",
+        "amount": "1缶",
+        "grams": 70
+      },
+      {
+        "name": "マヨネーズ",
+        "amount": "大さじ1",
+        "grams": 12
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      },
+      {
+        "name": "すりごま",
+        "amount": "大さじ1",
+        "grams": 9
+      }
+    ],
+    "steps": [
+      "ブロッコリーを小房に分けて茹でる",
+      "ツナ缶の汁を切る",
+      "マヨネーズ・しょうゆ・すりごまを混ぜる",
+      "ブロッコリーとツナを和える"
+    ],
+    "nutrientsPerServing": {
+      "calories": 95,
+      "protein": 10,
+      "fat": 4,
+      "carbohydrate": 5,
+      "iron": 1.2,
+      "calcium": 45,
+      "folate": 150,
+      "vitaminD": 1.5,
+      "vitaminB6": 0.45,
+      "vitaminB12": 2.5,
+      "zinc": 0.7,
+      "fiber": 3,
+      "dha": 400
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-007",
+    "name": "豆腐ハンバーグ（和風あんかけ）",
+    "description": "タンパク質・鉄分・カルシウムを補えるメインおかず",
+    "cookTime": "25分",
+    "servings": 4,
+    "storageInfo": "冷蔵3日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "タンパク質",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "protein",
+      "calcium",
+      "iron",
+      "vitaminB12",
+      "zinc"
+    ],
+    "ingredients": [
+      {
+        "name": "木綿豆腐",
+        "amount": "1丁",
+        "grams": 300
+      },
+      {
+        "name": "鶏ひき肉",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1/2個",
+        "grams": 100
+      },
+      {
+        "name": "卵",
+        "amount": "1個",
+        "grams": 50
+      },
+      {
+        "name": "パン粉",
+        "amount": "大さじ3",
+        "grams": 9
+      },
+      {
+        "name": "だし汁",
+        "amount": "150ml",
+        "grams": 150
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1",
+        "grams": 18
+      }
+    ],
+    "steps": [
+      "豆腐を水切りする",
+      "玉ねぎをみじん切りにしてレンジで加熱",
+      "豆腐・ひき肉・玉ねぎ・卵・パン粉を混ぜてこねる",
+      "小判型に成形してフライパンで両面焼く",
+      "だし汁としょうゆであんを作りかける"
+    ],
+    "nutrientsPerServing": {
+      "calories": 185,
+      "protein": 18,
+      "fat": 9,
+      "carbohydrate": 7,
+      "iron": 2,
+      "calcium": 110,
+      "folate": 40,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.15,
+      "vitaminB12": 0.2,
+      "zinc": 1,
+      "fiber": 1,
+      "dha": 5
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-008",
+    "name": "あさりと小松菜の酒蒸し",
+    "description": "鉄分の宝庫。あさりの旨味で小松菜もたっぷり食べられる",
+    "cookTime": "15分",
+    "servings": 3,
+    "storageInfo": "冷蔵2日",
+    "tags": [
+      "作り置き",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "iron",
+      "calcium",
+      "vitaminB12"
+    ],
+    "ingredients": [
+      {
+        "name": "あさり（殻付き）",
+        "amount": "300g",
+        "grams": 300
+      },
+      {
+        "name": "小松菜",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "にんにく",
+        "amount": "1片",
+        "grams": 5
+      },
+      {
+        "name": "酒",
+        "amount": "大さじ2",
+        "grams": 30
+      },
+      {
+        "name": "バター",
+        "amount": "10g",
+        "grams": 10
+      }
+    ],
+    "steps": [
+      "あさりを砂抜きする",
+      "小松菜を3cm幅に切る",
+      "フライパンにバターとにんにくを熱し、あさりと酒を加えて蓋をする",
+      "あさりが開いたら小松菜を加えてさっと炒める"
+    ],
+    "nutrientsPerServing": {
+      "calories": 75,
+      "protein": 7,
+      "fat": 3.5,
+      "carbohydrate": 3,
+      "iron": 5,
+      "calcium": 130,
+      "folate": 65,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 8,
+      "zinc": 0.5,
+      "fiber": 2.5,
+      "dha": 20
+    },
+    "trimesterSuitability": [
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-009",
+    "name": "枝豆入り卵焼き",
+    "description": "葉酸・タンパク質が豊富なお弁当にも便利な一品",
+    "cookTime": "10分",
+    "servings": 3,
+    "storageInfo": "冷蔵3日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "葉酸",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "folate",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "name": "卵",
+        "amount": "4個",
+        "grams": 200
+      },
+      {
+        "name": "枝豆（むき身）",
+        "amount": "60g",
+        "grams": 60
+      },
+      {
+        "name": "だし汁",
+        "amount": "大さじ2",
+        "grams": 30
+      },
+      {
+        "name": "砂糖",
+        "amount": "小さじ1",
+        "grams": 3
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "grams": 1
+      }
+    ],
+    "steps": [
+      "卵を溶きほぐし、だし汁・砂糖・塩を混ぜる",
+      "枝豆を加えて混ぜる",
+      "卵焼き器に油を薄く敷き、数回に分けて巻きながら焼く",
+      "冷めてから切り分ける"
+    ],
+    "nutrientsPerServing": {
+      "calories": 130,
+      "protein": 10,
+      "fat": 8,
+      "carbohydrate": 3,
+      "iron": 1.5,
+      "calcium": 50,
+      "folate": 85,
+      "vitaminD": 0.5,
+      "vitaminB6": 0.05,
+      "vitaminB12": 0.3,
+      "zinc": 1,
+      "fiber": 3.5,
+      "dha": 40
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-010",
+    "name": "高野豆腐の含め煮",
+    "description": "カルシウム・鉄分・タンパク質がバランスよく摂れる",
+    "cookTime": "20分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "protein",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "高野豆腐",
+        "amount": "4枚",
+        "grams": 64
+      },
+      {
+        "name": "だし汁",
+        "amount": "400ml",
+        "grams": 400
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1.5",
+        "grams": 27
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1.5",
+        "grams": 27
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1",
+        "grams": 9
+      }
+    ],
+    "steps": [
+      "高野豆腐をぬるま湯で戻し、水気を絞る",
+      "だし汁に調味料を加えて煮立てる",
+      "高野豆腐を入れ、落し蓋をして弱火で15分煮る",
+      "煮汁ごと冷まして味を含ませる"
+    ],
+    "nutrientsPerServing": {
+      "calories": 100,
+      "protein": 9,
+      "fat": 5,
+      "carbohydrate": 6,
+      "iron": 1.8,
+      "calcium": 95,
+      "folate": 12,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 0.8,
+      "fiber": 1,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-011",
+    "name": "鮭とアスパラの味噌マヨ焼き",
+    "description": "タンパク質・カルシウム・葉酸をバランスよく補えるメインおかず",
+    "cookTime": "20分",
+    "servings": 3,
+    "storageInfo": "冷蔵3日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "タンパク質",
+      "葉酸"
+    ],
+    "targetNutrients": [
+      "protein",
+      "folate",
+      "calcium",
+      "vitaminD",
+      "vitaminB6",
+      "vitaminB12",
+      "dha"
+    ],
+    "ingredients": [
+      {
+        "name": "鮭",
+        "amount": "3切れ",
+        "grams": 240
+      },
+      {
+        "name": "アスパラガス",
+        "amount": "6本",
+        "grams": 120
+      },
+      {
+        "name": "味噌",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "マヨネーズ",
+        "amount": "大さじ1",
+        "grams": 12
+      },
+      {
+        "name": "みりん",
+        "amount": "小さじ1",
+        "grams": 6
+      }
+    ],
+    "steps": [
+      "鮭に塩をふり10分置き、水気を拭く",
+      "アスパラを斜め切りにする",
+      "味噌・マヨネーズ・みりんを混ぜる",
+      "鮭とアスパラを焼き、味噌マヨを塗ってさらに焼く"
+    ],
+    "nutrientsPerServing": {
+      "calories": 195,
+      "protein": 22,
+      "fat": 9,
+      "carbohydrate": 5,
+      "iron": 0.8,
+      "calcium": 35,
+      "folate": 95,
+      "vitaminD": 8,
+      "vitaminB6": 0.4,
+      "vitaminB12": 3,
+      "zinc": 0.5,
+      "fiber": 2.5,
+      "dha": 250
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-012",
+    "name": "厚揚げと野菜のそぼろ煮",
+    "description": "カルシウム・タンパク質が豊富。ご飯がすすむ甘辛味",
+    "cookTime": "20分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "protein",
+      "vitaminB12",
+      "zinc"
+    ],
+    "ingredients": [
+      {
+        "name": "厚揚げ",
+        "amount": "2枚",
+        "grams": 300
+      },
+      {
+        "name": "鶏ひき肉",
+        "amount": "150g",
+        "grams": 150
+      },
+      {
+        "name": "にんじん",
+        "amount": "1/2本",
+        "grams": 80
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ2",
+        "grams": 36
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1",
+        "grams": 9
+      },
+      {
+        "name": "しょうが",
+        "amount": "1片",
+        "grams": 10
+      },
+      {
+        "name": "だし汁",
+        "amount": "200ml",
+        "grams": 200
+      }
+    ],
+    "steps": [
+      "厚揚げを一口大に切り、熱湯で油抜きする",
+      "にんじんを小さめの乱切りにする",
+      "鍋で鶏ひき肉としょうがを炒める",
+      "だし汁・調味料・厚揚げ・にんじんを加えて15分煮る"
+    ],
+    "nutrientsPerServing": {
+      "calories": 175,
+      "protein": 15,
+      "fat": 10,
+      "carbohydrate": 6,
+      "iron": 1.8,
+      "calcium": 160,
+      "folate": 30,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.15,
+      "vitaminB12": 0.2,
+      "zinc": 1,
+      "fiber": 1.8,
+      "dha": 5
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-013",
+    "name": "モロヘイヤのおひたし",
+    "description": "葉酸・鉄分・カルシウムが群を抜いて多いスーパー野菜",
+    "cookTime": "8分",
+    "servings": 3,
+    "storageInfo": "冷蔵2日",
+    "tags": [
+      "作り置き",
+      "葉酸",
+      "鉄分",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "folate",
+      "iron",
+      "calcium"
+    ],
+    "ingredients": [
+      {
+        "name": "モロヘイヤ",
+        "amount": "1束",
+        "grams": 100
+      },
+      {
+        "name": "かつお節",
+        "amount": "1パック",
+        "grams": 3
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ2",
+        "grams": 12
+      },
+      {
+        "name": "だし汁",
+        "amount": "大さじ1",
+        "grams": 15
+      }
+    ],
+    "steps": [
+      "モロヘイヤの葉を茎から外す",
+      "沸騰した湯でさっと茹でて冷水にとる",
+      "水気を絞り、細かく刻む",
+      "しょうゆ・だし汁で和え、かつお節をのせる"
+    ],
+    "nutrientsPerServing": {
+      "calories": 20,
+      "protein": 2,
+      "fat": 0.2,
+      "carbohydrate": 2,
+      "iron": 2,
+      "calcium": 88,
+      "folate": 170,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 0.5,
+      "fiber": 1,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-014",
+    "name": "牛肉とパプリカのオイスター炒め",
+    "description": "鉄分・タンパク質豊富。パプリカのビタミンCで鉄の吸収UP",
+    "cookTime": "15分",
+    "servings": 3,
+    "storageInfo": "冷蔵3日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "iron",
+      "protein",
+      "vitaminB12",
+      "zinc"
+    ],
+    "ingredients": [
+      {
+        "name": "牛もも薄切り肉",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "パプリカ（赤）",
+        "amount": "1個",
+        "grams": 150
+      },
+      {
+        "name": "ピーマン",
+        "amount": "2個",
+        "grams": 60
+      },
+      {
+        "name": "オイスターソース",
+        "amount": "大さじ1.5",
+        "grams": 27
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      },
+      {
+        "name": "ごま油",
+        "amount": "小さじ1",
+        "grams": 4
+      }
+    ],
+    "steps": [
+      "牛肉を食べやすい大きさに切り、しょうゆで下味をつける",
+      "パプリカ・ピーマンを細切りにする",
+      "フライパンにごま油を熱し、牛肉を炒める",
+      "野菜を加えてさっと炒め、オイスターソースで味付け"
+    ],
+    "nutrientsPerServing": {
+      "calories": 170,
+      "protein": 17,
+      "fat": 8,
+      "carbohydrate": 7,
+      "iron": 2.8,
+      "calcium": 15,
+      "folate": 55,
+      "vitaminD": 0,
+      "vitaminB6": 0.2,
+      "vitaminB12": 1,
+      "zinc": 2.8,
+      "fiber": 1.5,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-015",
+    "name": "納豆とオクラのネバネバ和え",
+    "description": "葉酸・鉄分・カルシウムを手軽に。混ぜるだけの簡単作り置き",
+    "cookTime": "5分",
+    "servings": 2,
+    "storageInfo": "冷蔵2日",
+    "tags": [
+      "作り置き",
+      "葉酸",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "folate",
+      "calcium",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "納豆",
+        "amount": "2パック",
+        "grams": 80
+      },
+      {
+        "name": "オクラ",
+        "amount": "6本",
+        "grams": 60
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      },
+      {
+        "name": "かつお節",
+        "amount": "1パック",
+        "grams": 3
+      }
+    ],
+    "steps": [
+      "オクラを茹でて小口切りにする",
+      "納豆を付属のたれで混ぜる",
+      "オクラと納豆を合わせ、しょうゆで味を調える",
+      "かつお節をのせる"
+    ],
+    "nutrientsPerServing": {
+      "calories": 105,
+      "protein": 9,
+      "fat": 5,
+      "carbohydrate": 7,
+      "iron": 2,
+      "calcium": 55,
+      "folate": 95,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 0.8,
+      "fiber": 1,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-016",
+    "name": "かぼちゃと小豆のいとこ煮",
+    "description": "葉酸・鉄分・食物繊維が豊富。やさしい甘さの定番おかず",
+    "cookTime": "25分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "葉酸",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "folate",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "かぼちゃ",
+        "amount": "300g",
+        "grams": 300
+      },
+      {
+        "name": "ゆで小豆（無糖）",
+        "amount": "100g",
+        "grams": 100
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1.5",
+        "grams": 14
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      },
+      {
+        "name": "水",
+        "amount": "200ml",
+        "grams": 200
+      }
+    ],
+    "steps": [
+      "かぼちゃを一口大に切る",
+      "鍋にかぼちゃと水を入れ、落し蓋をして中火で煮る",
+      "かぼちゃが柔らかくなったら小豆と調味料を加える",
+      "弱火で5分ほど煮て味をなじませる"
+    ],
+    "nutrientsPerServing": {
+      "calories": 115,
+      "protein": 4,
+      "fat": 0.5,
+      "carbohydrate": 25,
+      "iron": 1.5,
+      "calcium": 25,
+      "folate": 60,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 0.5,
+      "fiber": 1,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-017",
+    "name": "鶏むね肉の塩麹漬け",
+    "description": "高タンパク低脂質。塩麹で柔らかく仕上がる万能作り置き",
+    "cookTime": "15分（＋漬け時間）",
+    "servings": 4,
+    "storageInfo": "冷蔵4日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "protein",
+      "vitaminB6"
+    ],
+    "ingredients": [
+      {
+        "name": "鶏むね肉",
+        "amount": "2枚",
+        "grams": 500
+      },
+      {
+        "name": "塩麹",
+        "amount": "大さじ3",
+        "grams": 54
+      },
+      {
+        "name": "酒",
+        "amount": "大さじ1",
+        "grams": 15
+      }
+    ],
+    "steps": [
+      "鶏むね肉をフォークで数か所刺す",
+      "塩麹と酒をまぶし、保存袋に入れて半日以上漬ける",
+      "沸騰した湯に入れ、再沸騰したら火を止めて蓋をし30分放置",
+      "冷めたらスライスする"
+    ],
+    "nutrientsPerServing": {
+      "calories": 155,
+      "protein": 28,
+      "fat": 2.5,
+      "carbohydrate": 4,
+      "iron": 0.4,
+      "calcium": 8,
+      "folate": 15,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.3,
+      "vitaminB12": 0.1,
+      "zinc": 0.5,
+      "fiber": 1,
+      "dha": 5
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-018",
+    "name": "春菊と豆腐の白和え",
+    "description": "カルシウム・葉酸・鉄分を一度に。やさしい味の副菜",
+    "cookTime": "15分",
+    "servings": 3,
+    "storageInfo": "冷蔵2日",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "葉酸"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "folate",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "春菊",
+        "amount": "150g",
+        "grams": 150
+      },
+      {
+        "name": "木綿豆腐",
+        "amount": "1/2丁",
+        "grams": 150
+      },
+      {
+        "name": "すりごま",
+        "amount": "大さじ2",
+        "grams": 18
+      },
+      {
+        "name": "砂糖",
+        "amount": "小さじ2",
+        "grams": 6
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      }
+    ],
+    "steps": [
+      "豆腐を水切りし、すり鉢でなめらかにする",
+      "すりごま・砂糖・しょうゆを混ぜる",
+      "春菊を茹でて水気を絞り、3cm幅に切る",
+      "豆腐の衣で春菊を和える"
+    ],
+    "nutrientsPerServing": {
+      "calories": 95,
+      "protein": 7,
+      "fat": 6,
+      "carbohydrate": 4,
+      "iron": 2.5,
+      "calcium": 145,
+      "folate": 120,
+      "vitaminD": 0,
+      "vitaminB6": 0.15,
+      "vitaminB12": 0,
+      "zinc": 1.1,
+      "fiber": 3,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-019",
+    "name": "さば缶と玉ねぎのカレー炒め",
+    "description": "鉄分・タンパク質・カルシウムが豊富。缶詰で手軽に",
+    "cookTime": "10分",
+    "servings": 3,
+    "storageInfo": "冷蔵3日",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "タンパク質",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "iron",
+      "protein",
+      "calcium",
+      "vitaminD",
+      "vitaminB12",
+      "dha"
+    ],
+    "ingredients": [
+      {
+        "name": "さば水煮缶",
+        "amount": "1缶",
+        "grams": 190
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1個",
+        "grams": 200
+      },
+      {
+        "name": "カレー粉",
+        "amount": "小さじ1",
+        "grams": 2
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      },
+      {
+        "name": "オリーブオイル",
+        "amount": "小さじ1",
+        "grams": 4
+      }
+    ],
+    "steps": [
+      "玉ねぎを薄切りにする",
+      "フライパンにオリーブオイルを熱し、玉ねぎを炒める",
+      "さば缶を汁ごと加えてほぐす",
+      "カレー粉としょうゆで味付け"
+    ],
+    "nutrientsPerServing": {
+      "calories": 145,
+      "protein": 14,
+      "fat": 7,
+      "carbohydrate": 7,
+      "iron": 2.2,
+      "calcium": 130,
+      "folate": 25,
+      "vitaminD": 3.5,
+      "vitaminB6": 0.25,
+      "vitaminB12": 4,
+      "zinc": 0.8,
+      "fiber": 1,
+      "dha": 450
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-020",
+    "name": "ほうれん草とチーズのキッシュ風",
+    "description": "葉酸・カルシウム・タンパク質がたっぷり。パイ生地なしで簡単",
+    "cookTime": "30分",
+    "servings": 4,
+    "storageInfo": "冷蔵3日 / 冷凍2週間",
+    "tags": [
+      "作り置き",
+      "葉酸",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "folate",
+      "calcium",
+      "protein",
+      "vitaminB12",
+      "zinc"
+    ],
+    "ingredients": [
+      {
+        "name": "ほうれん草",
+        "amount": "150g",
+        "grams": 150
+      },
+      {
+        "name": "卵",
+        "amount": "3個",
+        "grams": 150
+      },
+      {
+        "name": "牛乳",
+        "amount": "100ml",
+        "grams": 100
+      },
+      {
+        "name": "ピザ用チーズ",
+        "amount": "60g",
+        "grams": 60
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "grams": 1
+      },
+      {
+        "name": "こしょう",
+        "amount": "少々",
+        "grams": 0.5
+      }
+    ],
+    "steps": [
+      "ほうれん草を茹でて水気を絞り、刻む",
+      "卵・牛乳・塩・こしょうを混ぜる",
+      "耐熱容器にほうれん草を敷き、卵液を注ぐ",
+      "チーズをのせて180℃のオーブンで20分焼く"
+    ],
+    "nutrientsPerServing": {
+      "calories": 145,
+      "protein": 12,
+      "fat": 9,
+      "carbohydrate": 3,
+      "iron": 1.8,
+      "calcium": 175,
+      "folate": 95,
+      "vitaminD": 0.1,
+      "vitaminB6": 0.25,
+      "vitaminB12": 1.4,
+      "zinc": 3,
+      "fiber": 2.5,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-021",
+    "name": "豚肉と大豆のトマト煮",
+    "description": "鉄分・タンパク質・葉酸をバランスよく。洋風の作り置きメイン",
+    "cookTime": "30分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "iron",
+      "protein",
+      "folate",
+      "zinc"
+    ],
+    "ingredients": [
+      {
+        "name": "豚もも薄切り肉",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "大豆（水煮）",
+        "amount": "100g",
+        "grams": 100
+      },
+      {
+        "name": "トマト缶",
+        "amount": "1缶",
+        "grams": 400
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1個",
+        "grams": 200
+      },
+      {
+        "name": "にんにく",
+        "amount": "1片",
+        "grams": 5
+      },
+      {
+        "name": "コンソメ",
+        "amount": "1個",
+        "grams": 5
+      },
+      {
+        "name": "オリーブオイル",
+        "amount": "小さじ1",
+        "grams": 4
+      }
+    ],
+    "steps": [
+      "豚肉を一口大に切る",
+      "玉ねぎ・にんにくをみじん切りにする",
+      "オリーブオイルで玉ねぎ・にんにくを炒め、豚肉を加える",
+      "トマト缶・大豆・コンソメを加えて20分煮込む"
+    ],
+    "nutrientsPerServing": {
+      "calories": 195,
+      "protein": 17,
+      "fat": 7,
+      "carbohydrate": 15,
+      "iron": 2.5,
+      "calcium": 45,
+      "folate": 55,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.2,
+      "vitaminB12": 0.3,
+      "zinc": 2,
+      "fiber": 3.5,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-022",
+    "name": "しらすとわかめの酢の物",
+    "description": "カルシウム豊富。さっぱりして食欲がない時にも",
+    "cookTime": "10分",
+    "servings": 3,
+    "storageInfo": "冷蔵3日",
+    "tags": [
+      "作り置き",
+      "カルシウム"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "vitaminD",
+      "vitaminB12",
+      "fiber"
+    ],
+    "ingredients": [
+      {
+        "name": "しらす",
+        "amount": "40g",
+        "grams": 40
+      },
+      {
+        "name": "乾燥わかめ",
+        "amount": "5g",
+        "grams": 5
+      },
+      {
+        "name": "きゅうり",
+        "amount": "1本",
+        "grams": 100
+      },
+      {
+        "name": "酢",
+        "amount": "大さじ2",
+        "grams": 30
+      },
+      {
+        "name": "砂糖",
+        "amount": "小さじ2",
+        "grams": 6
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      }
+    ],
+    "steps": [
+      "わかめを水で戻す",
+      "きゅうりを薄切りにして塩もみし、水気を絞る",
+      "酢・砂糖・しょうゆを混ぜて合わせ酢を作る",
+      "わかめ・きゅうり・しらすを合わせ酢で和える"
+    ],
+    "nutrientsPerServing": {
+      "calories": 35,
+      "protein": 4,
+      "fat": 0.5,
+      "carbohydrate": 4,
+      "iron": 0.5,
+      "calcium": 85,
+      "folate": 15,
+      "vitaminD": 5,
+      "vitaminB6": 0.05,
+      "vitaminB12": 1,
+      "zinc": 0.3,
+      "fiber": 4,
+      "dha": 50
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-023",
+    "name": "ほうれん草入りミートボール",
+    "description": "鉄分・葉酸・タンパク質をまとめて補えるメインおかず",
+    "cookTime": "25分",
+    "servings": 4,
+    "storageInfo": "冷蔵3日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "葉酸",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "iron",
+      "folate",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "name": "豚ひき肉",
+        "amount": "250g",
+        "grams": 250
+      },
+      {
+        "name": "ほうれん草",
+        "amount": "100g",
+        "grams": 100
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1/4個",
+        "grams": 50
+      },
+      {
+        "name": "卵",
+        "amount": "1個",
+        "grams": 50
+      },
+      {
+        "name": "パン粉",
+        "amount": "大さじ2",
+        "grams": 6
+      },
+      {
+        "name": "ケチャップ",
+        "amount": "大さじ3",
+        "grams": 45
+      },
+      {
+        "name": "ウスターソース",
+        "amount": "大さじ1",
+        "grams": 18
+      }
+    ],
+    "steps": [
+      "ほうれん草を茹でて細かく刻む",
+      "玉ねぎをみじん切りにする",
+      "ひき肉・ほうれん草・玉ねぎ・卵・パン粉を混ぜて丸める",
+      "フライパンで焼き色をつけ、ケチャップ・ウスターソースを加えて煮絡める"
+    ],
+    "nutrientsPerServing": {
+      "calories": 195,
+      "protein": 16,
+      "fat": 11,
+      "carbohydrate": 8,
+      "iron": 2.2,
+      "calcium": 30,
+      "folate": 70,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.25,
+      "vitaminB12": 0.3,
+      "zinc": 1.5,
+      "fiber": 2.5,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-024",
+    "name": "ヨーグルトバーク",
+    "description": "カルシウムたっぷりの冷凍おやつ。つわり時にも食べやすい",
+    "cookTime": "10分（＋冷凍時間）",
+    "servings": 4,
+    "storageInfo": "冷凍2週間",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "おやつ"
+    ],
+    "targetNutrients": [
+      "calcium"
+    ],
+    "ingredients": [
+      {
+        "name": "ヨーグルト（プレーン）",
+        "amount": "300g",
+        "grams": 300
+      },
+      {
+        "name": "はちみつ",
+        "amount": "大さじ2",
+        "grams": 42
+      },
+      {
+        "name": "ブルーベリー",
+        "amount": "50g",
+        "grams": 50
+      },
+      {
+        "name": "アーモンド",
+        "amount": "20g",
+        "grams": 20
+      }
+    ],
+    "steps": [
+      "ヨーグルトとはちみつを混ぜる",
+      "クッキングシートを敷いたバットに平らに広げる",
+      "ブルーベリーとアーモンドをのせる",
+      "冷凍庫で3時間以上固める。割って食べる"
+    ],
+    "nutrientsPerServing": {
+      "calories": 110,
+      "protein": 5,
+      "fat": 4,
+      "carbohydrate": 15,
+      "iron": 0.5,
+      "calcium": 120,
+      "folate": 18,
+      "vitaminD": 0.1,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0.1,
+      "zinc": 0.5,
+      "fiber": 1,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-025",
+    "name": "ごぼうと鶏肉の甘辛煮",
+    "description": "鉄分・食物繊維が豊富。便秘対策にもおすすめ",
+    "cookTime": "25分",
+    "servings": 4,
+    "storageInfo": "冷蔵5日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "鉄分",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "iron",
+      "protein",
+      "fiber"
+    ],
+    "ingredients": [
+      {
+        "name": "鶏もも肉",
+        "amount": "250g",
+        "grams": 250
+      },
+      {
+        "name": "ごぼう",
+        "amount": "1本",
+        "grams": 150
+      },
+      {
+        "name": "にんじん",
+        "amount": "1/2本",
+        "grams": 80
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ2",
+        "grams": 36
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1.5",
+        "grams": 14
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "ごま油",
+        "amount": "小さじ1",
+        "grams": 4
+      }
+    ],
+    "steps": [
+      "ごぼうをささがきにして水にさらす",
+      "鶏肉を一口大に切る",
+      "鍋にごま油を熱し、鶏肉を炒める",
+      "ごぼう・にんじんを加え、調味料と水を入れて煮汁がなくなるまで煮る"
+    ],
+    "nutrientsPerServing": {
+      "calories": 175,
+      "protein": 15,
+      "fat": 7,
+      "carbohydrate": 13,
+      "iron": 1.5,
+      "calcium": 30,
+      "folate": 35,
+      "vitaminD": 0.05,
+      "vitaminB6": 0.15,
+      "vitaminB12": 0.2,
+      "zinc": 1.3,
+      "fiber": 4.3,
+      "dha": 5
+    },
+    "trimesterSuitability": [
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-026",
+    "name": "小松菜とベーコンのソテー",
+    "description": "カルシウム・鉄分を手軽に補える5分おかず",
+    "cookTime": "5分",
+    "servings": 2,
+    "storageInfo": "冷蔵3日",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "小松菜",
+        "amount": "200g",
+        "grams": 200
+      },
+      {
+        "name": "ベーコン",
+        "amount": "2枚",
+        "grams": 30
+      },
+      {
+        "name": "にんにく",
+        "amount": "1/2片",
+        "grams": 3
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "grams": 1
+      },
+      {
+        "name": "オリーブオイル",
+        "amount": "小さじ1",
+        "grams": 4
+      }
+    ],
+    "steps": [
+      "小松菜を3cm幅に切る",
+      "ベーコンを1cm幅に切る",
+      "フライパンにオリーブオイルとにんにくを熱し、ベーコンを炒める",
+      "小松菜を加えてさっと炒め、塩で味を調える"
+    ],
+    "nutrientsPerServing": {
+      "calories": 65,
+      "protein": 4,
+      "fat": 4,
+      "carbohydrate": 3,
+      "iron": 2.8,
+      "calcium": 170,
+      "folate": 55,
+      "vitaminD": 0,
+      "vitaminB6": 0.15,
+      "vitaminB12": 0,
+      "zinc": 0.5,
+      "fiber": 2.5,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-027",
+    "name": "ツナと豆のマリネ",
+    "description": "タンパク質・鉄分・葉酸が摂れる洋風作り置き",
+    "cookTime": "10分",
+    "servings": 4,
+    "storageInfo": "冷蔵4日",
+    "tags": [
+      "作り置き",
+      "タンパク質",
+      "鉄分"
+    ],
+    "targetNutrients": [
+      "protein",
+      "iron",
+      "folate",
+      "vitaminB6",
+      "vitaminB12",
+      "dha"
+    ],
+    "ingredients": [
+      {
+        "name": "ツナ缶（水煮）",
+        "amount": "1缶",
+        "grams": 70
+      },
+      {
+        "name": "ミックスビーンズ",
+        "amount": "120g",
+        "grams": 120
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1/4個",
+        "grams": 50
+      },
+      {
+        "name": "パセリ",
+        "amount": "適量",
+        "grams": 5
+      },
+      {
+        "name": "オリーブオイル",
+        "amount": "大さじ1",
+        "grams": 12
+      },
+      {
+        "name": "酢",
+        "amount": "大さじ1",
+        "grams": 15
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "grams": 1
+      }
+    ],
+    "steps": [
+      "玉ねぎをみじん切りにして水にさらす",
+      "オリーブオイル・酢・塩でドレッシングを作る",
+      "ミックスビーンズ・ツナ・玉ねぎを合わせる",
+      "ドレッシングで和え、パセリを散らす"
+    ],
+    "nutrientsPerServing": {
+      "calories": 105,
+      "protein": 8,
+      "fat": 4,
+      "carbohydrate": 10,
+      "iron": 1.5,
+      "calcium": 25,
+      "folate": 45,
+      "vitaminD": 1.5,
+      "vitaminB6": 0.35,
+      "vitaminB12": 2.5,
+      "zinc": 0.4,
+      "fiber": 1,
+      "dha": 400
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-028",
+    "name": "高野豆腐のそぼろ",
+    "description": "カルシウム・タンパク質・鉄分豊富。ご飯にかけて丼にも",
+    "cookTime": "15分",
+    "servings": 4,
+    "storageInfo": "冷蔵5日 / 冷凍3週間",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "protein",
+      "iron"
+    ],
+    "ingredients": [
+      {
+        "name": "高野豆腐",
+        "amount": "3枚",
+        "grams": 48
+      },
+      {
+        "name": "にんじん",
+        "amount": "1/3本",
+        "grams": 50
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ2",
+        "grams": 36
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1.5",
+        "grams": 14
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "しょうが",
+        "amount": "1片",
+        "grams": 10
+      },
+      {
+        "name": "ごま油",
+        "amount": "小さじ1",
+        "grams": 4
+      }
+    ],
+    "steps": [
+      "高野豆腐を水で戻し、フードプロセッサーまたはおろし器で細かくする",
+      "にんじんをみじん切りにする",
+      "フライパンにごま油としょうがを熱し、にんじんを炒める",
+      "高野豆腐を加えて炒め、調味料を入れて水分がなくなるまで炒り煮する"
+    ],
+    "nutrientsPerServing": {
+      "calories": 90,
+      "protein": 7,
+      "fat": 4,
+      "carbohydrate": 7,
+      "iron": 1.5,
+      "calcium": 85,
+      "folate": 10,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 1.1,
+      "fiber": 2.3,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-029",
+    "name": "アボカドとサーモンのポキ風",
+    "description": "葉酸・タンパク質・良質な脂質が摂れるハワイ風おかず",
+    "cookTime": "10分",
+    "servings": 2,
+    "storageInfo": "冷蔵1日",
+    "tags": [
+      "葉酸",
+      "タンパク質"
+    ],
+    "targetNutrients": [
+      "folate",
+      "protein",
+      "vitaminD",
+      "vitaminB6",
+      "vitaminB12",
+      "dha"
+    ],
+    "ingredients": [
+      {
+        "name": "サーモン（刺身用）",
+        "amount": "150g",
+        "grams": 150
+      },
+      {
+        "name": "アボカド",
+        "amount": "1個",
+        "grams": 140
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1",
+        "grams": 18
+      },
+      {
+        "name": "ごま油",
+        "amount": "小さじ1",
+        "grams": 4
+      },
+      {
+        "name": "白ごま",
+        "amount": "小さじ1",
+        "grams": 3
+      }
+    ],
+    "steps": [
+      "サーモンを2cm角に切る",
+      "アボカドも同じ大きさに切る",
+      "しょうゆ・ごま油を混ぜてたれを作る",
+      "サーモンとアボカドをたれで和え、ごまを振る"
+    ],
+    "nutrientsPerServing": {
+      "calories": 250,
+      "protein": 19,
+      "fat": 17,
+      "carbohydrate": 5,
+      "iron": 1,
+      "calcium": 20,
+      "folate": 65,
+      "vitaminD": 8,
+      "vitaminB6": 0.4,
+      "vitaminB12": 3,
+      "zinc": 0.8,
+      "fiber": 3,
+      "dha": 250
+    },
+    "trimesterSuitability": [
+      "second",
+      "third"
+    ]
+  },
+  {
+    "recipeId": "recipe-030",
+    "name": "にんじんとくるみの白和え",
+    "description": "カルシウム・葉酸が摂れるやさしい味の副菜",
+    "cookTime": "15分",
+    "servings": 3,
+    "storageInfo": "冷蔵2日",
+    "tags": [
+      "作り置き",
+      "カルシウム",
+      "葉酸"
+    ],
+    "targetNutrients": [
+      "calcium",
+      "folate"
+    ],
+    "ingredients": [
+      {
+        "name": "にんじん",
+        "amount": "1本",
+        "grams": 150
+      },
+      {
+        "name": "木綿豆腐",
+        "amount": "1/2丁",
+        "grams": 150
+      },
+      {
+        "name": "くるみ",
+        "amount": "20g",
+        "grams": 20
+      },
+      {
+        "name": "すりごま",
+        "amount": "大さじ1",
+        "grams": 9
+      },
+      {
+        "name": "砂糖",
+        "amount": "小さじ2",
+        "grams": 6
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "小さじ1",
+        "grams": 6
+      }
+    ],
+    "steps": [
+      "豆腐を水切りし、なめらかになるまで潰す",
+      "にんじんを千切りにして茹でる",
+      "くるみを細かく砕く",
+      "豆腐にすりごま・砂糖・しょうゆを混ぜ、にんじんとくるみを和える"
+    ],
+    "nutrientsPerServing": {
+      "calories": 120,
+      "protein": 7,
+      "fat": 8,
+      "carbohydrate": 6,
+      "iron": 1.5,
+      "calcium": 105,
+      "folate": 35,
+      "vitaminD": 0,
+      "vitaminB6": 0.1,
+      "vitaminB12": 0,
+      "zinc": 1.1,
+      "fiber": 2.3,
+      "dha": 0
+    },
+    "trimesterSuitability": [
+      "first",
+      "second",
+      "third"
+    ]
+  }
+]

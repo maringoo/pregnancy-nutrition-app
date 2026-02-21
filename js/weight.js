@@ -92,7 +92,7 @@ function addWeightRecord() {
     const records = getWeightRecords();
     records.push(record);
     records.sort((a, b) => a.date.localeCompare(b.date));
-    localStorage.setItem('weightRecords', JSON.stringify(records));
+    safeSetItem('weightRecords', records);
 
     // フォームリセット
     valueInput.value = '';
@@ -102,6 +102,9 @@ function addWeightRecord() {
     // 表示更新
     displayWeightRecords();
     renderWeightChart();
+
+    // リマインダー再チェック
+    if (typeof checkAndRenderReminders === 'function') checkAndRenderReminders();
 }
 
 // ===== 体重記録を取得 =====
@@ -115,7 +118,7 @@ function deleteWeightRecord(id) {
 
     let records = getWeightRecords();
     records = records.filter(r => r.id !== id);
-    localStorage.setItem('weightRecords', JSON.stringify(records));
+    safeSetItem('weightRecords', records);
 
     // 編集中の記録が削除された場合はキャンセル
     if (editingWeightId === id) {
@@ -188,7 +191,7 @@ function saveWeightEdit() {
     records[index].memo = memo;
 
     records.sort((a, b) => a.date.localeCompare(b.date));
-    localStorage.setItem('weightRecords', JSON.stringify(records));
+    safeSetItem('weightRecords', records);
 
     // 編集モードを解除
     cancelWeightEdit();
@@ -248,9 +251,16 @@ function displayWeightRecords() {
             changeHtml = `<span class="weight-record-change ${cls}">${sign}${diff.toFixed(1)}kg</span>`;
         }
 
-        // 妊娠週数を計算
+        // 妊娠週数 or 産後日数を計算
         let weekHtml = '';
-        if (profile.pregnancyStartDate) {
+        if (profile.mode === 'postpartum' && profile.birthDate) {
+            const birth = new Date(profile.birthDate);
+            const recDate = new Date(record.date);
+            const diffDays = Math.floor((recDate - birth) / (1000 * 60 * 60 * 24));
+            if (diffDays >= 0) {
+                weekHtml = `<span class="weight-record-week">産後${diffDays}日目</span>`;
+            }
+        } else if (profile.pregnancyStartDate) {
             const week = getPregnancyWeek(profile.pregnancyStartDate, new Date(record.date));
             if (week !== null) {
                 weekHtml = `<span class="weight-record-week">妊娠${week}週</span>`;
@@ -273,8 +283,8 @@ function displayWeightRecords() {
                     ${memoHtml}
                 </div>
                 <div class="weight-record-actions">
-                    <button class="btn btn-small btn-edit" onclick="startWeightEdit('${record.id}')">編集</button>
-                    <button class="btn btn-small btn-delete" onclick="deleteWeightRecord('${record.id}')">削除</button>
+                    <button class="btn btn-small btn-outline-sm" onclick="startWeightEdit('${record.id}')">編集</button>
+                    <button class="btn-delete-sm" onclick="deleteWeightRecord('${record.id}')">&times;</button>
                 </div>
             </div>
         `;
@@ -354,11 +364,12 @@ function renderWeightChart() {
     const records = getWeightRecords();
     const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     const notice = document.getElementById('weightChartNotice');
-    const hasProfile = profile.pregnancyStartDate && profile.prePregnancyWeight && profile.height;
+    const isPostpartum = profile.mode === 'postpartum';
+    const hasProfile = profile.pregnancyStartDate && profile.prePregnancyWeight && profile.height && !isPostpartum;
 
-    // プロフィール未設定の通知
+    // プロフィール未設定の通知（産後モードでは非表示）
     if (notice) {
-        notice.classList.toggle('hidden', !!hasProfile);
+        notice.classList.toggle('hidden', !!hasProfile || isPostpartum);
     }
 
     // 既存のチャートを破棄
@@ -517,6 +528,24 @@ function renderWeightChart() {
         });
     }
 
+    // 2.5) 体重予測ライン (B6) — 産後モードでは非表示
+    if (hasProfile && !isPostpartum && records.length >= 2) {
+        const projectionData = getProjectionLineData(timelinePoints, profile, records);
+        if (projectionData) {
+            datasets.push({
+                label: '予測ライン',
+                data: projectionData,
+                borderColor: 'rgba(233, 30, 99, 0.5)',
+                borderWidth: 2,
+                borderDash: [8, 4],
+                pointRadius: 0,
+                fill: false,
+                spanGaps: false,
+                yAxisID: 'y'
+            });
+        }
+    }
+
     // 3) 日別摂取カロリー
     const firstDate = timelinePoints[0].date;
     const lastDate = timelinePoints[timelinePoints.length - 1].date;
@@ -636,5 +665,80 @@ function renderWeightChart() {
             },
             scales: scales
         }
+    });
+}
+
+// ============================================================
+// B6: 体重増加ペース予測
+// ============================================================
+
+function calculateWeeklyGainRate(records, weeksToConsider) {
+    weeksToConsider = weeksToConsider || 4;
+    if (records.length < 2) return null;
+
+    const sorted = [...records].sort((a, b) => a.date.localeCompare(b.date));
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - weeksToConsider * 7);
+    const cutoffStr = cutoff.toISOString().split('T')[0];
+
+    const recent = sorted.filter(r => r.date >= cutoffStr);
+    if (recent.length < 2) {
+        // Fallback to all records
+        const first = sorted[0];
+        const last = sorted[sorted.length - 1];
+        const daysDiff = (new Date(last.date) - new Date(first.date)) / (1000 * 60 * 60 * 24);
+        if (daysDiff < 1) return null;
+        return (last.weight - first.weight) / (daysDiff / 7);
+    }
+
+    const first = recent[0];
+    const last = recent[recent.length - 1];
+    const daysDiff = (new Date(last.date) - new Date(first.date)) / (1000 * 60 * 60 * 24);
+    if (daysDiff < 1) return null;
+    return (last.weight - first.weight) / (daysDiff / 7);
+}
+
+function projectFinalWeight(profile, records) {
+    if (!profile.pregnancyStartDate || !profile.prePregnancyWeight || records.length < 2) return null;
+
+    const sorted = [...records].sort((a, b) => a.date.localeCompare(b.date));
+    const currentWeight = sorted[sorted.length - 1].weight;
+    const currentWeek = getPregnancyWeek(profile.pregnancyStartDate);
+    if (currentWeek === null || currentWeek >= 40) return null;
+
+    const weeklyRate = calculateWeeklyGainRate(records);
+    if (weeklyRate === null) return null;
+
+    const remainingWeeks = 40 - currentWeek;
+    const projectedFinalWeight = currentWeight + (weeklyRate * remainingWeeks);
+    const totalGain = projectedFinalWeight - profile.prePregnancyWeight;
+
+    return {
+        currentWeight,
+        weeklyRate,
+        projectedFinalWeight,
+        totalGain,
+        remainingWeeks
+    };
+}
+
+function getProjectionLineData(timelinePoints, profile, records) {
+    if (!profile.pregnancyStartDate || !profile.prePregnancyWeight || records.length < 2) return null;
+
+    const projection = projectFinalWeight(profile, records);
+    if (!projection) return null;
+
+    const sorted = [...records].sort((a, b) => a.date.localeCompare(b.date));
+    const lastRecord = sorted[sorted.length - 1];
+    const lastRecordDate = new Date(lastRecord.date);
+
+    return timelinePoints.map(p => {
+        const pDate = new Date(p.date);
+        if (pDate < lastRecordDate) return null;
+
+        const daysDiff = (pDate - lastRecordDate) / (1000 * 60 * 60 * 24);
+        const weeksDiff = daysDiff / 7;
+        const projected = projection.currentWeight + (projection.weeklyRate * weeksDiff);
+        return Math.round(projected * 10) / 10;
     });
 }

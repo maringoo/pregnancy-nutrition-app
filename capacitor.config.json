@@ -1,0 +1,21 @@
+{
+  "appId": "com.mamori.app",
+  "appName": "mamori",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "preferredContentMode": "mobile",
+    "scheme": "mamori"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "Light",
+      "backgroundColor": "#D4708F"
+    },
+    "Share": {},
+    "Clipboard": {}
+  }
+}

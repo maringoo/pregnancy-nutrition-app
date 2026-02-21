@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4708F"/>
+      <stop offset="100%" style="stop-color:#C4607F"/>
+    </linearGradient>
+  </defs>
+  <!-- 背景 -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- 湯気（S字カーブ） -->
+  <path d="M200 205 C195 190 210 182 205 165 C200 148 215 140 210 125"
+    stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M256 195 C251 178 266 170 261 152 C256 135 271 128 266 112"
+    stroke="rgba(255,255,255,0.5)" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M312 205 C307 190 322 182 317 165 C312 148 327 140 322 125"
+    stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- ボウル本体 -->
+  <path d="M128 230
+    Q128 245 140 280
+    Q165 340 256 345
+    Q347 340 372 280
+    Q384 245 384 230Z"
+    fill="rgba(255,255,255,0.85)"/>
+
+  <!-- ボウルのリム -->
+  <path d="M120 222 Q120 240 256 240 Q392 240 392 222 Q392 212 256 212 Q120 212 120 222Z"
+    fill="rgba(255,255,255,0.97)"/>
+
+  <!-- 双葉の芽（ボウルの中、白背景の上） -->
+  <!-- 茎 -->
+  <path d="M285 310 C295 298 310 275 312 256"
+    stroke="#5AB87A" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+  <!-- 左の丸葉 -->
+  <ellipse cx="300" cy="250" rx="16" ry="12"
+    transform="rotate(-15 300 250)"
+    fill="#5AB87A"/>
+
+  <!-- 右の丸葉 -->
+  <ellipse cx="326" cy="247" rx="16" ry="12"
+    transform="rotate(40 326 247)"
+    fill="#6BC98B"/>
+
+  <!-- mamori テキスト -->
+  <text x="256" y="430" text-anchor="middle"
+    font-family="'Helvetica Neue', Arial, sans-serif"
+    font-size="62" font-weight="700" letter-spacing="4"
+    fill="rgba(255,255,255,0.95)">mamori</text>
+</svg>

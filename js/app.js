@@ -5,13 +5,19 @@
 
 // ===== 栄養素の推奨量（動的に妊娠期に応じて更新） =====
 let NUTRIENT_RECOMMENDATIONS = {
-    calories: { label: 'カロリー', recommended: 2250, unit: 'kcal' },
-    protein: { label: 'タンパク質', recommended: 55, unit: 'g' },
-    fat: { label: '脂質', recommended: 55, unit: 'g' },
-    carbohydrate: { label: '炭水化物', recommended: 300, unit: 'g' },
-    iron: { label: '鉄', recommended: 21, unit: 'mg' },
-    calcium: { label: 'カルシウム', recommended: 650, unit: 'mg' },
-    folate: { label: '葉酸', recommended: 480, unit: 'μg' }
+    calories: { label: 'カロリー', recommended: 2250, unit: 'kcal', group: 'macro' },
+    protein: { label: 'タンパク質', recommended: 55, unit: 'g', group: 'macro' },
+    fat: { label: '脂質', recommended: 55, unit: 'g', group: 'macro' },
+    carbohydrate: { label: '炭水化物', recommended: 300, unit: 'g', group: 'macro' },
+    iron: { label: '鉄', recommended: 21, unit: 'mg', group: 'mineral' },
+    calcium: { label: 'カルシウム', recommended: 650, unit: 'mg', group: 'mineral' },
+    zinc: { label: '亜鉛', recommended: 10, unit: 'mg', group: 'mineral' },
+    folate: { label: '葉酸', recommended: 480, unit: 'μg', group: 'vitamin' },
+    vitaminD: { label: 'ビタミンD', recommended: 8.5, unit: 'μg', group: 'vitamin' },
+    vitaminB6: { label: 'ビタミンB6', recommended: 1.4, unit: 'mg', group: 'vitamin' },
+    vitaminB12: { label: 'ビタミンB12', recommended: 2.8, unit: 'μg', group: 'vitamin' },
+    fiber: { label: '食物繊維', recommended: 18, unit: 'g', group: 'other' },
+    dha: { label: 'DHA', recommended: 1000, unit: 'mg', group: 'other' }
 };
 
 // 栄養素基準データ（nutrients.jsonから読み込み）
@@ -22,9 +28,21 @@ let foodMasterData = [];  // 食品マスタデータ
 let currentMealType = 'breakfast';  // 現在選択している食事タイプ
 let selectedFood = null;  // 選択されている食品
 let currentMealDate = null;  // 現在表示中の食事記録日付（YYYY-MM-DD）
+let pendingMeals = [];  // 一括追加用の仮リスト
 
 // ===== 初期化処理 =====
 document.addEventListener('DOMContentLoaded', () => {
+    // オンボーディングチェック
+    if (typeof checkOnboarding === 'function') checkOnboarding();
+
+    // 旧APIキーの移行（claudeApiKey → aiApiKey_claude）
+    const oldKey = localStorage.getItem('claudeApiKey');
+    if (oldKey && !localStorage.getItem('aiApiKey_claude')) {
+        localStorage.setItem('aiApiKey_claude', oldKey);
+        localStorage.setItem('aiProvider', 'claude');
+        localStorage.removeItem('claudeApiKey');
+    }
+
     // 日付を表示
     updateTodayDate();
 
@@ -36,10 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavTabs();
 
     // 栄養素基準データを読み込み、推奨量を動的に設定
-    loadNutrientsData();
+    const nutrientsP = loadNutrientsData();
 
     // 食品マスタデータを読み込み
-    loadFoodMaster();
+    const foodsP = loadFoodMaster();
 
     // イベントリスナーを登録
     setupEventListeners();
@@ -57,11 +75,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // オリジナル食品一覧を表示
     displayCustomFoods();
 
-    // 提案セクションを描画
-    renderSuggestionSection();
+    // レシピデータを読み込み
+    const recipesP = loadRecipeData();
+
+    // 全データ読み込み完了後に提案セクションを描画
+    Promise.all([nutrientsP, foodsP, recipesP]).then(() => {
+        renderSuggestionSection();
+    });
 
     // 体重管理モジュールを初期化
     initWeightModule();
+
+    // データバックアップ機能を初期化
+    setupBackupEvents();
+
+    // 水分記録を初期化
+    initWaterTracker();
+
+    // ストリーク＆栄養スコアを更新
+    updateStreak();
+    updateNutritionScore();
+
+    // テーマカラー初期化
+    initThemePicker();
+
+    // B7: つわり対応モード初期化
+    initMorningSicknessMode();
+
+    // 産後モード初期化
+    initPostpartumMode();
+
+    // B5: 食事タブの週数アドバイスヒント
+    renderMealTabAdviceTip();
+
+    // リマインダー初期化
+    if (typeof initReminders === 'function') initReminders();
 });
 
 // ===== 日付表示の更新 =====
@@ -76,7 +124,7 @@ function updateTodayDate() {
 function loadFoodMaster() {
     // fetch で foods.json を読み込む
     // もし foods.json が見つからない場合は、サンプルデータを使用
-    fetch('data/foods.json')
+    return fetch('data/foods.json')
         .then(response => {
             if (!response.ok) {
                 console.warn('foods.json が見つかりません。サンプルデータを使用します。');
@@ -111,6 +159,7 @@ function useSampleFoodData() {
             iron: 0.1,
             calcium: 3,
             folate: 3,
+            vitaminD: 0, vitaminB6: 0.02, vitaminB12: 0, zinc: 0.6, fiber: 0.3, dha: 0,
             category: 'grain'
         },
         {
@@ -123,6 +172,7 @@ function useSampleFoodData() {
             iron: 1.8,
             calcium: 51,
             folate: 44,
+            vitaminD: 1.8, vitaminB6: 0.08, vitaminB12: 0.9, zinc: 1.3, fiber: 0, dha: 120,
             category: 'protein'
         },
         {
@@ -135,6 +185,7 @@ function useSampleFoodData() {
             iron: 2.0,
             calcium: 49,
             folate: 110,
+            vitaminD: 0, vitaminB6: 0.08, vitaminB12: 0, zinc: 0.7, fiber: 3.6, dha: 0,
             category: 'vegetable'
         },
         {
@@ -147,6 +198,7 @@ function useSampleFoodData() {
             iron: 0.0,
             calcium: 110,
             folate: 5,
+            vitaminD: 0.3, vitaminB6: 0.03, vitaminB12: 0.3, zinc: 0.4, fiber: 0, dha: 0,
             category: 'dairy'
         },
         {
@@ -159,6 +211,7 @@ function useSampleFoodData() {
             iron: 0.2,
             calcium: 7,
             folate: 20,
+            vitaminD: 0, vitaminB6: 0.08, vitaminB12: 0, zinc: 0.1, fiber: 1.0, dha: 0,
             category: 'vegetable'
         },
         {
@@ -171,6 +224,7 @@ function useSampleFoodData() {
             iron: 0.8,
             calcium: 12,
             folate: 8,
+            vitaminD: 32.0, vitaminB6: 0.64, vitaminB12: 9.4, zinc: 0.5, fiber: 0, dha: 820,
             category: 'protein'
         },
         {
@@ -183,6 +237,7 @@ function useSampleFoodData() {
             iron: 0.8,
             calcium: 38,
             folate: 120,
+            vitaminD: 0, vitaminB6: 0.27, vitaminB12: 0, zinc: 0.7, fiber: 4.4, dha: 0,
             category: 'vegetable'
         },
         {
@@ -195,6 +250,7 @@ function useSampleFoodData() {
             iron: 0.3,
             calcium: 6,
             folate: 19,
+            vitaminD: 0, vitaminB6: 0.38, vitaminB12: 0, zinc: 0.2, fiber: 1.1, dha: 0,
             category: 'fruit'
         },
         {
@@ -207,6 +263,7 @@ function useSampleFoodData() {
             iron: 0.2,
             calcium: 630,
             folate: 9,
+            vitaminD: 0.5, vitaminB6: 0.04, vitaminB12: 1.5, zinc: 3.2, fiber: 0, dha: 0,
             category: 'dairy'
         },
         {
@@ -219,6 +276,7 @@ function useSampleFoodData() {
             iron: 0.8,
             calcium: 11,
             folate: 9,
+            vitaminD: 0.1, vitaminB6: 0.54, vitaminB12: 0.2, zinc: 0.7, fiber: 0, dha: 10,
             category: 'protein'
         }
     ];
@@ -233,14 +291,42 @@ function setupEventListeners() {
             document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
             e.target.classList.add('active');
             currentMealType = e.target.dataset.type;
+            updateMealFormPanelTitle();
         });
     });
 
-    // 食品検索（1文字以上で検索開始）
+    // FABボタン
+    document.getElementById('mealFab').addEventListener('click', () => {
+        openMealFormPanel();
+    });
+
+    // フォームパネル閉じるボタン
+    document.getElementById('closeMealFormPanel').addEventListener('click', () => {
+        if (pendingMeals.length > 0) {
+            if (confirm(`${pendingMeals.length}品が未確定です。確定してから閉じますか？`)) {
+                confirmPendingMeals();
+            } else {
+                pendingMeals = [];
+                renderPendingMeals();
+                closeMealFormPanel();
+            }
+        } else {
+            closeMealFormPanel();
+        }
+    });
+
+    // 一括確定ボタン
+    document.getElementById('confirmPendingMeals').addEventListener('click', () => {
+        confirmPendingMeals();
+    });
+
+    // 食品検索（デバウンス付き、1文字以上で検索開始）
+    let foodSearchTimer = null;
     document.getElementById('foodSearch').addEventListener('input', (e) => {
         const searchTerm = e.target.value.trim();
+        clearTimeout(foodSearchTimer);
         if (searchTerm.length >= 1) {
-            showFoodSuggestions(searchTerm);
+            foodSearchTimer = setTimeout(() => showFoodSuggestions(searchTerm), 150);
         } else {
             hideFoodSuggestions();
         }
@@ -256,6 +342,9 @@ function setupEventListeners() {
     document.getElementById('clearFoodBtn').addEventListener('click', () => {
         clearSelectedFood();
     });
+
+    // 一括確定ボタン
+    document.getElementById('confirmAllMealsBtn').addEventListener('click', confirmAllMeals);
 
     // リセットボタン
     document.getElementById('resetButton').addEventListener('click', () => {
@@ -285,6 +374,10 @@ function setupEventListeners() {
     document.getElementById('openCustomFoodBtn').addEventListener('click', () => {
         openCustomFoodModal();
     });
+    // フォーム内のオリジナル食品登録リンク
+    document.getElementById('openCustomFoodFromForm').addEventListener('click', () => {
+        openCustomFoodModal();
+    });
     document.getElementById('closeModalBtn').addEventListener('click', () => {
         document.getElementById('customFoodModal').classList.add('hidden');
     });
@@ -305,11 +398,13 @@ function setupEventListeners() {
         });
     });
 
-    // 類似食品検索（lookupモード）
+    // 類似食品検索（lookupモード、デバウンス付き）
+    let lookupTimer = null;
     document.getElementById('lookupSearch').addEventListener('input', (e) => {
         const term = e.target.value.trim();
+        clearTimeout(lookupTimer);
         if (term.length >= 1) {
-            showLookupSuggestions(term);
+            lookupTimer = setTimeout(() => showLookupSuggestions(term), 150);
         } else {
             document.getElementById('lookupSuggestions').classList.add('hidden');
         }
@@ -320,11 +415,13 @@ function setupEventListeners() {
         applyLookupNutrients();
     });
 
-    // レシピモード: 食材検索
+    // レシピモード: 食材検索（デバウンス付き）
+    let recipeSearchTimer = null;
     document.getElementById('recipeAddSearch').addEventListener('input', (e) => {
         const term = e.target.value.trim();
+        clearTimeout(recipeSearchTimer);
         if (term.length >= 1) {
-            showRecipeAddSuggestions(term);
+            recipeSearchTimer = setTimeout(() => showRecipeAddSuggestions(term), 150);
         } else {
             document.getElementById('recipeAddSuggestions').classList.add('hidden');
         }
@@ -350,23 +447,43 @@ function setupEventListeners() {
         applyPasteResult();
     });
 
+    // API設定: プロバイダー選択
+    const providerSelect = document.getElementById('aiProviderSelect');
+    const savedProvider = localStorage.getItem('aiProvider') || 'claude';
+    providerSelect.value = savedProvider;
+    updateAiApiKeyHint();
+
+    providerSelect.addEventListener('change', () => {
+        localStorage.setItem('aiProvider', providerSelect.value);
+        updateAiApiKeyHint();
+        updateApiKeyStatus();
+    });
+
     // API設定: 保存
     document.getElementById('saveApiKeyBtn').addEventListener('click', () => {
-        const key = document.getElementById('claudeApiKeyInput').value.trim();
+        const key = document.getElementById('aiApiKeyInput').value.trim();
         if (!key) {
             alert('APIキーを入力してください');
             return;
         }
-        localStorage.setItem('claudeApiKey', key);
-        document.getElementById('claudeApiKeyInput').value = '';
+        const provider = document.getElementById('aiProviderSelect').value;
+        localStorage.setItem('aiProvider', provider);
+        localStorage.setItem('aiApiKey_' + provider, key);
+        document.getElementById('aiApiKeyInput').value = '';
         updateApiKeyStatus();
     });
 
     // API設定: 削除
     document.getElementById('deleteApiKeyBtn').addEventListener('click', () => {
-        localStorage.removeItem('claudeApiKey');
-        document.getElementById('claudeApiKeyInput').value = '';
+        const provider = document.getElementById('aiProviderSelect').value;
+        localStorage.removeItem('aiApiKey_' + provider);
+        document.getElementById('aiApiKeyInput').value = '';
         updateApiKeyStatus();
+    });
+
+    // API設定: 接続テスト
+    document.getElementById('testApiKeyBtn').addEventListener('click', () => {
+        testApiConnection();
     });
 
     // API設定: 初期表示
@@ -655,62 +772,111 @@ function addMeal() {
 
     const targetDate = currentMealDate || getTodayString();
 
-    // localStorageからデータを取得
-    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
-    if (!allRecords[targetDate]) {
-        allRecords[targetDate] = { meals: [] };
-    }
-
     // 栄養素を計算（料理で食材が編集されている場合は食材ベースで計算）
     let nutrients;
     let savedIngredients = null;
 
     if (editableIngredients.length > 0) {
-        // 食材ベースの栄養計算
         nutrients = calculateNutrientsFromIngredients(editableIngredients, quantityInput);
         savedIngredients = editableIngredients.map(ing => ({ name: ing.name, amount: ing.amount }));
     } else {
         nutrients = calculateNutrients(selectedFood, quantityInGrams);
     }
 
-    // 新しい食事項目を作成
+    // 仮リストに追加
     const mealItem = {
         id: generateUUID(),
         mealType: currentMealType,
         foodId: selectedFood.foodId,
         foodName: selectedFood.name,
         quantity: quantityInGrams,
-        displayQuantity: quantityInput,  // 表示用の数量
-        displayUnit: unitLabel,          // 表示用の単位
+        displayQuantity: quantityInput,
+        displayUnit: unitLabel,
         nutrients: nutrients,
-        ingredients: savedIngredients,   // 編集後の食材構成を保存
+        ingredients: savedIngredients,
         createdAt: new Date().toISOString(),
-        planned: isFutureDate(targetDate)  // 未来日は予定として記録
+        planned: isFutureDate(targetDate)
     };
 
-    // 配列に追加
-    allRecords[targetDate].meals.push(mealItem);
-
-    // localStorageに保存
-    localStorage.setItem('mealRecords', JSON.stringify(allRecords));
-
-    // 履歴に追加
-    addToHistory(mealItem);
+    pendingMeals.push(mealItem);
 
     // 食品名を保持してからフォームをリセット
     const addedFoodName = selectedFood.name;
-
-    // フォームをリセット
     resetForm();
 
-    // 表示を更新
+    // 仮リストの表示を更新
+    renderPendingMeals();
+    showToast(`${addedFoodName} をリストに追加`);
+}
+
+function renderPendingMeals() {
+    const section = document.getElementById('pendingMealsSection');
+    const list = document.getElementById('pendingMealsList');
+    const count = document.getElementById('pendingMealsCount');
+    const confirmBtn = document.getElementById('confirmPendingMeals');
+    if (!section || !list) return;
+
+    if (pendingMeals.length === 0) {
+        section.classList.add('hidden');
+        if (confirmBtn) confirmBtn.classList.add('hidden');
+        return;
+    }
+
+    section.classList.remove('hidden');
+    if (confirmBtn) confirmBtn.classList.remove('hidden');
+    if (count) count.textContent = pendingMeals.length;
+
+    list.innerHTML = pendingMeals.map((item, idx) => `
+        <div class="pending-meal-item">
+            <div class="pending-meal-info">
+                <span class="pending-meal-name">${item.foodName}</span>
+                <span class="pending-meal-qty">${item.displayQuantity}${item.displayUnit} (${Math.round(item.nutrients.calories)}kcal)</span>
+            </div>
+            <button type="button" class="pending-meal-remove" data-idx="${idx}">&times;</button>
+        </div>
+    `).join('');
+
+    list.querySelectorAll('.pending-meal-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+            pendingMeals.splice(parseInt(btn.dataset.idx), 1);
+            renderPendingMeals();
+        });
+    });
+}
+
+function confirmPendingMeals() {
+    if (pendingMeals.length === 0) return;
+
+    const targetDate = currentMealDate || getTodayString();
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    if (!allRecords[targetDate]) {
+        allRecords[targetDate] = { meals: [] };
+    }
+
+    pendingMeals.forEach(item => {
+        allRecords[targetDate].meals.push(item);
+        addToHistory(item);
+    });
+
+    safeSetItem('mealRecords', allRecords);
+
+    const addedCount = pendingMeals.length;
+    pendingMeals = [];
+    renderPendingMeals();
+    resetForm();
+
     displayMeals();
     displayMealHistory(currentMealType);
     updateNutrientsSummary();
     renderSuggestionSection();
+    closeMealFormPanel();
+    updateStreak();
+    updateNutritionScore();
 
-    // トースト通知
-    showToast(`${addedFoodName} を追加しました`);
+    showToast(`${addedCount}品を追加しました`);
+
+    // リマインダー再チェック
+    if (typeof checkAndRenderReminders === 'function') checkAndRenderReminders();
 }
 
 // ===== バリデーション =====
@@ -740,7 +906,7 @@ function validateMealInput() {
 // ===== 食材リストから栄養素を合計計算 =====
 function calculateNutrientsFromIngredients(ingredients, servings) {
     // 各食材の量をパースしてグラム数を取得し、食品マスタから栄養素を計算
-    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0 };
+    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
 
     ingredients.forEach(ing => {
         // 量から数値を抽出（例: "250g" → 250、"60g" → 60）
@@ -769,23 +935,13 @@ function calculateNutrientsFromIngredients(ingredients, servings) {
     return totals;
 }
 
-// ===== 食事一覧を表示 =====
+// ===== 食事一覧を表示（ダイアリー形式） =====
 function displayMeals() {
     const targetDate = currentMealDate || getTodayString();
     const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
     const todayMeals = allRecords[targetDate]?.meals || [];
 
-    const mealsList = document.getElementById('mealsList');
-    const emptyMessage = document.getElementById('emptyMealsMessage');
-
-    // 食事がない場合
-    if (todayMeals.length === 0) {
-        mealsList.innerHTML = '';
-        emptyMessage.classList.remove('hidden');
-        return;
-    }
-
-    emptyMessage.classList.add('hidden');
+    const diaryContainer = document.getElementById('mealDiary');
 
     // 食事タイプごとにグループ化
     const groupedMeals = {
@@ -799,8 +955,6 @@ function displayMeals() {
         groupedMeals[meal.mealType].push(meal);
     });
 
-    // HTMLを生成
-    let html = '';
     const mealTypeLabels = {
         breakfast: '朝食',
         lunch: '昼食',
@@ -808,74 +962,145 @@ function displayMeals() {
         snack: '間食'
     };
 
-    const mealTypeColors = {
-        breakfast: '#FFB6C1',
-        lunch: '#FFB6C1',
-        dinner: '#FFB6C1',
-        snack: '#A5D6A7'
+    const mealTypeIcons = {
+        breakfast: '<svg class="meal-type-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 8h3M17 8h3M12 2v2M6.3 3.8l1.4 1.4M17.7 3.8l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 18h16M6 18v2M18 18v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        lunch: '<svg class="meal-type-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        dinner: '<svg class="meal-type-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        snack: '<svg class="meal-type-svg" viewBox="0 0 24 24"><path d="M12 3C8 3 5 6 5 10c0 3 2 5 4 6v2h6v-2c2-1 4-3 4-6 0-4-3-7-7-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18h6M10 21h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
     };
 
+    // 各タイプのカロリー小計を計算（確定/予定を分離）
+    const mealTypeCalories = {};
+    const mealTypePlannedCal = {};
     Object.keys(groupedMeals).forEach(type => {
-        if (groupedMeals[type].length > 0) {
-            html += `
-                <div class="meal-group" style="border-left-color: ${mealTypeColors[type]}">
-                    <h3 class="meal-group-title">${mealTypeLabels[type]}</h3>
-            `;
+        mealTypeCalories[type] = groupedMeals[type].reduce((sum, m) => sum + (m.nutrients.calories || 0), 0);
+        mealTypePlannedCal[type] = groupedMeals[type]
+            .filter(m => m.planned === true)
+            .reduce((sum, m) => sum + (m.nutrients.calories || 0), 0);
+    });
 
-            groupedMeals[type].forEach(meal => {
-                const time = new Date(meal.createdAt).toLocaleTimeString('ja-JP', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+    let html = '';
 
-                // 表示用の数量と単位を使用（displayQuantity, displayUnitが存在する場合）
+    Object.keys(groupedMeals).forEach(type => {
+        const meals = groupedMeals[type];
+        const cal = mealTypeCalories[type];
+        const plannedCal = mealTypePlannedCal[type];
+
+        // セクションの開閉状態を復元（デフォルト:開）
+        const collapsed = getDiarySectionCollapsed(type);
+
+        // カロリー表示（予定分があれば内訳表示）
+        let calDisplay = '';
+        if (cal > 0) {
+            if (plannedCal > 0 && plannedCal < cal) {
+                calDisplay = `<span class="diary-section-cal">${Math.round(cal)} kcal <span class="diary-cal-planned">(うち${Math.round(plannedCal)}予定)</span></span>`;
+            } else if (plannedCal > 0 && plannedCal === cal) {
+                calDisplay = `<span class="diary-section-cal diary-cal-all-planned">${Math.round(cal)} kcal (予定)</span>`;
+            } else {
+                calDisplay = `<span class="diary-section-cal">${Math.round(cal)} kcal</span>`;
+            }
+        }
+
+        html += `
+            <div class="diary-section${collapsed ? ' collapsed' : ''}" data-meal-type="${type}">
+                <div class="diary-section-header" role="button" tabindex="0" aria-expanded="${!collapsed}">
+                    <div class="diary-section-title">
+                        <span class="diary-section-icon">${mealTypeIcons[type]}</span>
+                        <span class="diary-section-label">${mealTypeLabels[type]}</span>
+                        ${calDisplay}
+                    </div>
+                    <div class="diary-section-actions">
+                        <button type="button" class="btn-copy-meals" data-type="${type}" title="前の日からコピー"><svg class="copy-icon-svg" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+                        <button type="button" class="diary-add-btn" data-type="${type}" aria-label="${mealTypeLabels[type]}を追加">+</button>
+                        <span class="diary-chevron"></span>
+                    </div>
+                </div>
+                <div class="diary-section-items">
+        `;
+
+        if (meals.length === 0) {
+            html += `<p class="diary-empty-hint">タップして${mealTypeLabels[type]}を追加</p>`;
+        } else {
+            meals.forEach(meal => {
                 const displayQuantity = meal.displayQuantity !== undefined ? meal.displayQuantity : meal.quantity;
                 const displayUnit = meal.displayUnit || 'g';
 
-                // 予定/確定バッジ
                 const isPlanned = meal.planned === true;
                 const plannedClass = isPlanned ? ' planned' : '';
                 let statusBadge = '';
                 if (isPlanned) {
                     statusBadge = '<span class="meal-planned-badge">予定</span>';
                 } else if (meal.planned === false && isFutureDate(targetDate)) {
-                    // 未来日だが確定済み（planned が明示的に false）
                     statusBadge = '<span class="meal-confirmed-badge">確定</span>';
                 }
 
-                // 予定の場合は確定ボタンを表示
                 const confirmBtn = isPlanned
-                    ? `<button class="btn-confirm" data-meal-id="${meal.id}">確定</button>`
+                    ? `<button class="btn-confirm-sm" data-meal-id="${meal.id}">確定</button>`
                     : '';
 
+                const favClass = isFavorite(meal.foodId) ? ' is-favorite' : '';
                 html += `
-                    <div class="meal-item${plannedClass}">
+                    <div class="meal-item-compact${plannedClass}">
                         <div class="meal-item-info">
-                            <p class="meal-item-name">${meal.foodName} ${statusBadge}</p>
-                            <p class="meal-item-quantity">摂取量: ${displayQuantity}${displayUnit}</p>
-                            <p class="meal-item-nutrients">
-                                <span>カロリー: ${meal.nutrients.calories}kcal</span>
-                                <span>タンパク質: ${meal.nutrients.protein}g</span>
-                            </p>
-                            ${meal.ingredients ? `<details class="meal-item-ingredients"><summary>食材構成</summary><ul>${meal.ingredients.map(i => `<li>${i.name}: ${i.amount}</li>`).join('')}</ul></details>` : ''}
-                            <p style="font-size: 0.8rem; color: #999; margin-top: 0.3rem;">${time}</p>
+                            <button class="btn-fav-star${favClass}" data-food-id="${meal.foodId}" data-food-name="${meal.foodName}" data-qty="${displayQuantity}" data-unit="${displayUnit}">★</button>
+                            <span class="meal-item-name-inline">${meal.foodName}</span>
+                            ${statusBadge}
+                            <span class="meal-item-meta">${displayQuantity}${displayUnit} / ${meal.nutrients.calories}kcal</span>
                         </div>
-                        <div class="meal-item-delete">
+                        <div class="meal-item-actions">
                             ${confirmBtn}
-                            <button class="btn-delete" data-meal-id="${meal.id}">削除</button>
+                            <button class="btn-delete-sm" data-meal-id="${meal.id}">&times;</button>
                         </div>
                     </div>
                 `;
             });
-
-            html += '</div>';
         }
+
+        html += `
+                </div>
+            </div>
+        `;
     });
 
-    mealsList.innerHTML = html;
+    diaryContainer.innerHTML = html;
+
+    // ダイアリーセクションの「+」ボタンイベント
+    diaryContainer.querySelectorAll('.diary-add-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const type = e.target.dataset.type;
+            openMealFormPanel(type);
+        });
+    });
+
+    // 空ヒントタップでもフォームを開く
+    diaryContainer.querySelectorAll('.diary-empty-hint').forEach(hint => {
+        hint.addEventListener('click', () => {
+            const type = hint.closest('.diary-section').dataset.mealType;
+            openMealFormPanel(type);
+        });
+    });
+
+    // セクションヘッダーの開閉トグル
+    diaryContainer.querySelectorAll('.diary-section-header').forEach(header => {
+        const toggleSection = (e) => {
+            if (e.target.closest('.diary-add-btn') || e.target.closest('.btn-copy-meals')) return;
+            const section = header.closest('.diary-section');
+            const type = section.dataset.mealType;
+            section.classList.toggle('collapsed');
+            header.setAttribute('aria-expanded', !section.classList.contains('collapsed'));
+            setDiarySectionCollapsed(type, section.classList.contains('collapsed'));
+        };
+        header.addEventListener('click', toggleSection);
+        header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleSection(e);
+            }
+        });
+    });
 
     // 削除ボタンのイベントリスナー
-    mealsList.querySelectorAll('.btn-delete').forEach(btn => {
+    diaryContainer.querySelectorAll('.btn-delete-sm').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const mealId = e.target.dataset.mealId;
             deleteMeal(mealId);
@@ -883,12 +1108,82 @@ function displayMeals() {
     });
 
     // 確定ボタンのイベントリスナー
-    mealsList.querySelectorAll('.btn-confirm').forEach(btn => {
+    diaryContainer.querySelectorAll('.btn-confirm-sm').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const mealId = e.target.dataset.mealId;
             confirmMeal(mealId);
         });
     });
+
+    // コピーボタンのイベントリスナー (A1)
+    diaryContainer.querySelectorAll('.btn-copy-meals').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showMealCopyPicker(btn.dataset.type);
+        });
+    });
+
+    // お気に入りボタンのイベントリスナー (A2)
+    diaryContainer.querySelectorAll('.btn-fav-star').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleFavorite(btn.dataset.foodId, btn.dataset.foodName, parseFloat(btn.dataset.qty), btn.dataset.unit);
+        });
+    });
+}
+
+// ===== ダイアリーセクション開閉状態管理 =====
+function getDiarySectionCollapsed(type) {
+    try {
+        const state = JSON.parse(localStorage.getItem('diaryCollapsed') || '{}');
+        return state[type] === true;
+    } catch { return false; }
+}
+
+function setDiarySectionCollapsed(type, collapsed) {
+    try {
+        const state = JSON.parse(localStorage.getItem('diaryCollapsed') || '{}');
+        state[type] = collapsed;
+        localStorage.setItem('diaryCollapsed', JSON.stringify(state));
+    } catch {}
+}
+
+// ===== フォームパネルの開閉 =====
+function openMealFormPanel(mealType) {
+    if (mealType) {
+        currentMealType = mealType;
+        // タブボタンも同期
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.type === mealType);
+        });
+    }
+    // 仮リストをリセット
+    pendingMeals = [];
+    renderPendingMeals();
+
+    updateMealFormPanelTitle();
+    const panel = document.getElementById('mealFormPanel');
+    panel.classList.remove('hidden');
+    panel.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    displayMealHistory(currentMealType);
+    // FABを隠す
+    document.getElementById('mealFab').classList.add('hidden');
+}
+
+function closeMealFormPanel() {
+    document.getElementById('mealFormPanel').classList.add('hidden');
+    document.body.style.overflow = '';
+    document.getElementById('mealFab').classList.remove('hidden');
+    resetForm();
+}
+
+function updateMealFormPanelTitle() {
+    const labels = { breakfast: '朝食', lunch: '昼食', dinner: '夕食', snack: '間食' };
+    const titleEl = document.getElementById('mealFormPanelTitle');
+    if (titleEl) {
+        titleEl.textContent = `${labels[currentMealType] || '食事'}を追加`;
+    }
 }
 
 // ===== 予定の食事を確定する =====
@@ -900,9 +1195,31 @@ function confirmMeal(mealId) {
     const meal = meals.find(m => m.id === mealId);
     if (meal) {
         meal.planned = false;
-        localStorage.setItem('mealRecords', JSON.stringify(allRecords));
+        safeSetItem('mealRecords', allRecords);
         displayMeals();
         updateNutrientsSummary();
+    }
+}
+
+// ===== 予定の食事を一括確定する =====
+function confirmAllMeals() {
+    const targetDate = currentMealDate || getTodayString();
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const meals = allRecords[targetDate]?.meals || [];
+
+    let confirmedCount = 0;
+    meals.forEach(meal => {
+        if (meal.planned === true) {
+            meal.planned = false;
+            confirmedCount++;
+        }
+    });
+
+    if (confirmedCount > 0) {
+        safeSetItem('mealRecords', allRecords);
+        displayMeals();
+        updateNutrientsSummary();
+        showToast(`${confirmedCount}件の食事を確定しました`);
     }
 }
 
@@ -916,13 +1233,15 @@ function deleteMeal(mealId) {
     allRecords[targetDate].meals = dateMeals.filter(meal => meal.id !== mealId);
 
     // localStorageに保存
-    localStorage.setItem('mealRecords', JSON.stringify(allRecords));
+    safeSetItem('mealRecords', allRecords);
 
     // 表示を更新
     displayMeals();
     displayMealHistory(currentMealType);
     updateNutrientsSummary();
     renderSuggestionSection();
+    updateStreak();
+    updateNutritionScore();
 }
 
 // ===== 栄養素サマリーを更新 =====
@@ -931,44 +1250,74 @@ function updateNutrientsSummary() {
     const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
     const todayMeals = allRecords[targetDate]?.meals || [];
 
-    // 栄養素を集計
-    const totals = {
-        calories: 0,
-        protein: 0,
-        fat: 0,
-        carbohydrate: 0,
-        iron: 0,
-        calcium: 0,
-        folate: 0
-    };
+    // 確定と予定を分けて集計
+    const confirmedTotals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
+    const plannedTotals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
+    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
 
     todayMeals.forEach(meal => {
+        const isPlanned = meal.planned === true;
         Object.keys(totals).forEach(nutrient => {
-            totals[nutrient] += meal.nutrients[nutrient];
+            const val = meal.nutrients[nutrient] || 0;
+            totals[nutrient] += val;
+            if (isPlanned) {
+                plannedTotals[nutrient] += val;
+            } else {
+                confirmedTotals[nutrient] += val;
+            }
         });
     });
 
-    // グリッドを生成
+    const hasPlanned = plannedTotals.calories > 0;
+
+    // グリッドを生成（グループ別）
     const grid = document.getElementById('nutrientsGrid');
     grid.innerHTML = '';
 
+    const groupLabels = {
+        macro: '三大栄養素',
+        mineral: 'ミネラル',
+        vitamin: 'ビタミン',
+        other: 'その他'
+    };
+    const groupOrder = ['macro', 'mineral', 'vitamin', 'other'];
+    let lastGroup = null;
+
     Object.keys(NUTRIENT_RECOMMENDATIONS).forEach(nutrientKey => {
         const recommendation = NUTRIENT_RECOMMENDATIONS[nutrientKey];
-        const current = totals[nutrientKey];
-        const percentage = (current / recommendation.recommended) * 100;
 
-        // 色分けロジック（〜50%赤、50〜80%黄、80%〜緑、120%超は過剰赤）
-        let statusClass = '';
-        if (percentage > 120) {
-            statusClass = 'danger';   // 赤色：過剰
-        } else if (percentage < 50) {
-            statusClass = 'danger';   // 赤色：大幅不足
-        } else if (percentage < 80) {
-            statusClass = 'warning';  // 黄色：不足気味
+        // グループヘッダーを挿入
+        const currentGroup = recommendation.group || 'other';
+        if (currentGroup !== lastGroup) {
+            const header = document.createElement('div');
+            header.className = 'nutrient-group-header';
+            header.textContent = groupLabels[currentGroup] || currentGroup;
+            grid.appendChild(header);
+            lastGroup = currentGroup;
         }
 
-        const progressPercentage = Math.min(percentage, 100);
-        const overText = percentage > 120 ? `(+${(percentage - 100).toFixed(0)}%超過)` : '';
+        const current = totals[nutrientKey];
+        const confirmed = confirmedTotals[nutrientKey];
+        const planned = plannedTotals[nutrientKey];
+        const percentage = (current / recommendation.recommended) * 100;
+        const confirmedPct = (confirmed / recommendation.recommended) * 100;
+        const plannedPct = (planned / recommendation.recommended) * 100;
+
+        // 100%超えかどうかでカード背景を切り替え（つわりモード時は緩和）
+        let statusClass = '';
+        const overThreshold = isMorningSicknessMode() ? 150 : 100;
+        if (percentage > overThreshold) {
+            statusClass = 'over';
+        }
+
+        const confirmedBarWidth = Math.min(confirmedPct, 100);
+        const plannedBarWidth = Math.min(plannedPct, 100 - confirmedBarWidth);
+        const overText = percentage > 100 ? `(+${(percentage - 100).toFixed(0)}%)` : '';
+
+        // 予定分の表示テキスト
+        const plannedNote = hasPlanned && planned > 0
+            ? `<span class="nutrient-planned-note">うち${planned.toFixed(1)}${recommendation.unit}予定</span>`
+            : '';
 
         const card = document.createElement('div');
         card.className = `nutrient-card ${statusClass}`;
@@ -982,15 +1331,65 @@ function updateNutrientsSummary() {
                 <div class="nutrient-recommended">/ ${recommendation.recommended}</div>
             </div>
             <div class="progress-bar-container">
-                <div class="progress-bar ${statusClass}" style="width: ${progressPercentage}%"></div>
+                <div class="progress-bar confirmed" style="width: ${confirmedBarWidth}%"></div>
+                <div class="progress-bar planned" style="width: ${plannedBarWidth}%; left: ${confirmedBarWidth}%"></div>
             </div>
-            <div class="nutrient-percentage">
-                ${percentage.toFixed(0)}% <span class="nutrient-over">${overText}</span>
+            <div class="nutrient-percentage ${statusClass}">
+                ${percentage.toFixed(0)}% ${overText}
             </div>
+            ${plannedNote}
         `;
 
         grid.appendChild(card);
     });
+
+    // ドーナツチャートを更新（確定/予定分けて渡す）
+    updateCalorieDonut(confirmedTotals.calories, plannedTotals.calories);
+}
+
+function updateCalorieDonut(confirmed, planned) {
+    const consumed = confirmed + planned;
+    const calRec = NUTRIENT_RECOMMENDATIONS.calories;
+    const goal = calRec ? calRec.recommended : 2000;
+    const remaining = Math.round(goal - consumed);
+    const circumference = 314.16; // 2 * PI * 50
+
+    // 確定分のドーナツ
+    const confirmedPercent = Math.min(confirmed / goal, 1);
+    const confirmedOffset = circumference * (1 - confirmedPercent);
+
+    // 確定+予定分のドーナツ（予定は確定の上に追加）
+    const totalPercent = Math.min(consumed / goal, 1);
+    const totalOffset = circumference * (1 - totalPercent);
+
+    const donut = document.getElementById('donutProgress');
+    const donutPlanned = document.getElementById('donutProgressPlanned');
+    const remEl = document.getElementById('donutCalRemaining');
+    const eqGoal = document.getElementById('eqGoal');
+    const eqFood = document.getElementById('eqFood');
+    const eqRemaining = document.getElementById('eqRemaining');
+    const eqPlannedNote = document.getElementById('eqPlannedNote');
+
+    if (donutPlanned) {
+        donutPlanned.style.strokeDashoffset = totalOffset;
+        donutPlanned.classList.toggle('hidden-circle', planned === 0);
+    }
+    if (donut) {
+        donut.style.strokeDashoffset = confirmedOffset;
+        donut.classList.toggle('over', consumed / goal > 1);
+    }
+    if (remEl) {
+        remEl.textContent = remaining > 0 ? remaining : 0;
+    }
+    if (eqGoal) eqGoal.textContent = Math.round(goal);
+    if (eqFood) eqFood.textContent = Math.round(consumed);
+    if (eqRemaining) {
+        eqRemaining.textContent = remaining;
+        eqRemaining.style.color = remaining < 0 ? 'var(--danger-red)' : '';
+    }
+    if (eqPlannedNote) {
+        eqPlannedNote.textContent = planned > 0 ? `うち${Math.round(planned)}予定` : '';
+    }
 }
 
 // ===== フォームをリセット =====
@@ -1005,7 +1404,7 @@ function resetDayRecords() {
     const targetDate = currentMealDate || getTodayString();
     const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
     delete allRecords[targetDate];
-    localStorage.setItem('mealRecords', JSON.stringify(allRecords));
+    safeSetItem('mealRecords', allRecords);
 
     // 表示を更新
     displayMeals();
@@ -1021,8 +1420,12 @@ function setupNavTabs() {
             const targetTab = e.target.dataset.tab;
 
             // タブボタンの切替
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
             e.target.classList.add('active');
+            e.target.setAttribute('aria-selected', 'true');
 
             // コンテンツの切替
             document.querySelectorAll('.tab-content').forEach(content => {
@@ -1043,33 +1446,70 @@ function setupNavTabs() {
                 renderWeightChart();
                 renderDashboard();
             }
+
+            // 買い物タブに切り替えた時は買い物モジュールを初期化
+            if (targetTab === 'shopping') {
+                initShoppingModule();
+            }
+
+            // FABの表示/非表示（食事記録タブのみ表示）
+            const fab = document.getElementById('mealFab');
+            const formPanel = document.getElementById('mealFormPanel');
+            if (targetTab === 'meals') {
+                if (formPanel.classList.contains('hidden')) {
+                    fab.classList.remove('hidden');
+                }
+            } else {
+                fab.classList.add('hidden');
+                formPanel.classList.add('hidden');
+            }
         });
     });
 }
 
+// ===== 献立予定から食事記録タブに遷移 =====
+function navigateToMealEntry(dateStr) {
+    // 日付を設定
+    currentMealDate = dateStr;
+    const datePicker = document.getElementById('mealDatePicker');
+    if (datePicker) datePicker.value = dateStr;
+    updateMealDateDisplay();
+    displayMeals();
+    updateNutrientsSummary();
+
+    // 食事記録タブに切り替え
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    const mealsTab = document.querySelector('.nav-tab[data-tab="meals"]');
+    if (mealsTab) mealsTab.classList.add('active');
+
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    const mealsContent = document.getElementById('tab-meals');
+    if (mealsContent) mealsContent.classList.add('active');
+}
+
 // ===== 食事記録の日付セレクター =====
+// 週間日付タブの起点日（週の最初の日 = 月曜）
+let weekStartDate = null;
+
 function initMealDateSelector() {
-    const prevBtn = document.getElementById('mealDatePrev');
-    const nextBtn = document.getElementById('mealDateNext');
-    const displayBtn = document.getElementById('mealDateDisplay');
     const datePicker = document.getElementById('mealDatePicker');
 
-    prevBtn.addEventListener('click', () => {
-        const d = new Date(currentMealDate);
-        d.setDate(d.getDate() - 1);
-        setMealDate(d.toISOString().split('T')[0]);
+    // 週の起点を計算（今日を含む週：月曜始まり）
+    weekStartDate = getWeekStart(currentMealDate);
+    renderWeekDateTabs();
+
+    document.getElementById('weekPrev').addEventListener('click', () => {
+        const d = new Date(weekStartDate);
+        d.setDate(d.getDate() - 7);
+        weekStartDate = d.toISOString().split('T')[0];
+        renderWeekDateTabs();
     });
 
-    nextBtn.addEventListener('click', () => {
-        const d = new Date(currentMealDate);
-        d.setDate(d.getDate() + 1);
-        setMealDate(d.toISOString().split('T')[0]);
-    });
-
-    // 日付表示ボタンをクリックするとdate pickerを開く
-    displayBtn.addEventListener('click', () => {
-        datePicker.value = currentMealDate;
-        datePicker.showPicker();
+    document.getElementById('weekNext').addEventListener('click', () => {
+        const d = new Date(weekStartDate);
+        d.setDate(d.getDate() + 7);
+        weekStartDate = d.toISOString().split('T')[0];
+        renderWeekDateTabs();
     });
 
     datePicker.addEventListener('change', (e) => {
@@ -1081,61 +1521,79 @@ function initMealDateSelector() {
     updateMealDateDisplay();
 }
 
+function getWeekStart(dateStr) {
+    const d = new Date(dateStr);
+    const day = d.getDay();
+    const diff = (day === 0 ? -6 : 1) - day; // 月曜始まり
+    d.setDate(d.getDate() + diff);
+    return d.toISOString().split('T')[0];
+}
+
+function renderWeekDateTabs() {
+    const container = document.getElementById('weekDateTabs');
+    const today = getTodayString();
+    const dayLabels = ['月', '火', '水', '木', '金', '土', '日'];
+
+    let html = '';
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(weekStartDate);
+        d.setDate(d.getDate() + i);
+        const dateStr = d.toISOString().split('T')[0];
+        const isSelected = dateStr === currentMealDate;
+        const isToday = dateStr === today;
+        const dayNum = d.getDate();
+        const dayLabel = dayLabels[i];
+
+        html += `<button type="button" class="week-date-tab${isSelected ? ' selected' : ''}${isToday ? ' is-today' : ''}" data-date="${dateStr}">
+            <span class="week-day-label">${dayLabel}</span>
+            <span class="week-day-num">${dayNum}</span>
+        </button>`;
+    }
+    container.innerHTML = html;
+
+    // タブクリックイベント
+    container.querySelectorAll('.week-date-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            setMealDate(tab.dataset.date);
+        });
+        // 長押しでdate picker
+        let pressTimer;
+        tab.addEventListener('touchstart', () => {
+            pressTimer = setTimeout(() => {
+                const picker = document.getElementById('mealDatePicker');
+                picker.value = currentMealDate;
+                picker.showPicker();
+            }, 500);
+        }, { passive: true });
+        tab.addEventListener('touchend', () => clearTimeout(pressTimer));
+    });
+}
+
 function setMealDate(dateStr) {
     currentMealDate = dateStr;
+    // 選択した日付が現在の週範囲外なら週を移動
+    const newWeekStart = getWeekStart(dateStr);
+    if (newWeekStart !== weekStartDate) {
+        weekStartDate = newWeekStart;
+    }
+    renderWeekDateTabs();
     updateMealDateDisplay();
     displayMeals();
     updateNutrientsSummary();
     renderSuggestionSection();
     displayMealHistory(currentMealType);
+    updateWaterDisplay();
+    updateNutritionScore();
 }
 
 function updateMealDateDisplay() {
-    const displayBtn = document.getElementById('mealDateDisplay');
     const banner = document.getElementById('plannedBanner');
-    const titleEl = document.getElementById('mealsListTitle');
     const today = getTodayString();
-
-    const d = new Date(currentMealDate);
-    const options = { month: 'long', day: 'numeric', weekday: 'short' };
-    let label = d.toLocaleDateString('ja-JP', options);
-
-    const isToday = currentMealDate === today;
     const isFuture = currentMealDate > today;
-
-    if (isToday) {
-        label = '今日 — ' + label;
-    } else {
-        // 昨日・明日の判定
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        if (currentMealDate === yesterday.toISOString().split('T')[0]) {
-            label = '昨日 — ' + label;
-        } else if (currentMealDate === tomorrow.toISOString().split('T')[0]) {
-            label = '明日 — ' + label;
-        }
-    }
-
-    displayBtn.textContent = label;
-    displayBtn.classList.toggle('is-today', isToday);
-    displayBtn.classList.toggle('is-future', isFuture);
 
     // 未来日のバナー表示
     if (banner) {
         banner.classList.toggle('hidden', !isFuture);
-    }
-
-    // 食事一覧タイトルの更新
-    if (titleEl) {
-        if (isToday) {
-            titleEl.textContent = '今日の食事一覧';
-        } else if (isFuture) {
-            titleEl.textContent = '食事の予定';
-        } else {
-            titleEl.textContent = `${d.getMonth() + 1}/${d.getDate()}の食事一覧`;
-        }
     }
 }
 
@@ -1153,9 +1611,32 @@ function renderDashboard() {
     const notice = document.getElementById('dashboardProfileNotice');
     if (notice) notice.classList.toggle('hidden', !!hasProfile);
 
-    // 妊娠週数サマリー
+    // 妊娠週数サマリー / 産後表示
     const weekInfo = document.getElementById('dashboardWeekInfo');
-    if (weekInfo && profile.pregnancyStartDate) {
+    if (weekInfo && profile.mode === 'postpartum') {
+        const feedingType = profile.feedingType || 'breastfeeding';
+        const feedingLabels = { breastfeeding: '完全母乳', mixed: '混合（母乳+ミルク）', formula: '完全ミルク' };
+        let dayText = '産後';
+        let daysCount = 0;
+        if (profile.birthDate) {
+            const birth = new Date(profile.birthDate);
+            const now = new Date();
+            daysCount = Math.floor((now - birth) / (1000 * 60 * 60 * 24));
+            dayText = `産後 ${daysCount}日目`;
+        }
+        const monthText = daysCount > 0 ? `（約${Math.floor(daysCount / 30)}ヶ月）` : '';
+        const feedingComments = {
+            breastfeeding: '母乳育児では通常より多くのエネルギーと栄養が必要です。水分補給を忘れずに、カルシウム・ビタミンB12・亜鉛をしっかり摂りましょう。',
+            mixed: '混合育児では、母乳の割合に応じた栄養補給が大切です。バランスの良い食事と水分補給を心がけましょう。',
+            formula: 'ご自身の体の回復を大切にしましょう。バランスの良い食事を心がけ、無理のないペースで過ごしてください。'
+        };
+        weekInfo.innerHTML = `
+            <div class="week-number">${dayText}</div>
+            <div class="week-trimester">${feedingLabels[feedingType]}${monthText}</div>
+            <div class="week-comment">${feedingComments[feedingType]}</div>
+        `;
+        weekInfo.classList.remove('hidden');
+    } else if (weekInfo && profile.pregnancyStartDate) {
         const week = getPregnancyWeek(profile.pregnancyStartDate);
         const trimester = getTrimester(week);
         const label = getTrimesterLabel(trimester);
@@ -1164,15 +1645,38 @@ function renderDashboard() {
         const dueDateStr = `${dueDate.getFullYear()}/${dueDate.getMonth()+1}/${dueDate.getDate()}`;
         const remainWeeks = 40 - (week || 0);
 
+        const trimesterComment = trimester === 'first'
+            ? 'つわりがつらい時期。食べられるものを少量ずつ摂りましょう。葉酸の摂取が特に大切です。'
+            : trimester === 'second'
+            ? '安定期に入り食欲が戻る時期。バランスよく栄養を摂りましょう。鉄分・カルシウムを意識して。'
+            : '赤ちゃんの成長が加速する時期。鉄分・たんぱく質をしっかり摂り、体重管理も意識しましょう。';
+
         weekInfo.innerHTML = `
             <div class="week-number">妊娠 ${week} 週</div>
             <div class="week-trimester">妊娠${label}（${trimester === 'first' ? '〜15週' : trimester === 'second' ? '16〜27週' : '28週〜'}）</div>
             <div class="week-due-date">出産予定日: ${dueDateStr}（あと約${remainWeeks}週）</div>
+            <div class="week-comment">${trimesterComment}</div>
         `;
         weekInfo.classList.remove('hidden');
     } else if (weekInfo) {
         weekInfo.classList.add('hidden');
     }
+
+    // 妊娠週数アドバイス (B5) — 産後モードでは非表示
+    if (profile.mode === 'postpartum') {
+        const adviceCard = document.getElementById('pregnancyAdviceCard');
+        if (adviceCard) adviceCard.classList.add('hidden');
+        const predCard = document.getElementById('weightPredictionCard');
+        if (predCard) predCard.classList.add('hidden');
+    } else {
+        renderPregnancyAdviceCard();
+        // 体重増加ペース予測 (B6)
+        renderWeightPrediction();
+    }
+
+    // 週間・月間レポート (A4)
+    setupReportPeriodTabs();
+    renderReport(7);
 
     // 直近7日間の栄養バランス
     renderWeeklyNutrition();
@@ -1203,13 +1707,19 @@ function renderWeeklyNutrition() {
     });
 
     // 各日の各栄養素を集計
-    const nutrients = ['calories', 'protein', 'iron', 'calcium', 'folate'];
+    const nutrients = ['calories', 'protein', 'iron', 'calcium', 'folate', 'vitaminD', 'vitaminB6', 'vitaminB12', 'zinc', 'fiber', 'dha'];
     const nutrientLabels = {
         calories: 'カロリー',
         protein: 'タンパク質',
         iron: '鉄',
         calcium: 'カルシウム',
-        folate: '葉酸'
+        folate: '葉酸',
+        vitaminD: 'ビタミンD',
+        vitaminB6: 'ビタミンB6',
+        vitaminB12: 'ビタミンB12',
+        zinc: '亜鉛',
+        fiber: '食物繊維',
+        dha: 'DHA'
     };
 
     let html = '';
@@ -1235,12 +1745,7 @@ function renderWeeklyNutrition() {
         const bars = dailyValues.map(val => {
             const pct = recommended > 0 ? Math.min(val / recommended * 100, 100) : 0;
             let cls = 'empty';
-            if (val > 0) {
-                const fullPct = recommended > 0 ? val / recommended * 100 : 0;
-                if (fullPct >= 80 && fullPct <= 120) cls = 'good';
-                else if (fullPct < 80) cls = 'warning';
-                else cls = 'danger';
-            }
+            if (val > 0) cls = 'good';
             return `<div class="weekly-day-bar"><div class="weekly-day-fill ${cls}" style="height:${Math.max(pct, 4)}%"></div></div>`;
         });
 
@@ -1272,7 +1777,29 @@ function renderDashboardSummary() {
     const items = [];
 
     // 1) 体重評価
-    if (records.length > 0 && profile.prePregnancyWeight && profile.height) {
+    const isPostpartum = profile.mode === 'postpartum';
+    if (isPostpartum && records.length > 0 && profile.prePregnancyWeight) {
+        // 産後モード: 妊娠前体重との比較（体重回復の参考情報としてやさしいトーンで表示）
+        const sorted = [...records].sort((a,b) => b.date.localeCompare(a.date));
+        const latest = sorted[0];
+        const diff = latest.weight - profile.prePregnancyWeight;
+        let icon, cls, title, detail;
+        if (Math.abs(diff) < 0.5) {
+            icon = '✓'; cls = 'good';
+            title = '体重は妊娠前とほぼ同じです';
+            detail = `現在 ${latest.weight.toFixed(1)}kg（妊娠前: ${profile.prePregnancyWeight}kg）`;
+        } else if (diff > 0) {
+            icon = 'i'; cls = 'good';
+            title = '体重の変化を記録しています';
+            detail = `現在 ${latest.weight.toFixed(1)}kg（妊娠前より +${diff.toFixed(1)}kg）。産後の体重変化は個人差が大きいです。無理のないペースで過ごしましょう`;
+        } else {
+            icon = 'i'; cls = 'good';
+            title = '体重の変化を記録しています';
+            detail = `現在 ${latest.weight.toFixed(1)}kg（妊娠前より ${diff.toFixed(1)}kg）。しっかり栄養を摂ることが大切です`;
+        }
+        items.push({ icon, cls, title, detail });
+    } else if (!isPostpartum && records.length > 0 && profile.prePregnancyWeight && profile.height) {
+        // 妊娠中モード: 推奨体重増加範囲と比較
         const sorted = [...records].sort((a,b) => b.date.localeCompare(a.date));
         const latest = sorted[0];
         const gain = latest.weight - profile.prePregnancyWeight;
@@ -1419,7 +1946,7 @@ function renderDashboardSummary() {
 
 // ===== 栄養素基準データの読み込みと動的推奨量設定 =====
 function loadNutrientsData() {
-    fetch('data/nutrients.json')
+    return fetch('data/nutrients.json')
         .then(response => response.json())
         .then(data => {
             nutrientsData = data.nutrients;
@@ -1433,6 +1960,53 @@ function loadNutrientsData() {
 function updateRecommendationsForTrimester() {
     const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     const weekDisplay = document.getElementById('pregnancyWeekDisplay');
+
+    // 活動レベル別カロリーオフセット（18-49歳女性、ふつう基準）
+    const activityOffsets = { low: -250, moderate: 0, high: 300 };
+    const activityOffset = activityOffsets[profile.activityLevel] || 0;
+
+    // 産後モードの処理
+    if (profile.mode === 'postpartum') {
+        const feedingType = profile.feedingType || 'breastfeeding';
+        const feedingKeyMap = {
+            breastfeeding: 'postpartumBreastfeeding',
+            mixed: 'postpartumMixed',
+            formula: 'postpartumFormula'
+        };
+        const trimesterKey = feedingKeyMap[feedingType] || 'postpartumBreastfeeding';
+        const feedingLabels = {
+            breastfeeding: '完全母乳',
+            mixed: '混合',
+            formula: '完全ミルク'
+        };
+        if (weekDisplay) {
+            let dayText = '産後';
+            if (profile.birthDate) {
+                const birth = new Date(profile.birthDate);
+                const now = new Date();
+                const diffDays = Math.floor((now - birth) / (1000 * 60 * 60 * 24));
+                dayText = `産後 ${diffDays}日目`;
+            }
+            weekDisplay.textContent = `現在: ${dayText}（${feedingLabels[feedingType]}）`;
+            weekDisplay.classList.remove('hidden');
+        }
+        if (nutrientsData) {
+            nutrientsData.forEach(nutrient => {
+                const id = nutrient.nutrientId;
+                if (NUTRIENT_RECOMMENDATIONS[id]) {
+                    NUTRIENT_RECOMMENDATIONS[id].recommended = nutrient[trimesterKey];
+                    NUTRIENT_RECOMMENDATIONS[id].label = NUTRIENT_RECOMMENDATIONS[id].label || nutrient.name;
+                    NUTRIENT_RECOMMENDATIONS[id].unit = nutrient.unit;
+                }
+            });
+        }
+        if (NUTRIENT_RECOMMENDATIONS.calories && activityOffset !== 0) {
+            NUTRIENT_RECOMMENDATIONS.calories.recommended += activityOffset;
+        }
+        updateNutrientsSummary();
+        renderSuggestionSection();
+        return;
+    }
 
     if (!profile.pregnancyStartDate) {
         // 妊娠開始日未設定の場合はデフォルト（中期）を維持
@@ -1453,24 +2027,17 @@ function updateRecommendationsForTrimester() {
 
     // nutrients.json のデータがある場合は推奨量を更新
     if (nutrientsData) {
-        const labelMap = {
-            calories: 'カロリー',
-            protein: 'タンパク質',
-            fat: '脂質',
-            carbohydrate: '炭水化物',
-            iron: '鉄',
-            calcium: 'カルシウム',
-            folate: '葉酸'
-        };
-
         nutrientsData.forEach(nutrient => {
             const id = nutrient.nutrientId;
             if (NUTRIENT_RECOMMENDATIONS[id]) {
                 NUTRIENT_RECOMMENDATIONS[id].recommended = nutrient[trimesterKey];
-                NUTRIENT_RECOMMENDATIONS[id].label = labelMap[id] || nutrient.name;
+                NUTRIENT_RECOMMENDATIONS[id].label = NUTRIENT_RECOMMENDATIONS[id].label || nutrient.name;
                 NUTRIENT_RECOMMENDATIONS[id].unit = nutrient.unit;
             }
         });
+    }
+    if (NUTRIENT_RECOMMENDATIONS.calories && activityOffset !== 0) {
+        NUTRIENT_RECOMMENDATIONS.calories.recommended += activityOffset;
     }
 
     // サマリーを再描画
@@ -1494,6 +2061,9 @@ function initProfileSettings() {
     }
     if (profile.height) {
         document.getElementById('userHeight').value = profile.height;
+    }
+    if (profile.activityLevel) {
+        document.getElementById('activityLevel').value = profile.activityLevel;
     }
 
     // BMI表示を更新
@@ -1589,11 +2159,18 @@ function saveProfile() {
     const prePregnancyWeight = parseFloat(document.getElementById('prePregnancyWeight').value);
     const height = parseFloat(document.getElementById('userHeight').value);
 
+    // 既存のprofileを読み込んで産後モード関連フィールドを保持
+    const existing = JSON.parse(localStorage.getItem('userProfile') || '{}');
     const profile = {};
     if (pregnancyStartDate) profile.pregnancyStartDate = pregnancyStartDate;
     if (dueDate) profile.dueDate = dueDate;
     if (!isNaN(prePregnancyWeight)) profile.prePregnancyWeight = prePregnancyWeight;
     if (!isNaN(height)) profile.height = height;
+    profile.activityLevel = document.getElementById('activityLevel').value || 'moderate';
+    // 産後モードフィールドを保持
+    if (existing.mode) profile.mode = existing.mode;
+    if (existing.birthDate) profile.birthDate = existing.birthDate;
+    if (existing.feedingType) profile.feedingType = existing.feedingType;
 
     localStorage.setItem('userProfile', JSON.stringify(profile));
 
@@ -1625,6 +2202,85 @@ function generateUUID() {
         const v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
+}
+
+// ===== localStorage 安全書き込みラッパー =====
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+        return true;
+    } catch (e) {
+        if (e.name === 'QuotaExceededError' || e.code === 22) {
+            console.warn('localStorage容量制限に到達。古いデータをアーカイブします。');
+            pruneOldData();
+            try {
+                localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+                return true;
+            } catch (e2) {
+                showToast('ストレージ容量が不足しています。設定からデータをエクスポートしてください。', 4000);
+                return false;
+            }
+        }
+        console.error('localStorage書き込みエラー:', e);
+        return false;
+    }
+}
+
+function safeGetItem(key, fallback) {
+    try {
+        const val = localStorage.getItem(key);
+        if (val === null) return fallback !== undefined ? fallback : null;
+        return JSON.parse(val);
+    } catch (e) {
+        console.error('localStorageデータ破損:', key, e);
+        return fallback !== undefined ? fallback : null;
+    }
+}
+
+function pruneOldData() {
+    // 90日より古い食事記録を削除
+    try {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - 90);
+        const cutoffStr = cutoff.toISOString().split('T')[0];
+
+        const records = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+        let pruned = 0;
+        Object.keys(records).forEach(dateStr => {
+            if (dateStr < cutoffStr) {
+                delete records[dateStr];
+                pruned++;
+            }
+        });
+        if (pruned > 0) {
+            localStorage.setItem('mealRecords', JSON.stringify(records));
+            console.log(`${pruned}日分の古い食事記録をアーカイブしました`);
+        }
+
+        // 水分記録も同様に整理
+        const water = JSON.parse(localStorage.getItem('waterRecords') || '{}');
+        let wPruned = 0;
+        Object.keys(water).forEach(dateStr => {
+            if (dateStr < cutoffStr) {
+                delete water[dateStr];
+                wPruned++;
+            }
+        });
+        if (wPruned > 0) {
+            localStorage.setItem('waterRecords', JSON.stringify(water));
+        }
+    } catch (e) {
+        console.error('データ整理エラー:', e);
+    }
+}
+
+function getStorageUsage() {
+    let total = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        total += (localStorage.getItem(key) || '').length;
+    }
+    return { usedKB: Math.round(total / 1024), limitKB: 5120 };
 }
 
 // カテゴリラベルを取得
@@ -1701,11 +2357,14 @@ function addToHistory(mealItem) {
     }
 
     // localStorage に保存
-    localStorage.setItem('mealHistory', JSON.stringify(mealHistory));
+    safeSetItem('mealHistory', mealHistory);
 }
 
 // ===== 食事タイプの履歴を表示 =====
 function displayMealHistory(mealType) {
+    // お気に入りも表示 (A2)
+    displayFavorites();
+
     const mealHistory = JSON.parse(localStorage.getItem('mealHistory') || '{}');
     const historySection = document.getElementById('historySection');
     const historyList = document.getElementById('historyList');
@@ -1752,7 +2411,7 @@ function deleteHistoryItem(index, mealType) {
     const mealHistory = JSON.parse(localStorage.getItem('mealHistory') || '{}');
     if (mealHistory[mealType] && index < mealHistory[mealType].length) {
         mealHistory[mealType].splice(index, 1);
-        localStorage.setItem('mealHistory', JSON.stringify(mealHistory));
+        safeSetItem('mealHistory', mealHistory);
         displayMealHistory(mealType);
     }
 }
@@ -2019,7 +2678,7 @@ function updateRecipeNutrientPreview() {
     const servings = parseInt(document.getElementById('recipeServings').value) || 1;
 
     // 全食材の栄養素を合計
-    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0 };
+    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
     let totalGrams = 0;
 
     recipeIngredients.forEach(ing => {
@@ -2060,6 +2719,12 @@ function updateRecipeNutrientPreview() {
         <span>鉄: <strong>${per100g.iron || 0}</strong>mg</span>
         <span>Ca: <strong>${per100g.calcium || 0}</strong>mg</span>
         <span>葉酸: <strong>${per100g.folate || 0}</strong>μg</span>
+        <span>VD: <strong>${per100g.vitaminD || 0}</strong>μg</span>
+        <span>B6: <strong>${per100g.vitaminB6 || 0}</strong>mg</span>
+        <span>B12: <strong>${per100g.vitaminB12 || 0}</strong>μg</span>
+        <span>亜鉛: <strong>${per100g.zinc || 0}</strong>mg</span>
+        <span>食物繊維: <strong>${per100g.fiber || 0}</strong>g</span>
+        <span>DHA: <strong>${per100g.dha || 0}</strong>mg</span>
         <span style="color:var(--light-text); font-size:0.75rem">（1人前 約${gramsPerServing}g）</span>
     `;
 
@@ -2113,7 +2778,7 @@ function registerCustomFood() {
     if (customFoodMode === 'recipe' && recipeIngredients.length > 0) {
         // レシピモード: 食材から100gあたりの栄養素を計算
         const servings = parseInt(document.getElementById('recipeServings').value) || 1;
-        const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0 };
+        const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
         let totalGrams = 0;
 
         recipeIngredients.forEach(ing => {
@@ -2320,17 +2985,205 @@ function editCustomFood(foodId) {
     }
 }
 
-// ===== API設定: ステータス表示を更新 =====
+// ===== AI プロバイダー設定 =====
+const AI_PROVIDERS = {
+    claude: { name: 'Claude', placeholder: 'sk-ant-...' },
+    chatgpt: { name: 'ChatGPT', placeholder: 'sk-...' },
+    gemini: { name: 'Gemini', placeholder: 'AIza...' }
+};
+
+function getActiveAIConfig() {
+    const provider = localStorage.getItem('aiProvider') || 'claude';
+    const apiKey = localStorage.getItem('aiApiKey_' + provider);
+    return { provider, apiKey };
+}
+
+function updateAiApiKeyHint() {
+    const provider = document.getElementById('aiProviderSelect').value;
+    const hint = document.getElementById('aiApiKeyHint');
+    const input = document.getElementById('aiApiKeyInput');
+    if (hint) hint.textContent = AI_PROVIDERS[provider]?.name + ' の APIキーを入力';
+    if (input) input.placeholder = AI_PROVIDERS[provider]?.placeholder || '';
+
+    // ガイドの表示切替: 選択中のプロバイダーのみ表示
+    const guideMap = { claude: 'guideClaudeSection', chatgpt: 'guideChatGPTSection', gemini: 'guideGeminiSection' };
+    Object.entries(guideMap).forEach(([key, id]) => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (key === provider) ? '' : 'none';
+    });
+}
+
 function updateApiKeyStatus() {
     const statusEl = document.getElementById('apiKeyStatus');
-    const key = localStorage.getItem('claudeApiKey');
-    if (key) {
-        statusEl.textContent = 'APIキー設定済み（' + key.slice(0, 10) + '...）';
+    const { provider, apiKey } = getActiveAIConfig();
+    const providerName = AI_PROVIDERS[provider]?.name || provider;
+    if (apiKey) {
+        statusEl.textContent = `${providerName} APIキー設定済み（${apiKey.slice(0, 10)}...）`;
         statusEl.style.color = 'var(--success-green)';
     } else {
-        statusEl.textContent = 'APIキー未設定（ローカル解析を使用）';
+        statusEl.textContent = `${providerName} APIキー未設定（ローカル解析を使用）`;
         statusEl.style.color = 'var(--light-text)';
     }
+}
+
+// ===== API接続テスト =====
+async function testApiConnection() {
+    const statusEl = document.getElementById('apiKeyStatus');
+    const { provider, apiKey } = getActiveAIConfig();
+    const providerName = AI_PROVIDERS[provider]?.name || provider;
+
+    if (!apiKey) {
+        statusEl.textContent = 'APIキーが保存されていません。先にキーを保存してください。';
+        statusEl.style.color = 'var(--danger-red)';
+        return;
+    }
+
+    statusEl.textContent = `${providerName} に接続テスト中...`;
+    statusEl.style.color = 'var(--light-text)';
+
+    try {
+        const result = await callAI('「こんにちは」と一言だけ返してください。', 32);
+        if (result) {
+            statusEl.textContent = `${providerName} 接続成功: "${result.trim().slice(0, 30)}"`;
+            statusEl.style.color = 'var(--success-green)';
+        } else {
+            statusEl.textContent = `${providerName} 接続失敗: APIからの応答がありません。Consoleを確認してください。`;
+            statusEl.style.color = 'var(--danger-red)';
+        }
+    } catch (error) {
+        statusEl.textContent = `${providerName} 接続失敗: ${error.message}`;
+        statusEl.style.color = 'var(--danger-red)';
+    }
+}
+
+// ===== 統一AIコール関数 =====
+async function callAI(prompt, maxTokens) {
+    const { provider, apiKey } = getActiveAIConfig();
+    if (!apiKey) return null;
+
+    maxTokens = maxTokens || 1024;
+
+    try {
+        if (provider === 'claude') {
+            return await callClaude(apiKey, prompt, maxTokens);
+        } else if (provider === 'chatgpt') {
+            return await callChatGPT(apiKey, prompt, maxTokens);
+        } else if (provider === 'gemini') {
+            return await callGemini(apiKey, prompt, maxTokens);
+        }
+    } catch (error) {
+        console.error(`AI API error (${provider}):`, error);
+        return null;
+    }
+}
+
+async function callClaude(apiKey, prompt, maxTokens) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: maxTokens,
+            messages: [{ role: 'user', content: prompt }]
+        })
+    });
+    if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        console.error('Claude API error:', response.status, err);
+        return null;
+    }
+    const data = await response.json();
+    return data.content[0].text;
+}
+
+async function callChatGPT(apiKey, prompt, maxTokens) {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apiKey
+        },
+        body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            max_tokens: maxTokens,
+            messages: [{ role: 'user', content: prompt }]
+        })
+    });
+    if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        console.error('OpenAI API error:', response.status, err);
+        return null;
+    }
+    const data = await response.json();
+    return data.choices[0].message.content;
+}
+
+// Geminiモデルの優先順位（無料枠が残っているモデルからフォールバック）
+const GEMINI_MODELS = [
+    'gemini-2.0-flash-lite',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash'
+];
+
+async function callGemini(apiKey, prompt, maxTokens) {
+    // 複数モデルを順にトライ（無料枠切れ対策）
+    for (const model of GEMINI_MODELS) {
+        const result = await callGeminiModel(apiKey, prompt, maxTokens, model);
+        if (result !== null) return result;
+    }
+    return null;
+}
+
+async function callGeminiModel(apiKey, prompt, maxTokens, model) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+                maxOutputTokens: maxTokens,
+                temperature: 0.7
+            },
+            safetySettings: [
+                { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+            ]
+        })
+    });
+    if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        // 429 (quota exceeded) の場合は次のモデルを試す
+        if (response.status === 429) {
+            console.warn(`Gemini ${model}: 無料枠超過、次のモデルを試行します`, err);
+            return null;
+        }
+        console.error(`Gemini API error (${model}):`, response.status, err);
+        return null;
+    }
+    const data = await response.json();
+    if (!data.candidates || data.candidates.length === 0) {
+        console.error(`Gemini ${model}: candidatesが空です`, data);
+        return null;
+    }
+    const candidate = data.candidates[0];
+    if (candidate.finishReason === 'SAFETY') {
+        console.error(`Gemini ${model}: 安全フィルターによりブロックされました`, candidate.safetyRatings);
+        return null;
+    }
+    if (!candidate.content || !candidate.content.parts || candidate.content.parts.length === 0) {
+        console.error(`Gemini ${model}: contentが空です`, candidate);
+        return null;
+    }
+    console.log(`Gemini: ${model} で応答を取得しました`);
+    return candidate.content.parts[0].text;
 }
 
 // ===== 単位換算テーブル（調味料等のグラム変換） =====
@@ -2618,9 +3471,9 @@ function convertToGrams(quantity, unit, extra) {
     }
 }
 
-// ===== Claude API パーサー =====
+// ===== AI レシピパーサー =====
 async function parseRecipeWithAI(text) {
-    const apiKey = localStorage.getItem('claudeApiKey');
+    const { apiKey } = getActiveAIConfig();
     if (!apiKey) return null;
 
     const prompt = `以下のレシピテキストから食材名と分量（グラム数）を抽出してJSON形式で返してください。
@@ -2634,32 +3487,8 @@ async function parseRecipeWithAI(text) {
 ${text}`;
 
     try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': apiKey,
-                'anthropic-version': '2023-06-01',
-                'anthropic-dangerous-direct-browser-access': 'true'
-            },
-            body: JSON.stringify({
-                model: 'claude-haiku-4-5-20251001',
-                max_tokens: 1024,
-                messages: [{
-                    role: 'user',
-                    content: prompt
-                }]
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.error('Claude API error:', response.status, errorData);
-            return null;
-        }
-
-        const data = await response.json();
-        const content = data.content[0].text;
+        const content = await callAI(prompt, 1024);
+        if (!content) return null;
 
         // JSONを抽出（コードブロック内の場合も対応）
         const jsonMatch = content.match(/\[[\s\S]*\]/);
@@ -2674,7 +3503,7 @@ ${text}`;
             matchedFood: null
         }));
     } catch (error) {
-        console.error('Claude API parsing error:', error);
+        console.error('AI parsing error:', error);
         return null;
     }
 }
@@ -2717,7 +3546,7 @@ async function analyzeRecipe(text) {
     let ingredients;
 
     // APIキーがあればAI解析を試行
-    const apiKey = localStorage.getItem('claudeApiKey');
+    const { apiKey } = getActiveAIConfig();
     if (apiKey) {
         statusEl.textContent = 'AI解析中...';
         ingredients = await parseRecipeWithAI(text);
@@ -2830,6 +3659,96 @@ function applyPasteResult() {
     updateRecipeNutrientPreview();
 }
 
+// ===== データバックアップ（エクスポート/インポート） =====
+
+const BACKUP_KEYS = [
+    'mealRecords', 'weightRecords', 'userProfile', 'mealHistory',
+    'customFoods', 'pantryItems', 'shoppingList', 'aiProvider',
+    'waterRecords', 'diaryCollapsed', 'favoriteFoods', 'morningSicknessMode', 'appTheme'
+];
+
+function setupBackupEvents() {
+    const exportBtn = document.getElementById('exportDataBtn');
+    const importInput = document.getElementById('importDataFile');
+    if (exportBtn) exportBtn.addEventListener('click', exportAppData);
+    if (importInput) importInput.addEventListener('change', importAppData);
+}
+
+function exportAppData() {
+    const data = {};
+    BACKUP_KEYS.forEach(key => {
+        const val = localStorage.getItem(key);
+        if (val !== null) data[key] = JSON.parse(val);
+    });
+    data._exportedAt = new Date().toISOString();
+    data._appVersion = 'maternity-nutrition-v1';
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `maternity-nutrition-backup-${getTodayString()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast('データをエクスポートしました');
+}
+
+function importAppData(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const msgEl = document.getElementById('backupMessage');
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const data = JSON.parse(event.target.result);
+
+            // バリデーション: 最低限のキーが含まれているか
+            const validKeys = BACKUP_KEYS.filter(key => key in data);
+            if (validKeys.length === 0) {
+                if (msgEl) {
+                    msgEl.textContent = 'このファイルは有効なバックアップファイルではありません。';
+                    msgEl.className = 'backup-message error';
+                    msgEl.classList.remove('hidden');
+                }
+                return;
+            }
+
+            if (!confirm(`${validKeys.length}種類のデータを復元します。現在のデータは上書きされます。よろしいですか？`)) {
+                e.target.value = '';
+                return;
+            }
+
+            // APIキーは復元しない（セキュリティ上の理由）
+            validKeys.forEach(key => {
+                if (key.startsWith('aiApiKey_')) return;
+                localStorage.setItem(key, JSON.stringify(data[key]));
+            });
+
+            if (msgEl) {
+                msgEl.textContent = `${validKeys.length}種類のデータを復元しました。ページを再読み込みします...`;
+                msgEl.className = 'backup-message success';
+                msgEl.classList.remove('hidden');
+            }
+
+            showToast('データを復元しました');
+            setTimeout(() => location.reload(), 1500);
+        } catch (err) {
+            if (msgEl) {
+                msgEl.textContent = 'ファイルの読み込みに失敗しました。JSONファイルか確認してください。';
+                msgEl.className = 'backup-message error';
+                msgEl.classList.remove('hidden');
+            }
+        }
+        e.target.value = '';
+    };
+    reader.readAsText(file);
+}
+
 // ===== トースト通知 =====
 function showToast(message, duration) {
     duration = duration || 2000;
@@ -2873,7 +3792,7 @@ function renderSuggestionSection() {
     const trimester = getTrimester(week);
 
     // 栄養素を集計
-    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0 };
+    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
     todayMeals.forEach(m => {
         Object.keys(totals).forEach(k => { totals[k] += (m.nutrients && m.nutrients[k]) || 0; });
     });
@@ -2901,13 +3820,15 @@ function renderSuggestionSection() {
         const rate = 100 - def.deficitRate;
         const deficit = def.recommendedAmount - def.currentAmount;
 
-        // 推奨食品を選定: 対象栄養素の含有量が多い順に上位5品
+        // 推奨食品を選定: 対象栄養素の含有量が多い順に上位8品
         const recommendations = getRecommendedFoods(def.nutrientId, deficit);
 
-        // 棒グラフの色
-        let barClass = 'danger';
-        if (rate >= 50) barClass = 'warning';
-        if (rate >= 80) barClass = 'good';
+        // 棒グラフの色（統一してグリーン）
+        let barClass = 'good';
+
+        // 最初の3品と残りを分ける
+        const visibleRecs = recommendations.slice(0, 3);
+        const hiddenRecs = recommendations.slice(3);
 
         html += `
             <div class="deficient-nutrient-card">
@@ -2921,24 +3842,36 @@ function renderSuggestionSection() {
                 <div class="progress-bar-container">
                     <div class="progress-bar ${barClass}" style="width: ${Math.min(rate, 100)}%"></div>
                 </div>
-                ${recommendations.length > 0 ? `
+                ${visibleRecs.length > 0 ? `
                     <div class="recommended-foods">
                         <p class="recommended-foods-label">おすすめ食品（不足分: ${deficit.toFixed(1)}${def.unit}）</p>
                         <div class="recommended-foods-list">
-                            ${recommendations.map(rec => `
+                            ${visibleRecs.map(rec => `
                                 <div class="recommended-food-card">
                                     <div class="recommended-food-info">
                                         <span class="recommended-food-name">${rec.name}</span>
                                         <span class="recommended-food-amount">${rec.nutrientPer100g.toFixed(1)}${def.unit}/100g</span>
                                         <span class="recommended-food-needed">${rec.neededGrams}gで不足分を補完</span>
                                     </div>
-                                    <button type="button" class="btn btn-small btn-apply btn-add-recommended"
-                                        data-food-id="${rec.foodId}"
-                                        data-quantity="${rec.neededGrams}"
-                                        data-food-name="${rec.name}">追加</button>
                                 </div>
                             `).join('')}
                         </div>
+                        ${hiddenRecs.length > 0 ? `
+                            <details class="recommended-foods-more">
+                                <summary>さらに${hiddenRecs.length}品を表示</summary>
+                                <div class="recommended-foods-list">
+                                    ${hiddenRecs.map(rec => `
+                                        <div class="recommended-food-card">
+                                            <div class="recommended-food-info">
+                                                <span class="recommended-food-name">${rec.name}</span>
+                                                <span class="recommended-food-amount">${rec.nutrientPer100g.toFixed(1)}${def.unit}/100g</span>
+                                                <span class="recommended-food-needed">${rec.neededGrams}gで不足分を補完</span>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </details>
+                        ` : ''}
                     </div>
                 ` : ''}
             </div>
@@ -2947,15 +3880,48 @@ function renderSuggestionSection() {
 
     container.innerHTML = html;
 
-    // ワンタップ追加ボタンのイベント
-    container.querySelectorAll('.btn-add-recommended').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const foodId = e.target.dataset.foodId;
-            const quantity = parseInt(e.target.dataset.quantity);
-            const foodName = e.target.dataset.foodName;
-            addRecommendedFood(foodId, quantity, foodName);
-        });
-    });
+    // 組み合わせ提案を生成・描画
+    const combos = generateFoodCombinations(deficients);
+    renderCombinationCards(combos);
+
+    // 作り置きレシピ提案を描画
+    renderMealPrepRecipes(deficients, trimester);
+
+    // AI献立セクションの表示制御
+    const aiSection = document.getElementById('aiRecipeSection');
+    const aiDetailsWrap = aiSection ? aiSection.closest('.suggestion-sub-details') : null;
+    if (aiSection) {
+        const { apiKey } = getActiveAIConfig();
+        if (apiKey) {
+            if (aiDetailsWrap) aiDetailsWrap.classList.remove('hidden');
+            // ボタンイベント（重複登録を防止）
+            const btn = document.getElementById('generateAIRecipeBtn');
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', async () => {
+                const loading = document.getElementById('aiRecipeLoading');
+                const results = document.getElementById('aiRecipeResults');
+                loading.classList.remove('hidden');
+                results.innerHTML = '';
+                newBtn.disabled = true;
+
+                const mealType = document.getElementById('aiMealTypeSelect').value;
+                const recipes = await fetchAIRecipes(deficients, mealType);
+                loading.classList.add('hidden');
+                newBtn.disabled = false;
+
+                if (recipes && recipes.length > 0) {
+                    renderAIRecipeCards(recipes);
+                } else {
+                    const { provider } = getActiveAIConfig();
+                    const providerName = AI_PROVIDERS[provider]?.name || provider;
+                    results.innerHTML = `<p class="ai-recipe-error">献立の生成に失敗しました。${providerName}のAPIキーと接続を確認してください。<br><span style="font-size:0.8rem;color:var(--light-text)">詳細はブラウザの開発者ツール（F12 → Console）で確認できます。</span></p>`;
+                }
+            });
+        } else {
+            if (aiDetailsWrap) aiDetailsWrap.classList.add('hidden');
+        }
+    }
 }
 
 // ===== 推奨食品を選定 =====
@@ -2976,15 +3942,161 @@ function getRecommendedFoods(nutrientId, deficitAmount) {
             neededGrams: Math.ceil(deficitAmount / f[nutrientId] * 100)
         }))
         .sort((a, b) => b.nutrientPer100g - a.nutrientPer100g)
-        .slice(0, 5);
+        .slice(0, 8);
 
     return sorted;
 }
 
-// ===== 推奨食品をワンタップで食事記録に追加 =====
-function addRecommendedFood(foodId, quantity, foodName) {
-    const food = foodMasterData.find(f => f.foodId === foodId);
-    if (!food) return;
+// ===== 組み合わせ提案: 不足栄養素を複数食品で補う =====
+function generateFoodCombinations(deficients) {
+    // 微量栄養素の不足のみ対象
+    const targetNutrients = deficients.filter(d =>
+        ['iron', 'calcium', 'folate', 'vitaminD', 'vitaminB6', 'vitaminB12', 'zinc', 'fiber', 'dha'].includes(d.nutrientId)
+    );
+    if (targetNutrients.length === 0 || foodMasterData.length === 0) return [];
+
+    // 各食品について不足栄養素のカバー率スコアを計算
+    function scoreFoodForDeficits(food, remaining) {
+        let score = 0;
+        remaining.forEach(d => {
+            const deficit = d.recommendedAmount - d.currentAmount;
+            if (deficit > 0 && food[d.nutrientId]) {
+                // 100gあたりの寄与率
+                score += Math.min(food[d.nutrientId] / deficit, 1);
+            }
+        });
+        return score;
+    }
+
+    const combos = [];
+    // 2〜3セットの組み合わせを生成
+    for (let attempt = 0; attempt < 3 && combos.length < 3; attempt++) {
+        const usedFoodIds = new Set(combos.flatMap(c => c.foods.map(f => f.foodId)));
+        const remaining = targetNutrients.map(d => ({ ...d }));
+        const combo = { foods: [], coverageMap: {} };
+
+        // 貪欲法で最大3食品を選定
+        for (let pick = 0; pick < 3; pick++) {
+            const candidates = foodMasterData
+                .filter(f => !usedFoodIds.has(f.foodId))
+                .map(f => ({ food: f, score: scoreFoodForDeficits(f, remaining) }))
+                .filter(c => c.score > 0)
+                .sort((a, b) => b.score - a.score);
+
+            if (candidates.length === 0) break;
+            const chosen = candidates[0].food;
+            usedFoodIds.add(chosen.foodId);
+
+            // 推奨量: 不足分を最も補う量（上限200g）
+            let bestGrams = 100;
+            remaining.forEach(d => {
+                const deficit = d.recommendedAmount - d.currentAmount;
+                if (deficit > 0 && chosen[d.nutrientId] > 0) {
+                    const needed = Math.ceil(deficit / chosen[d.nutrientId] * 100);
+                    bestGrams = Math.max(bestGrams, Math.min(needed, 200));
+                }
+            });
+            bestGrams = Math.min(bestGrams, 200);
+
+            combo.foods.push({
+                foodId: chosen.foodId,
+                name: chosen.name,
+                grams: bestGrams
+            });
+
+            // 残りの不足を更新
+            remaining.forEach(d => {
+                if (chosen[d.nutrientId]) {
+                    d.currentAmount += chosen[d.nutrientId] * bestGrams / 100;
+                }
+            });
+        }
+
+        if (combo.foods.length >= 2) {
+            // カバー率を計算
+            targetNutrients.forEach(d => {
+                let covered = 0;
+                combo.foods.forEach(f => {
+                    const food = foodMasterData.find(fm => fm.foodId === f.foodId);
+                    if (food && food[d.nutrientId]) {
+                        covered += food[d.nutrientId] * f.grams / 100;
+                    }
+                });
+                const deficit = d.recommendedAmount - d.currentAmount;
+                combo.coverageMap[d.nutrientId] = {
+                    name: d.name,
+                    unit: d.unit,
+                    covered: Math.round(covered * 10) / 10,
+                    deficit: Math.round(deficit * 10) / 10,
+                    rate: deficit > 0 ? Math.min(Math.round(covered / deficit * 100), 100) : 100
+                };
+            });
+            combos.push(combo);
+        }
+    }
+
+    return combos;
+}
+
+function renderCombinationCards(combos) {
+    const container = document.getElementById('comboSuggestions');
+    if (!container) return;
+
+    if (combos.length === 0) {
+        container.classList.add('hidden');
+        return;
+    }
+
+    container.classList.remove('hidden');
+    let html = '<h3 class="combo-title">おすすめメニュー（組み合わせ）</h3>';
+
+    combos.forEach((combo, idx) => {
+        const comboJSON = JSON.stringify(combo.foods).replace(/"/g, '&quot;');
+        html += `
+            <div class="combo-card">
+                <div class="combo-card-header">
+                    <span class="combo-label">セット ${idx + 1}</span>
+                </div>
+                <div class="combo-foods-list">
+                    ${combo.foods.map(f => `
+                        <span class="combo-food-pill">${f.name} ${f.grams}g</span>
+                    `).join('')}
+                </div>
+                <div class="combo-coverage">
+                    ${Object.entries(combo.coverageMap).map(([, cov]) => `
+                        <div class="combo-coverage-item">
+                            <span class="combo-coverage-label">${cov.name}</span>
+                            <div class="mini-progress-bar-container">
+                                <div class="mini-progress-bar" style="width: ${cov.rate}%"></div>
+                            </div>
+                            <span class="combo-coverage-rate">${cov.rate}%補完</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <button type="button" class="btn btn-small btn-apply btn-add-combo"
+                    data-combo='${comboJSON}'>まとめて追加</button>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+
+    // まとめて追加ボタンのイベント
+    container.querySelectorAll('.btn-add-combo').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            addComboFoods(e.target.dataset.combo);
+        });
+    });
+}
+
+function addComboFoods(comboDataJSON) {
+    let foods;
+    try {
+        foods = JSON.parse(comboDataJSON);
+    } catch (e) {
+        console.error('コンボデータの解析に失敗:', e);
+        return;
+    }
 
     const targetDate = currentMealDate || getTodayString();
     const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
@@ -2992,33 +4104,232 @@ function addRecommendedFood(foodId, quantity, foodName) {
         allRecords[targetDate] = { meals: [] };
     }
 
-    const nutrients = calculateNutrients(food, quantity);
+    const addedNames = [];
 
-    const mealItem = {
-        id: generateUUID(),
-        mealType: currentMealType,
-        foodId: food.foodId,
-        foodName: food.name,
-        quantity: quantity,
-        displayQuantity: quantity,
-        displayUnit: 'g',
-        nutrients: nutrients,
-        ingredients: null,
-        createdAt: new Date().toISOString(),
-        planned: isFutureDate(targetDate)
-    };
+    foods.forEach(f => {
+        const food = foodMasterData.find(fm => fm.foodId === f.foodId);
+        if (!food) return;
 
-    allRecords[targetDate].meals.push(mealItem);
-    localStorage.setItem('mealRecords', JSON.stringify(allRecords));
+        const nutrients = calculateNutrients(food, f.grams);
+        const mealItem = {
+            id: generateUUID(),
+            mealType: currentMealType,
+            foodId: food.foodId,
+            foodName: food.name,
+            quantity: f.grams,
+            displayQuantity: f.grams,
+            displayUnit: 'g',
+            nutrients: nutrients,
+            ingredients: null,
+            createdAt: new Date().toISOString(),
+            planned: isFutureDate(targetDate)
+        };
 
-    addToHistory(mealItem);
+        allRecords[targetDate].meals.push(mealItem);
+        addToHistory(mealItem);
+        addedNames.push(food.name);
+    });
 
-    // 表示を更新
+    safeSetItem('mealRecords', allRecords);
+
+    // 表示を一度だけリフレッシュ
     displayMeals();
     updateNutrientsSummary();
     renderSuggestionSection();
 
-    showToast(`${foodName} ${quantity}g を追加しました`);
+    showToast(`${addedNames.join('、')} を追加しました`);
+}
+
+// ===== AI献立生成 =====
+const MEAL_TYPE_LABELS = {
+    breakfast: '朝食',
+    lunch: '昼食',
+    dinner: '夕食',
+    snack: '間食・おやつ',
+    mealprep: '作り置き'
+};
+
+const MEAL_TYPE_HINTS = {
+    breakfast: '朝に手軽に作れるもの。調理時間は15分以内を目安に',
+    lunch: '昼食向けのバランスの良いメニュー',
+    dinner: '夕食のメインディッシュや副菜の組み合わせ',
+    snack: '小腹が空いたときの軽食やおやつ。甘いもの・しょっぱいもの両方OK',
+    mealprep: '作り置き可能なおかず。冷蔵・冷凍保存ができ、複数人前を一度に作れるレシピ'
+};
+
+async function fetchAIRecipes(deficients, mealType) {
+    const { apiKey } = getActiveAIConfig();
+    if (!apiKey) return null;
+
+    mealType = mealType || 'dinner';
+    const mealLabel = MEAL_TYPE_LABELS[mealType] || '夕食';
+    const mealHint = MEAL_TYPE_HINTS[mealType] || '';
+
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    let trimesterInfo = '妊娠中期';
+    if (profile.pregnancyStartDate) {
+        const week = getPregnancyWeek(profile.pregnancyStartDate);
+        const trimester = getTrimester(week);
+        trimesterInfo = `妊娠${week}週（${getTrimesterLabel(trimester)}）`;
+    }
+
+    const deficientList = deficients
+        .filter(d => d.nutrientId !== 'calories')
+        .map(d => `${d.name}: 現在${d.currentAmount.toFixed(1)}${d.unit} / 推奨${d.recommendedAmount}${d.unit}（不足${(d.recommendedAmount - d.currentAmount).toFixed(1)}${d.unit}）`)
+        .join('\n');
+
+    const isMealPrep = mealType === 'mealprep';
+    const mealPrepJsonExtra = isMealPrep ? `\n  "storageInfo": "保存方法と日持ち（例: 冷蔵3日 / 冷凍2週間）",\n  "servings": 人数（3〜5人前）,` : '';
+    const mealPrepConditions = isMealPrep ? `\n- 作り置き可能なレシピにする（冷蔵・冷凍保存できるもの）\n- 保存方法と日持ち期間を必ず記載する\n- 3〜5人前の分量で記載する` : '\n- 1人前の分量で記載';
+
+    const prompt = `あなたは妊婦向け栄養管理の専門家です。以下の不足栄養素を補う「${mealLabel}」のレシピを2〜3品提案してください。
+
+対象者: ${trimesterInfo}の妊婦
+食事タイプ: ${mealLabel}（${mealHint}）
+不足栄養素:
+${deficientList}
+
+以下のJSON配列のみを返してください（説明文不要）:
+[{
+  "name": "料理名",
+  "cookTime": "調理時間（例: 15分）",${mealPrepJsonExtra}
+  "ingredients": [{"name": "食材名", "amount": "分量テキスト", "grams": グラム数}],
+  "steps": ["手順1", "手順2"],
+  "estimatedNutrients": {"iron": 数値, "calcium": 数値, "folate": 数値, "protein": 数値, "vitaminD": 数値, "vitaminB6": 数値, "vitaminB12": 数値, "zinc": 数値, "fiber": 数値, "dha": 数値}
+}]
+
+条件:
+- 妊婦が避けるべき食材（生肉、生魚、アルコール等）は使わない
+- ${mealLabel}にふさわしいメニューにする
+- 簡単に作れるレシピを優先${mealPrepConditions}`;
+
+    try {
+        const content = await callAI(prompt, 2048);
+        if (!content) return null;
+
+        const jsonMatch = content.match(/\[[\s\S]*\]/);
+        if (!jsonMatch) return null;
+
+        return JSON.parse(jsonMatch[0]);
+    } catch (error) {
+        console.error('AI献立生成エラー:', error);
+        return null;
+    }
+}
+
+function renderAIRecipeCards(recipes) {
+    const container = document.getElementById('aiRecipeResults');
+    if (!container || !recipes || recipes.length === 0) return;
+
+    let html = '';
+
+    recipes.forEach((recipe, idx) => {
+        const recipeJSON = JSON.stringify(recipe).replace(/"/g, '&quot;');
+        const nutrientBadges = recipe.estimatedNutrients
+            ? Object.entries(recipe.estimatedNutrients)
+                .filter(([, v]) => v > 0)
+                .map(([k, v]) => {
+                    const labels = { iron: '鉄', calcium: 'Ca', folate: '葉酸', protein: 'タンパク質', vitaminD: 'VD', vitaminB6: 'B6', vitaminB12: 'B12', zinc: '亜鉛', fiber: '食物繊維', dha: 'DHA' };
+                    const units = { iron: 'mg', calcium: 'mg', folate: 'μg', protein: 'g', vitaminD: 'μg', vitaminB6: 'mg', vitaminB12: 'μg', zinc: 'mg', fiber: 'g', dha: 'mg' };
+                    return `<span class="nutrient-badge">${labels[k] || k} ${v}${units[k] || ''}</span>`;
+                }).join('')
+            : '';
+
+        html += `
+            <div class="ai-recipe-card">
+                <div class="ai-recipe-card-header">
+                    <h4 class="ai-recipe-name">${recipe.name}</h4>
+                    <span class="ai-recipe-time">${recipe.cookTime || ''}</span>
+                </div>
+                ${recipe.storageInfo ? `<div class="recipe-meta-badges"><span class="recipe-storage-badge">${recipe.storageInfo}</span>${recipe.servings ? `<span class="recipe-servings-badge">${recipe.servings}人前</span>` : ''}</div>` : ''}
+                <div class="ai-recipe-nutrients">${nutrientBadges}</div>
+                <div class="ai-recipe-ingredients">
+                    <p class="ai-recipe-sub-label">食材:</p>
+                    <ul>
+                        ${recipe.ingredients.map(ing =>
+                            `<li>${ing.name} ${ing.amount}</li>`
+                        ).join('')}
+                    </ul>
+                </div>
+                <details class="ai-recipe-steps">
+                    <summary>作り方を見る</summary>
+                    <ol>
+                        ${recipe.steps.map(s => `<li>${s}</li>`).join('')}
+                    </ol>
+                </details>
+                <button type="button" class="btn btn-small btn-apply btn-add-recipe-ingredients"
+                    data-recipe='${recipeJSON}'>食材を追加</button>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+
+    container.querySelectorAll('.btn-add-recipe-ingredients').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const recipeData = JSON.parse(e.target.dataset.recipe);
+            addRecipeIngredients(recipeData);
+        });
+    });
+}
+
+function addRecipeIngredients(recipe) {
+    if (!recipe || !recipe.ingredients) return;
+
+    // matchIngredientsToMasterを再利用
+    const ingredients = recipe.ingredients.map(ing => ({
+        name: ing.name,
+        rawQuantity: ing.amount,
+        grams: ing.grams || 0,
+        matched: false,
+        matchedFood: null
+    }));
+
+    const matched = matchIngredientsToMaster(ingredients);
+
+    const targetDate = currentMealDate || getTodayString();
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    if (!allRecords[targetDate]) {
+        allRecords[targetDate] = { meals: [] };
+    }
+
+    let addedCount = 0;
+
+    matched.forEach(ing => {
+        if (!ing.matched || !ing.matchedFood || ing.grams <= 0) return;
+
+        const nutrients = calculateNutrients(ing.matchedFood, ing.grams);
+        const mealItem = {
+            id: generateUUID(),
+            mealType: currentMealType,
+            foodId: ing.matchedFood.foodId,
+            foodName: ing.matchedFood.name,
+            quantity: ing.grams,
+            displayQuantity: ing.grams,
+            displayUnit: 'g',
+            nutrients: nutrients,
+            ingredients: null,
+            createdAt: new Date().toISOString(),
+            planned: isFutureDate(targetDate)
+        };
+
+        allRecords[targetDate].meals.push(mealItem);
+        addToHistory(mealItem);
+        addedCount++;
+    });
+
+    safeSetItem('mealRecords', allRecords);
+
+    displayMeals();
+    updateNutrientsSummary();
+    renderSuggestionSection();
+
+    const unmatchedCount = matched.filter(i => !i.matched).length;
+    let msg = `${recipe.name}の食材 ${addedCount}品を追加しました`;
+    if (unmatchedCount > 0) {
+        msg += `（${unmatchedCount}品はマッチしませんでした）`;
+    }
+    showToast(msg, 3000);
 }
 
 // ===== オリジナル食品を削除 =====
@@ -3033,4 +4344,980 @@ function deleteCustomFood(foodId) {
     foodMasterData = foodMasterData.filter(f => f.foodId !== foodId);
 
     displayCustomFoods();
+}
+
+// ===== 記録ストリーク計算 =====
+function updateStreak() {
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const today = getTodayString();
+    let streak = 0;
+    let checkDate = new Date(today);
+
+    while (true) {
+        const dateStr = checkDate.toISOString().split('T')[0];
+        const meals = allRecords[dateStr]?.meals || [];
+        if (meals.length > 0) {
+            streak++;
+            checkDate.setDate(checkDate.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+
+    const countEl = document.getElementById('streakCount');
+    if (countEl) countEl.textContent = streak;
+}
+
+// ===== 栄養スコア（あすけん健康度風 100点満点） =====
+function updateNutritionScore() {
+    const targetDate = currentMealDate || getTodayString();
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const meals = allRecords[targetDate]?.meals || [];
+
+    if (meals.length === 0) {
+        const el = document.getElementById('nutritionScoreValue');
+        if (el) el.textContent = '--';
+        return;
+    }
+
+    // 各栄養素の合計を計算
+    const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
+    meals.forEach(m => {
+        Object.keys(totals).forEach(k => { totals[k] += (m.nutrients[k] || 0); });
+    });
+
+    let score = 0;
+
+    // つわりモード: 何か食べた=50点ベースの優しいスコアリング (B7)
+    if (isMorningSicknessMode()) {
+        score = 50; // 何か食べただけで50点
+        const calGoal = NUTRIENT_RECOMMENDATIONS.calories?.recommended || 2250;
+        const calRatio = totals.calories / calGoal;
+        if (calRatio >= 0.3) score += 15;
+        else if (calRatio > 0) score += 10;
+        // 水分を摂れたかのボーナス
+        const waterCount = getWaterCount();
+        if (waterCount >= 4) score += 15;
+        else if (waterCount >= 2) score += 10;
+        // 複数回に分けて食べたボーナス
+        const typesUsed = new Set(meals.map(m => m.mealType));
+        if (typesUsed.size >= 3) score += 20;
+        else if (typesUsed.size >= 2) score += 15;
+        else score += 5;
+        score = Math.min(score, 100);
+    } else {
+    // 通常モード
+    // カロリー適合度（30点）: 目標の80-120%が満点
+    const calGoal = NUTRIENT_RECOMMENDATIONS.calories?.recommended || 2250;
+    const calRatio = totals.calories / calGoal;
+    if (calRatio >= 0.8 && calRatio <= 1.2) {
+        score += 30;
+    } else if (calRatio >= 0.6 && calRatio <= 1.4) {
+        score += 20;
+    } else if (calRatio > 0) {
+        score += 10;
+    }
+
+    // PFCバランス（20点）
+    const totalCal = totals.calories || 1;
+    const pRatio = (totals.protein * 4) / totalCal;
+    const fRatio = (totals.fat * 9) / totalCal;
+    const cRatio = (totals.carbohydrate * 4) / totalCal;
+    // 理想: P13-20%, F20-30%, C50-65%
+    if (pRatio >= 0.13 && pRatio <= 0.20) score += 7;
+    else if (pRatio >= 0.10) score += 4;
+    if (fRatio >= 0.20 && fRatio <= 0.30) score += 7;
+    else if (fRatio >= 0.15 && fRatio <= 0.35) score += 4;
+    if (cRatio >= 0.50 && cRatio <= 0.65) score += 6;
+    else if (cRatio >= 0.40) score += 3;
+
+    // 微量栄養素（30点: 主要3種各6点 + 新規4種各3点 = 30点）
+    const microNutrients = [
+        { key: 'iron', points: 6 },
+        { key: 'calcium', points: 6 },
+        { key: 'folate', points: 6 },
+        { key: 'vitaminD', points: 3 },
+        { key: 'vitaminB12', points: 3 },
+        { key: 'zinc', points: 3 },
+        { key: 'fiber', points: 3 }
+    ];
+    microNutrients.forEach(({ key, points }) => {
+        const rec = NUTRIENT_RECOMMENDATIONS[key]?.recommended || 1;
+        const ratio = totals[key] / rec;
+        if (ratio >= 0.8) score += points;
+        else if (ratio >= 0.5) score += Math.round(points * 0.6);
+        else if (ratio > 0) score += Math.round(points * 0.3);
+    });
+
+    // 食事回数バランス（20点）: 3食以上で満点
+    const typesUsed = new Set(meals.map(m => m.mealType));
+    if (typesUsed.size >= 3) score += 20;
+    else if (typesUsed.size >= 2) score += 12;
+    else score += 5;
+    } // end normal mode
+
+    const el = document.getElementById('nutritionScoreValue');
+    if (el) {
+        el.textContent = score;
+        // スコアに応じた色
+        if (score >= 70) el.style.color = '#259D63';
+        else if (score >= 40) el.style.color = '#C16800';
+        else el.style.color = '#EC0000';
+    }
+}
+
+// ===== 水分記録 =====
+function initWaterTracker() {
+    const container = document.getElementById('waterGlasses');
+    if (!container) return;
+
+    let html = '';
+    for (let i = 0; i < 8; i++) {
+        html += `<button type="button" class="water-glass" data-index="${i}"></button>`;
+    }
+    container.innerHTML = html;
+
+    // 今日のデータを読み込み
+    updateWaterDisplay();
+
+    // クリックイベント
+    container.querySelectorAll('.water-glass').forEach(glass => {
+        glass.addEventListener('click', () => {
+            const idx = parseInt(glass.dataset.index);
+            const current = getWaterCount();
+            // タップしたグラスが既にfillの最後なら1つ減らす、それ以外はそこまでfill
+            if (idx + 1 === current) {
+                setWaterCount(idx);
+            } else {
+                setWaterCount(idx + 1);
+            }
+            updateWaterDisplay();
+        });
+    });
+}
+
+function getWaterCount() {
+    const dateKey = currentMealDate || getTodayString();
+    const data = JSON.parse(localStorage.getItem('waterRecords') || '{}');
+    return data[dateKey] || 0;
+}
+
+function setWaterCount(count) {
+    const dateKey = currentMealDate || getTodayString();
+    const data = JSON.parse(localStorage.getItem('waterRecords') || '{}');
+    data[dateKey] = count;
+    safeSetItem('waterRecords', data);
+
+    // リマインダー再チェック
+    if (typeof checkAndRenderReminders === 'function') checkAndRenderReminders();
+}
+
+function updateWaterDisplay() {
+    const count = getWaterCount();
+    const container = document.getElementById('waterGlasses');
+    if (!container) return;
+
+    container.querySelectorAll('.water-glass').forEach((glass, i) => {
+        glass.classList.toggle('filled', i < count);
+    });
+
+    const amountEl = document.getElementById('waterAmount');
+    if (amountEl) amountEl.textContent = count * 250;
+}
+
+// ============================================================
+// B7: つわり対応モード
+// ============================================================
+
+const MORNING_SICKNESS_EASY_FOODS = [
+    { name: 'クラッカー', tip: '起床前にベッドで数枚食べると楽に' },
+    { name: '生姜湯・ジンジャーエール', tip: '生姜は吐き気を和らげる効果' },
+    { name: 'レモン水', tip: '冷たくしてこまめに少量ずつ' },
+    { name: '冷たいおにぎり', tip: '匂いが少なく食べやすい' },
+    { name: '素うどん', tip: '消化が良くお腹に優しい' },
+    { name: 'バナナ', tip: 'エネルギー補給に最適' },
+    { name: 'ゼリー・寒天', tip: '水分補給も兼ねて' },
+    { name: '豆腐（冷奴）', tip: 'タンパク質を摂りやすい' },
+    { name: 'りんご', tip: 'すりおろすとさらに食べやすい' },
+    { name: 'ヨーグルト', tip: '整腸作用もあり一石二鳥' }
+];
+
+function isMorningSicknessMode() {
+    return localStorage.getItem('morningSicknessMode') === 'true';
+}
+
+// ===== テーマカラー切り替え =====
+function initThemePicker() {
+    // 保存済みテーマを適用
+    const saved = localStorage.getItem('appTheme');
+    if (saved && saved !== 'default') {
+        document.documentElement.setAttribute('data-theme', saved);
+    }
+
+    const picker = document.getElementById('themePicker');
+    if (!picker) return;
+
+    // 保存済みのアクティブ状態を反映
+    if (saved) {
+        picker.querySelectorAll('.theme-option').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.theme === saved);
+        });
+    }
+
+    picker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.theme-option');
+        if (!btn) return;
+
+        const theme = btn.dataset.theme;
+
+        // アクティブ状態の更新
+        picker.querySelectorAll('.theme-option').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // テーマ適用
+        if (theme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        localStorage.setItem('appTheme', theme);
+        showToast('テーマカラーを変更しました');
+    });
+}
+
+function initMorningSicknessMode() {
+    const toggle = document.getElementById('morningSicknessToggle');
+    if (!toggle) return;
+    toggle.checked = isMorningSicknessMode();
+    toggle.addEventListener('change', () => {
+        toggleMorningSicknessMode(toggle.checked);
+    });
+    updateMorningSicknessUI();
+}
+
+function toggleMorningSicknessMode(enabled) {
+    localStorage.setItem('morningSicknessMode', enabled ? 'true' : 'false');
+    updateMorningSicknessUI();
+    updateNutrientsSummary();
+    updateNutritionScore();
+    showToast(enabled ? 'つわりモードをONにしました' : 'つわりモードをOFFにしました');
+}
+
+function updateMorningSicknessUI() {
+    const enabled = isMorningSicknessMode();
+    const banner = document.getElementById('morningSicknessBanner');
+    if (banner) banner.classList.toggle('hidden', !enabled);
+
+    const foodsContainer = document.getElementById('morningSicknessEasyFoods');
+    if (foodsContainer) {
+        foodsContainer.classList.toggle('hidden', !enabled);
+        if (enabled) {
+            foodsContainer.innerHTML = `
+                <h4>食べやすい食品リスト</h4>
+                ${MORNING_SICKNESS_EASY_FOODS.map(f => `
+                    <div class="ms-easy-food-item">
+                        <span>${f.name}</span>
+                        <span class="ms-easy-food-tip">${f.tip}</span>
+                    </div>
+                `).join('')}
+            `;
+        }
+    }
+}
+
+// ============================================================
+// 産後モード
+// ============================================================
+
+function initPostpartumMode() {
+    const toggle = document.getElementById('postpartumToggle');
+    const dateGroup = document.getElementById('postpartumDateGroup');
+    const dateInput = document.getElementById('birthDateInput');
+    const feedingSelect = document.getElementById('feedingTypeSelect');
+    if (!toggle) return;
+
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    toggle.checked = profile.mode === 'postpartum';
+    if (toggle.checked && dateGroup) dateGroup.classList.remove('hidden');
+    if (profile.birthDate && dateInput) dateInput.value = profile.birthDate;
+    if (profile.feedingType && feedingSelect) feedingSelect.value = profile.feedingType;
+
+    toggle.addEventListener('change', () => {
+        const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+        if (toggle.checked) {
+            profile.mode = 'postpartum';
+            if (dateGroup) dateGroup.classList.remove('hidden');
+            if (!profile.birthDate) {
+                profile.birthDate = getTodayString();
+                if (dateInput) dateInput.value = profile.birthDate;
+            }
+            if (!profile.feedingType) {
+                profile.feedingType = 'breastfeeding';
+                if (feedingSelect) feedingSelect.value = 'breastfeeding';
+            }
+        } else {
+            delete profile.mode;
+            delete profile.birthDate;
+            delete profile.feedingType;
+            if (dateGroup) dateGroup.classList.add('hidden');
+        }
+        localStorage.setItem('userProfile', JSON.stringify(profile));
+        updateRecommendationsForTrimester();
+        renderDashboard();
+        showToast(toggle.checked ? '産後モードに切り替えました' : '妊娠モードに戻しました');
+    });
+
+    if (dateInput) {
+        dateInput.addEventListener('change', () => {
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            profile.birthDate = dateInput.value;
+            localStorage.setItem('userProfile', JSON.stringify(profile));
+            updateRecommendationsForTrimester();
+            renderDashboard();
+        });
+    }
+
+    if (feedingSelect) {
+        feedingSelect.addEventListener('change', () => {
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            profile.feedingType = feedingSelect.value;
+            localStorage.setItem('userProfile', JSON.stringify(profile));
+            updateRecommendationsForTrimester();
+            renderDashboard();
+            const labels = { breastfeeding: '完全母乳', mixed: '混合', formula: '完全ミルク' };
+            showToast(`授乳方法を「${labels[feedingSelect.value]}」に変更しました`);
+        });
+    }
+}
+
+// ============================================================
+// A2: お気に入り食品
+// ============================================================
+
+function getFavoriteFoods() {
+    return JSON.parse(localStorage.getItem('favoriteFoods') || '[]');
+}
+
+function saveFavoriteFoods(favorites) {
+    localStorage.setItem('favoriteFoods', JSON.stringify(favorites));
+}
+
+function isFavorite(foodId) {
+    return getFavoriteFoods().some(f => f.foodId === foodId);
+}
+
+function toggleFavorite(foodId, foodName, quantity, unitName) {
+    let favorites = getFavoriteFoods();
+    const index = favorites.findIndex(f => f.foodId === foodId);
+    if (index >= 0) {
+        favorites.splice(index, 1);
+        showToast(`${foodName} をお気に入りから削除`);
+    } else {
+        favorites.push({ foodId, foodName, quantity: quantity || 1, unitName: unitName || 'g' });
+        showToast(`${foodName} をお気に入りに追加`);
+    }
+    saveFavoriteFoods(favorites);
+    displayMeals();
+    displayFavorites();
+}
+
+function displayFavorites() {
+    const section = document.getElementById('favoritesSection');
+    const list = document.getElementById('favoritesList');
+    if (!section || !list) return;
+
+    const favorites = getFavoriteFoods();
+    if (favorites.length === 0) {
+        section.classList.add('hidden');
+        return;
+    }
+    section.classList.remove('hidden');
+    list.innerHTML = favorites.map((fav, i) => `
+        <div class="favorite-chip" data-index="${i}">
+            <span class="fav-star">★</span>
+            <span class="fav-text">${fav.foodName} (${fav.quantity}${fav.unitName})</span>
+            <span class="fav-remove" data-food-id="${fav.foodId}">&times;</span>
+        </div>
+    `).join('');
+
+    list.querySelectorAll('.fav-text').forEach((el, i) => {
+        el.addEventListener('click', () => {
+            const fav = favorites[i];
+            const food = foodMasterData.find(f => f.foodId === fav.foodId);
+            if (food) {
+                selectedFood = food;
+                document.getElementById('foodSearch').value = food.name;
+                document.getElementById('selectedFoodDisplay').classList.remove('hidden');
+                document.getElementById('selectedFoodName').textContent = food.name;
+                hideFoodSuggestions();
+                updateUnitSelect(food);
+                const unitSelect = document.getElementById('unitSelect');
+                for (let option of unitSelect.options) {
+                    if (option.textContent === fav.unitName) {
+                        unitSelect.value = option.value;
+                        break;
+                    }
+                }
+                document.getElementById('quantity').value = fav.quantity;
+                updateQuantityHint();
+            }
+        });
+    });
+
+    list.querySelectorAll('.fav-remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const foodId = btn.dataset.foodId;
+            const fav = favorites.find(f => f.foodId === foodId);
+            if (fav) toggleFavorite(fav.foodId, fav.foodName);
+        });
+    });
+}
+
+// ============================================================
+// A1: 食事コピー機能
+// ============================================================
+
+function getRecentDatesWithMeals(mealType, maxDays) {
+    maxDays = maxDays || 14;
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const today = new Date();
+    const targetDate = currentMealDate || getTodayString();
+    const results = [];
+
+    for (let i = 1; i <= maxDays; i++) {
+        const d = new Date(today);
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split('T')[0];
+        if (dateStr === targetDate) continue;
+        const meals = allRecords[dateStr]?.meals || [];
+        const typeMeals = meals.filter(m => m.mealType === mealType);
+        if (typeMeals.length > 0) {
+            results.push({
+                date: dateStr,
+                count: typeMeals.length,
+                foods: typeMeals.map(m => m.foodName).join(', ')
+            });
+        }
+    }
+    return results;
+}
+
+function showMealCopyPicker(mealType) {
+    const dates = getRecentDatesWithMeals(mealType);
+    if (dates.length === 0) {
+        showToast('コピー元の食事記録がありません');
+        return;
+    }
+
+    const mealLabels = { breakfast: '朝食', lunch: '昼食', dinner: '夕食', snack: '間食' };
+    const overlay = document.createElement('div');
+    overlay.className = 'meal-copy-overlay';
+    overlay.id = 'mealCopyOverlay';
+    overlay.innerHTML = `
+        <div class="meal-copy-sheet">
+            <h3>${mealLabels[mealType]}をコピー</h3>
+            ${dates.map(d => {
+                const dt = new Date(d.date);
+                const weekdays = ['日','月','火','水','木','金','土'];
+                const label = `${dt.getMonth()+1}/${dt.getDate()}(${weekdays[dt.getDay()]})`;
+                return `
+                    <div class="copy-date-item" data-date="${d.date}" data-type="${mealType}">
+                        <div>
+                            <div class="copy-date-label">${label}</div>
+                            <div class="copy-date-count">${d.foods}</div>
+                        </div>
+                        <span>${d.count}品</span>
+                    </div>
+                `;
+            }).join('')}
+            <button class="copy-close-btn">閉じる</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('.copy-close-btn').addEventListener('click', closeMealCopyPicker);
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeMealCopyPicker();
+    });
+
+    overlay.querySelectorAll('.copy-date-item').forEach(item => {
+        item.addEventListener('click', () => {
+            copyMealsFromDate(item.dataset.date, item.dataset.type);
+            closeMealCopyPicker();
+        });
+    });
+}
+
+function copyMealsFromDate(sourceDate, mealType) {
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const sourceMeals = (allRecords[sourceDate]?.meals || []).filter(m => m.mealType === mealType);
+    if (sourceMeals.length === 0) return;
+
+    const targetDate = currentMealDate || getTodayString();
+    if (!allRecords[targetDate]) allRecords[targetDate] = { meals: [] };
+
+    sourceMeals.forEach(meal => {
+        const copied = JSON.parse(JSON.stringify(meal));
+        copied.id = generateUUID();
+        copied.createdAt = new Date().toISOString();
+        copied.planned = isFutureDate(targetDate);
+        allRecords[targetDate].meals.push(copied);
+    });
+
+    safeSetItem('mealRecords', allRecords);
+    displayMeals();
+    updateNutrientsSummary();
+    updateNutritionScore();
+    updateStreak();
+    renderSuggestionSection();
+    showToast(`${sourceMeals.length}品をコピーしました`);
+}
+
+function closeMealCopyPicker() {
+    const overlay = document.getElementById('mealCopyOverlay');
+    if (overlay) overlay.remove();
+}
+
+// ============================================================
+// B5: 妊娠週数アドバイス
+// ============================================================
+
+const PREGNANCY_WEEK_ADVICE = [
+    { min: 0, max: 3, title: '妊娠超初期（0〜3週）', advice: '妊娠に気づく前の時期。葉酸の摂取を意識しましょう。', nutrients: ['葉酸'], foods: ['ほうれん草', 'ブロッコリー', '枝豆'] },
+    { min: 4, max: 7, title: '妊娠初期（4〜7週）', advice: 'つわりが始まることも。食べられるものを少量ずつ。葉酸は引き続き重要です。', nutrients: ['葉酸', 'ビタミンB6'], foods: ['バナナ', 'アボカド', '玄米'] },
+    { min: 8, max: 11, title: '妊娠初期（8〜11週）', advice: 'つわりのピーク期。水分補給を最優先に。脱水に注意しましょう。', nutrients: ['葉酸', '水分'], foods: ['ゼリー', '果物', 'スープ'] },
+    { min: 12, max: 15, title: '妊娠初期後半（12〜15週）', advice: 'つわりが落ち着く頃。バランスの良い食事を再開しましょう。', nutrients: ['葉酸', '鉄'], foods: ['赤身肉', 'レバー', '小松菜'] },
+    { min: 16, max: 19, title: '安定期（16〜19週）', advice: '食欲が出てくる時期。鉄分とカルシウムを意識的に摂りましょう。', nutrients: ['鉄', 'カルシウム'], foods: ['牛乳', '小魚', 'ひじき'] },
+    { min: 20, max: 23, title: '妊娠中期（20〜23週）', advice: '赤ちゃんの骨格が発達中。カルシウムとビタミンDが大切です。', nutrients: ['カルシウム', 'ビタミンD'], foods: ['鮭', 'しらす', 'きのこ'] },
+    { min: 24, max: 27, title: '妊娠中期後半（24〜27週）', advice: '血液量が増加。鉄分不足に注意。貧血検査の結果もチェック。', nutrients: ['鉄', 'タンパク質'], foods: ['赤身肉', '納豆', 'あさり'] },
+    { min: 28, max: 31, title: '妊娠後期（28〜31週）', advice: 'お腹が大きくなり胃が圧迫されます。少量頻回の食事がおすすめ。', nutrients: ['鉄', 'カルシウム', 'DHA'], foods: ['サバ', 'イワシ', '豆腐'] },
+    { min: 32, max: 35, title: '妊娠後期（32〜35週）', advice: '出産準備期。体力づくりのためにタンパク質と鉄をしっかり。', nutrients: ['タンパク質', '鉄'], foods: ['鶏むね肉', '卵', 'ほうれん草'] },
+    { min: 36, max: 39, title: '臨月（36〜39週）', advice: '赤ちゃんの体重増加期。バランス良く食べつつ体重管理も意識。', nutrients: ['タンパク質', 'ビタミンK'], foods: ['納豆', 'ブロッコリー', 'ほうれん草'] },
+    { min: 40, max: 42, title: '出産予定日前後（40〜42週）', advice: 'いつ出産になっても大丈夫。消化の良い食事で体力温存。', nutrients: ['炭水化物', 'タンパク質'], foods: ['おにぎり', 'バナナ', 'ゼリー'] }
+];
+
+function getWeekAdvice(week) {
+    if (week === null || week === undefined) return null;
+    return PREGNANCY_WEEK_ADVICE.find(a => week >= a.min && week <= a.max) || null;
+}
+
+function renderPregnancyAdviceCard() {
+    const card = document.getElementById('pregnancyAdviceCard');
+    if (!card) return;
+
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    // 産後モードでは妊娠アドバイスを表示しない
+    if (profile.mode === 'postpartum' || !profile.pregnancyStartDate) {
+        card.classList.add('hidden');
+        return;
+    }
+
+    const week = getPregnancyWeek(profile.pregnancyStartDate);
+    const advice = getWeekAdvice(week);
+    if (!advice) {
+        card.classList.add('hidden');
+        return;
+    }
+
+    card.classList.remove('hidden');
+    card.innerHTML = `
+        <div class="pregnancy-advice-card">
+            <div class="advice-card-header">
+                <svg class="advice-icon-svg" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <h3>${advice.title}</h3>
+            </div>
+            <div class="advice-card-body">
+                <p>${advice.advice}</p>
+                <div class="advice-nutrients">
+                    ${advice.nutrients.map(n => `<span class="advice-nutrient-tag">${n}</span>`).join('')}
+                </div>
+                <div class="advice-foods">おすすめ: ${advice.foods.join('、')}</div>
+            </div>
+        </div>
+    `;
+}
+
+function renderMealTabAdviceTip() {
+    const tip = document.getElementById('weekAdviceTip');
+    if (!tip) return;
+
+    if (sessionStorage.getItem('weekAdviceTipClosed') === 'true') {
+        tip.classList.add('hidden');
+        return;
+    }
+
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    // 産後モードまたは妊娠開始日未設定の場合は非表示
+    if (profile.mode === 'postpartum' || !profile.pregnancyStartDate) {
+        tip.classList.add('hidden');
+        return;
+    }
+
+    const week = getPregnancyWeek(profile.pregnancyStartDate);
+    const advice = getWeekAdvice(week);
+    if (!advice) {
+        tip.classList.add('hidden');
+        return;
+    }
+
+    tip.classList.remove('hidden');
+    tip.innerHTML = `
+        <button class="tip-close" id="closeTipBtn">&times;</button>
+        <div class="tip-title">${advice.title}</div>
+        <div>注目: ${advice.nutrients.join('、')} | おすすめ: ${advice.foods.join('、')}</div>
+    `;
+
+    document.getElementById('closeTipBtn').addEventListener('click', () => {
+        tip.classList.add('hidden');
+        sessionStorage.setItem('weekAdviceTipClosed', 'true');
+    });
+}
+
+// ============================================================
+// B6: 体重増加ペース予測（ダッシュボードカード部分）
+// ============================================================
+
+function renderWeightPrediction() {
+    const card = document.getElementById('weightPredictionCard');
+    if (!card) return;
+
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    const records = JSON.parse(localStorage.getItem('weightRecords') || '[]');
+
+    // 産後モードでは体重予測を表示しない
+    if (profile.mode === 'postpartum' || !profile.pregnancyStartDate || !profile.prePregnancyWeight || !profile.height || records.length < 2) {
+        card.classList.add('hidden');
+        return;
+    }
+
+    const projection = projectFinalWeight(profile, records);
+    if (!projection) {
+        card.classList.add('hidden');
+        return;
+    }
+
+    const heightM = profile.height / 100;
+    const bmi = profile.prePregnancyWeight / (heightM * heightM);
+    const range = getRecommendedGainRange(bmi);
+
+    let statusClass = 'good';
+    let statusText = '推奨範囲内';
+    if (projection.totalGain > range.max) {
+        statusClass = 'over';
+        statusText = '推奨上限を超える見込み';
+    } else if (projection.totalGain < range.min) {
+        statusClass = 'warning';
+        statusText = '推奨下限を下回る見込み';
+    }
+
+    card.classList.remove('hidden');
+    card.innerHTML = `
+        <h3 style="font-size:0.9rem;margin-bottom:0.4rem;color:var(--dark-text)">体重増加ペース予測</h3>
+        <div class="weight-prediction-card">
+            <div class="prediction-main">
+                <span class="prediction-value">${projection.totalGain >= 0 ? '+' : ''}${projection.totalGain.toFixed(1)}</span>
+                <span class="prediction-unit">kg（出産時予測）</span>
+            </div>
+            <div class="prediction-status ${statusClass}">${statusText}（推奨: +${range.min}〜+${range.max}kg）</div>
+            <div class="prediction-detail">
+                週あたり ${projection.weeklyRate >= 0 ? '+' : ''}${projection.weeklyRate.toFixed(2)}kg/週ペース
+                （現在 ${projection.currentWeight.toFixed(1)}kg / 妊娠前 ${profile.prePregnancyWeight}kg）
+            </div>
+        </div>
+    `;
+}
+
+// ============================================================
+// A4: 週間・月間レポート
+// ============================================================
+
+function setupReportPeriodTabs() {
+    document.querySelectorAll('.report-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            renderReport(parseInt(tab.dataset.days));
+        });
+    });
+}
+
+function renderReport(days) {
+    days = days || 7;
+    const container = document.getElementById('reportContainer');
+    if (!container) return;
+
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days + 1);
+    const startStr = startDate.toISOString().split('T')[0];
+    const endStr = endDate.toISOString().split('T')[0];
+
+    const stats = calculatePeriodNutritionStats(startStr, endStr);
+    let html = '';
+
+    html += renderAverageScoreReport(stats);
+    html += renderNutrientAchievementReport(stats);
+    html += renderReportComment(stats, days);
+
+    container.innerHTML = html;
+}
+
+function calculatePeriodNutritionStats(startDate, endDate) {
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const days = [];
+    const current = new Date(startDate);
+    const end = new Date(endDate);
+
+    while (current <= end) {
+        const dateStr = current.toISOString().split('T')[0];
+        const meals = allRecords[dateStr]?.meals || [];
+        const totals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
+        meals.forEach(m => {
+            Object.keys(totals).forEach(k => { totals[k] += (m.nutrients[k] || 0); });
+        });
+        days.push({ date: dateStr, totals, mealCount: meals.length });
+        current.setDate(current.getDate() + 1);
+    }
+
+    const daysWithMeals = days.filter(d => d.mealCount > 0);
+    const avgTotals = { calories: 0, protein: 0, fat: 0, carbohydrate: 0, iron: 0, calcium: 0, folate: 0, vitaminD: 0, vitaminB6: 0, vitaminB12: 0, zinc: 0, fiber: 0, dha: 0 };
+    if (daysWithMeals.length > 0) {
+        daysWithMeals.forEach(d => {
+            Object.keys(avgTotals).forEach(k => { avgTotals[k] += d.totals[k]; });
+        });
+        Object.keys(avgTotals).forEach(k => { avgTotals[k] /= daysWithMeals.length; });
+    }
+
+    // 日別スコアを計算
+    const dayScores = days.map(d => {
+        if (d.mealCount === 0) return { ...d, score: 0 };
+        let score = 0;
+        const calGoal = NUTRIENT_RECOMMENDATIONS.calories?.recommended || 2250;
+        const calRatio = d.totals.calories / calGoal;
+        if (calRatio >= 0.8 && calRatio <= 1.2) score += 30;
+        else if (calRatio >= 0.6 && calRatio <= 1.4) score += 20;
+        else if (calRatio > 0) score += 10;
+
+        ['iron', 'calcium', 'folate', 'vitaminD', 'vitaminB12', 'zinc', 'fiber'].forEach(key => {
+            const rec = NUTRIENT_RECOMMENDATIONS[key]?.recommended || 1;
+            const ratio = d.totals[key] / rec;
+            const pts = ['iron', 'calcium', 'folate'].includes(key) ? 6 : 3;
+            if (ratio >= 0.8) score += pts;
+            else if (ratio >= 0.5) score += Math.round(pts * 0.6);
+            else if (ratio > 0) score += Math.round(pts * 0.3);
+        });
+
+        score += Math.min(d.mealCount, 3) >= 3 ? 20 : (d.mealCount >= 2 ? 12 : 5);
+        // Simplified PFC score
+        const totalCal = d.totals.calories || 1;
+        const pRatio = (d.totals.protein * 4) / totalCal;
+        if (pRatio >= 0.13 && pRatio <= 0.20) score += 10;
+        else if (pRatio >= 0.10) score += 5;
+
+        return { ...d, score };
+    });
+
+    return { days, daysWithMeals, avgTotals, dayScores, totalDays: days.length };
+}
+
+function renderNutrientAchievementReport(stats) {
+    const nutrients = ['calories', 'protein', 'iron', 'calcium', 'folate', 'vitaminD', 'vitaminB6', 'vitaminB12', 'zinc', 'fiber', 'dha'];
+    let html = '<div class="report-section"><h4>栄養素別 平均達成率</h4>';
+
+    nutrients.forEach(key => {
+        const rec = NUTRIENT_RECOMMENDATIONS[key];
+        if (!rec) return;
+        const avg = stats.avgTotals[key];
+        const pct = Math.round((avg / rec.recommended) * 100);
+        const color = pct >= 80 ? 'var(--accent-green)' : pct >= 50 ? 'var(--accent-pink)' : 'var(--sumi-500)';
+
+        html += `
+            <div class="report-achievement-bar">
+                <span class="report-bar-label">${rec.label}</span>
+                <div class="report-bar-track">
+                    <div class="report-bar-fill" style="width:${Math.min(pct, 100)}%; background:${color}"></div>
+                </div>
+                <span class="report-bar-value" style="color:${color}">${pct}%</span>
+            </div>
+        `;
+    });
+    html += '</div>';
+    return html;
+}
+
+function renderBestWorstDaysReport(stats) {
+    const scored = stats.dayScores.filter(d => d.mealCount > 0).sort((a, b) => b.score - a.score);
+    if (scored.length === 0) return '<div class="report-section"><h4>ベスト/ワーストの日</h4><p style="font-size:0.85rem;color:var(--light-text)">データがありません</p></div>';
+
+    const best = scored[0];
+    const worst = scored[scored.length - 1];
+    const formatDate = (d) => {
+        const dt = new Date(d);
+        const wd = ['日','月','火','水','木','金','土'];
+        return `${dt.getMonth()+1}/${dt.getDate()}(${wd[dt.getDay()]})`;
+    };
+
+    return `
+        <div class="report-section">
+            <h4>ベスト/ワーストの日</h4>
+            <div class="report-day-card" style="border-left:3px solid var(--success-green)">
+                <span>ベスト: ${formatDate(best.date)}</span>
+                <span style="font-weight:600;color:var(--success-green)">${best.score}点</span>
+            </div>
+            <div class="report-day-card" style="border-left:3px solid var(--danger-red)">
+                <span>ワースト: ${formatDate(worst.date)}</span>
+                <span style="font-weight:600;color:var(--danger-red)">${worst.score}点</span>
+            </div>
+        </div>
+    `;
+}
+
+function renderWeightTrendReport(days) {
+    const records = JSON.parse(localStorage.getItem('weightRecords') || '[]');
+    if (records.length < 2) return '<div class="report-section"><h4>体重推移</h4><p style="font-size:0.85rem;color:var(--light-text)">体重記録が2件以上必要です</p></div>';
+
+    const sorted = [...records].sort((a, b) => a.date.localeCompare(b.date));
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+    const cutoffStr = cutoff.toISOString().split('T')[0];
+    const periodRecords = sorted.filter(r => r.date >= cutoffStr);
+
+    if (periodRecords.length < 1) {
+        return '<div class="report-section"><h4>体重推移</h4><p style="font-size:0.85rem;color:var(--light-text)">期間内の記録がありません</p></div>';
+    }
+
+    const first = periodRecords[0];
+    const last = periodRecords[periodRecords.length - 1];
+    const change = last.weight - first.weight;
+
+    return `
+        <div class="report-section">
+            <h4>体重推移（期間内）</h4>
+            <div class="report-weight-summary">
+                <div class="report-weight-item">
+                    <span class="rw-value">${first.weight.toFixed(1)} kg</span>
+                    <span class="rw-label">期間開始</span>
+                </div>
+                <div class="report-weight-item">
+                    <span class="rw-value">${last.weight.toFixed(1)} kg</span>
+                    <span class="rw-label">最新</span>
+                </div>
+                <div class="report-weight-item">
+                    <span class="rw-value" style="color:${change > 0 ? 'var(--danger-red)' : 'var(--success-green)'}">${change >= 0 ? '+' : ''}${change.toFixed(1)} kg</span>
+                    <span class="rw-label">変化量</span>
+                </div>
+                <div class="report-weight-item">
+                    <span class="rw-value">${periodRecords.length}</span>
+                    <span class="rw-label">記録回数</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderAverageScoreReport(stats) {
+    const scored = stats.dayScores.filter(d => d.mealCount > 0);
+    if (scored.length === 0) return '<div class="report-section"><div class="report-score-big"><span class="score-num">--</span><div class="score-label">平均栄養スコア</div></div></div>';
+
+    const avg = Math.round(scored.reduce((s, d) => s + d.score, 0) / scored.length);
+    const color = avg >= 70 ? 'var(--accent-green)' : avg >= 40 ? 'var(--accent-pink)' : 'var(--sumi-500)';
+
+    return `
+        <div class="report-section">
+            <div class="report-score-big">
+                <span class="score-num" style="color:${color}">${avg}</span>
+                <div class="score-label">平均栄養スコア（${scored.length}日間）</div>
+            </div>
+        </div>
+    `;
+}
+
+function renderReportComment(stats, days) {
+    const scored = stats.dayScores.filter(d => d.mealCount > 0);
+    if (scored.length === 0) {
+        const periodLabel = days <= 7 ? 'この1週間' : 'この1ヶ月';
+        return `<div class="report-comment">${periodLabel}はまだ食事記録がありません。記録を続けてアドバイスを受けましょう。</div>`;
+    }
+
+    const avg = Math.round(scored.reduce((s, d) => s + d.score, 0) / scored.length);
+    const periodLabel = days <= 7 ? 'この1週間' : 'この1ヶ月';
+
+    // 不足栄養素を特定
+    const nutrientKeys = ['iron', 'folate', 'calcium', 'protein'];
+    const lowNutrients = [];
+    nutrientKeys.forEach(key => {
+        const rec = NUTRIENT_RECOMMENDATIONS[key];
+        if (!rec) return;
+        let totalAmt = 0, dataCnt = 0;
+        scored.forEach(d => {
+            if (d.totals && d.totals[key] !== undefined) {
+                totalAmt += d.totals[key];
+                dataCnt++;
+            }
+        });
+        if (dataCnt > 0 && (totalAmt / dataCnt) < rec.recommended * 0.7) {
+            lowNutrients.push(rec.label);
+        }
+    });
+
+    let comment = '';
+    if (avg >= 70) {
+        comment = `${periodLabel}の栄養バランスは良好です。この調子で続けましょう！`;
+    } else if (avg >= 40) {
+        comment = `${periodLabel}の栄養スコアはまずまずです。`;
+    } else {
+        comment = `${periodLabel}は栄養が偏り気味です。バランスを意識してみましょう。`;
+    }
+
+    if (lowNutrients.length > 0) {
+        comment += `特に${lowNutrients.join('・')}が不足傾向です。意識して摂取しましょう。`;
+    }
+
+    const recordRate = Math.round(scored.length / days * 100);
+    if (recordRate < 50) {
+        comment += `記録率は${recordRate}%です。毎日の記録が正確な分析につながります。`;
+    }
+
+    return `<div class="report-comment">${comment}</div>`;
+}
+
+function renderStreakReport() {
+    const allRecords = JSON.parse(localStorage.getItem('mealRecords') || '{}');
+    const today = getTodayString();
+    let streak = 0;
+    let checkDate = new Date(today);
+
+    while (true) {
+        const dateStr = checkDate.toISOString().split('T')[0];
+        const meals = allRecords[dateStr]?.meals || [];
+        if (meals.length > 0) {
+            streak++;
+            checkDate.setDate(checkDate.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+
+    // 記録率（過去30日）
+    let recorded = 0;
+    for (let i = 0; i < 30; i++) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const ds = d.toISOString().split('T')[0];
+        if (allRecords[ds]?.meals?.length > 0) recorded++;
+    }
+    const rate = Math.round((recorded / 30) * 100);
+
+    return `
+        <div class="report-section">
+            <h4>記録継続</h4>
+            <div class="report-streak-info">
+                <div class="streak-num">${streak}日</div>
+                <div>連続記録中</div>
+                <div style="margin-top:8px;font-size:0.82rem;color:var(--light-text)">過去30日の記録率: ${rate}%（${recorded}/30日）</div>
+            </div>
+        </div>
+    `;
 }

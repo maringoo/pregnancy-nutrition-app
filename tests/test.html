@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マタニティ栄養ナビ - ユニットテスト</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Noto Sans JP", system-ui, sans-serif; font-size: 14px; padding: 20px; background: #f8f8fb; }
+        h1 { font-size: 1.2rem; margin-bottom: 16px; }
+        .summary { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-weight: 600; }
+        .summary.pass { background: #C8E6C9; color: #2E7D32; }
+        .summary.fail { background: #FFCDD2; color: #C62828; }
+        .suite { margin-bottom: 16px; }
+        .suite-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; padding: 6px 0; border-bottom: 1px solid #ddd; }
+        .test { padding: 4px 12px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+        .test.pass { color: #2E7D32; }
+        .test.fail { color: #C62828; background: #FFF3F3; border-radius: 4px; padding: 6px 12px; margin: 2px 0; }
+        .test .icon { font-size: 1rem; }
+        .fail-detail { font-size: 0.78rem; color: #999; margin-left: 24px; }
+    </style>
+</head>
+<body>
+    <h1>ユニットテスト</h1>
+    <div id="summary" class="summary"></div>
+    <div id="results"></div>
+
+    <!-- テスト対象のスクリプトを読み込み（DOMに依存しない関数のみテスト） -->
+    <script src="../js/nutrition.js"></script>
+    <script src="../js/weight.js"></script>
+    <script>
+    // ========== 軽量テストランナー ==========
+    const results = [];
+    let currentSuite = '';
+
+    function describe(name, fn) {
+        currentSuite = name;
+        fn();
+    }
+
+    function it(name, fn) {
+        try {
+            fn();
+            results.push({ suite: currentSuite, name, pass: true });
+        } catch (e) {
+            results.push({ suite: currentSuite, name, pass: false, error: e.message });
+        }
+    }
+
+    function assert(condition, msg) {
+        if (!condition) throw new Error(msg || 'Assertion failed');
+    }
+
+    function assertEqual(actual, expected, msg) {
+        if (actual !== expected) {
+            throw new Error(`${msg || 'assertEqual'}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+        }
+    }
+
+    function assertClose(actual, expected, tolerance, msg) {
+        if (Math.abs(actual - expected) > tolerance) {
+            throw new Error(`${msg || 'assertClose'}: expected ~${expected} (±${tolerance}), got ${actual}`);
+        }
+    }
+
+    function assertNull(actual, msg) {
+        if (actual !== null) throw new Error(`${msg || 'assertNull'}: expected null, got ${JSON.stringify(actual)}`);
+    }
+
+    function assertNotNull(actual, msg) {
+        if (actual === null || actual === undefined) throw new Error(`${msg || 'assertNotNull'}: got ${actual}`);
+    }
+
+    // ========== テスト用ヘルパー ==========
+    // localStorage をモック（テスト用）
+    const _origLS = {};
+    function mockLocalStorage(data) {
+        Object.keys(data).forEach(k => {
+            _origLS[k] = localStorage.getItem(k);
+            localStorage.setItem(k, typeof data[k] === 'string' ? data[k] : JSON.stringify(data[k]));
+        });
+    }
+    function restoreLocalStorage() {
+        Object.keys(_origLS).forEach(k => {
+            if (_origLS[k] === null) localStorage.removeItem(k);
+            else localStorage.setItem(k, _origLS[k]);
+        });
+    }
+
+    // app.js の関数をテストするために必要な最小グローバル
+    // (DOM非依存の関数のみテストするため)
+    if (typeof NUTRIENT_RECOMMENDATIONS === 'undefined') {
+        window.NUTRIENT_RECOMMENDATIONS = {
+            calories: { label: 'カロリー', recommended: 2250, unit: 'kcal' },
+            protein: { label: 'タンパク質', recommended: 55, unit: 'g' },
+            fat: { label: '脂質', recommended: 55, unit: 'g' },
+            carbohydrate: { label: '炭水化物', recommended: 300, unit: 'g' },
+            iron: { label: '鉄', recommended: 21, unit: 'mg' },
+            calcium: { label: 'カルシウム', recommended: 650, unit: 'mg' },
+            folate: { label: '葉酸', recommended: 480, unit: 'μg' }
+        };
+    }
+
+    // ========== テストスイート ==========
+
+    // --- nutrition.js ---
+
+    describe('getPregnancyWeek', () => {
+        it('正常: 70日後 → 10週', () => {
+            const start = new Date();
+            start.setDate(start.getDate() - 70);
+            const startStr = start.toISOString().split('T')[0];
+            assertEqual(getPregnancyWeek(startStr), 10);
+        });
+
+        it('正常: 0日目 → 0週', () => {
+            const today = new Date().toISOString().split('T')[0];
+            assertEqual(getPregnancyWeek(today), 0);
+        });
+
+        it('上限42週でキャップ', () => {
+            const start = new Date();
+            start.setDate(start.getDate() - 350);
+            const startStr = start.toISOString().split('T')[0];
+            assertEqual(getPregnancyWeek(startStr), 42);
+        });
+
+        it('未来の日付 → null', () => {
+            const future = new Date();
+            future.setDate(future.getDate() + 30);
+            assertNull(getPregnancyWeek(future.toISOString().split('T')[0]));
+        });
+
+        it('空文字 → null', () => {
+            assertNull(getPregnancyWeek(''));
+        });
+
+        it('null → null', () => {
+            assertNull(getPregnancyWeek(null));
+        });
+
+        it('不正な日付 → null', () => {
+            assertNull(getPregnancyWeek('invalid-date'));
+        });
+
+        it('referenceDate指定で正しく計算', () => {
+            const result = getPregnancyWeek('2025-01-01', new Date('2025-03-12'));
+            assertEqual(result, 10);
+        });
+    });
+
+    describe('getTrimester', () => {
+        it('0週 → first', () => assertEqual(getTrimester(0), 'first'));
+        it('15週 → first', () => assertEqual(getTrimester(15), 'first'));
+        it('16週 → second', () => assertEqual(getTrimester(16), 'second'));
+        it('27週 → second', () => assertEqual(getTrimester(27), 'second'));
+        it('28週 → third', () => assertEqual(getTrimester(28), 'third'));
+        it('40週 → third', () => assertEqual(getTrimester(40), 'third'));
+        it('null → second (デフォルト)', () => assertEqual(getTrimester(null), 'second'));
+        it('負の値 → second (デフォルト)', () => assertEqual(getTrimester(-1), 'second'));
+    });
+
+    describe('getTrimesterLabel', () => {
+        it('first → 初期', () => assertEqual(getTrimesterLabel('first'), '初期'));
+        it('second → 中期', () => assertEqual(getTrimesterLabel('second'), '中期'));
+        it('third → 後期', () => assertEqual(getTrimesterLabel('third'), '後期'));
+        it('不明 → 中期', () => assertEqual(getTrimesterLabel('unknown'), '中期'));
+    });
+
+    describe('calculateNutrients', () => {
+        const sampleFood = {
+            calories: 168, protein: 2.5, fat: 0.3,
+            carbohydrate: 37.1, iron: 0.1, calcium: 3, folate: 3
+        };
+
+        it('100gでそのままの値', () => {
+            const r = calculateNutrients(sampleFood, 100);
+            assertEqual(r.calories, 168);
+            assertEqual(r.protein, 2.5);
+        });
+
+        it('200gで2倍', () => {
+            const r = calculateNutrients(sampleFood, 200);
+            assertEqual(r.calories, 336);
+            assertEqual(r.protein, 5);
+        });
+
+        it('50gで半分', () => {
+            const r = calculateNutrients(sampleFood, 50);
+            assertEqual(r.calories, 84);
+        });
+
+        it('0gですべて0', () => {
+            const r = calculateNutrients(sampleFood, 0);
+            assertEqual(r.calories, 0);
+            assertEqual(r.protein, 0);
+        });
+
+        it('food=null → null', () => {
+            assertNull(calculateNutrients(null, 100));
+        });
+
+        it('quantity=負 → null', () => {
+            assertNull(calculateNutrients(sampleFood, -10));
+        });
+
+        it('quantity=文字列 → null', () => {
+            assertNull(calculateNutrients(sampleFood, 'abc'));
+        });
+    });
+
+    describe('calculateDailyTotal', () => {
+        const foods = [
+            { foodId: 'f1', calories: 168, protein: 2.5, fat: 0.3, carbohydrate: 37.1, iron: 0.1, calcium: 3, folate: 3 },
+            { foodId: 'f2', calories: 100, protein: 10, fat: 5, carbohydrate: 10, iron: 1, calcium: 50, folate: 20 }
+        ];
+
+        it('2食の合計が正しい', () => {
+            const meals = [
+                { foodId: 'f1', quantity: 100 },
+                { foodId: 'f2', quantity: 100 }
+            ];
+            const r = calculateDailyTotal(meals, foods);
+            assertClose(r.calories, 268, 0.1);
+            assertClose(r.protein, 12.5, 0.1);
+        });
+
+        it('空配列 → すべて0', () => {
+            const r = calculateDailyTotal([], foods);
+            assertEqual(r.calories, 0);
+        });
+
+        it('存在しないfoodIdはスキップ', () => {
+            const meals = [{ foodId: 'unknown', quantity: 100 }];
+            const r = calculateDailyTotal(meals, foods);
+            assertEqual(r.calories, 0);
+        });
+
+        it('不正入力 → null', () => {
+            assertNull(calculateDailyTotal('bad', foods));
+        });
+    });
+
+    // --- weight.js ---
+
+    describe('getRecommendedGainRange', () => {
+        it('BMI 17 → やせ型 9-12kg', () => {
+            const r = getRecommendedGainRange(17);
+            assertEqual(r.min, 9);
+            assertEqual(r.max, 12);
+            assertEqual(r.label, 'やせ型');
+        });
+
+        it('BMI 22 → 標準 7-12kg', () => {
+            const r = getRecommendedGainRange(22);
+            assertEqual(r.min, 7);
+            assertEqual(r.max, 12);
+        });
+
+        it('BMI 28 → 肥満 5-5kg', () => {
+            const r = getRecommendedGainRange(28);
+            assertEqual(r.min, 5);
+            assertEqual(r.max, 5);
+        });
+
+        it('BMI 18.5境界 → 標準', () => {
+            const r = getRecommendedGainRange(18.5);
+            assertEqual(r.label, '標準');
+        });
+
+        it('BMI 25.0境界 → 肥満', () => {
+            const r = getRecommendedGainRange(25.0);
+            assertEqual(r.label, '肥満');
+        });
+    });
+
+    describe('calculateWeeklyGainRate', () => {
+        it('2件の記録から増加率を計算', () => {
+            const records = [
+                { date: '2025-01-01', weight: 55.0 },
+                { date: '2025-01-15', weight: 56.0 }
+            ];
+            const rate = calculateWeeklyGainRate(records, 4);
+            assertNotNull(rate);
+            assertClose(rate, 0.5, 0.01, '2週間で1kg = 0.5kg/週');
+        });
+
+        it('1件 → null', () => {
+            assertNull(calculateWeeklyGainRate([{ date: '2025-01-01', weight: 55 }]));
+        });
+
+        it('0件 → null', () => {
+            assertNull(calculateWeeklyGainRate([]));
+        });
+
+        it('同日記録 → null (0日差)', () => {
+            const records = [
+                { date: '2025-01-01', weight: 55 },
+                { date: '2025-01-01', weight: 56 }
+            ];
+            assertNull(calculateWeeklyGainRate(records));
+        });
+    });
+
+    describe('projectFinalWeight', () => {
+        it('正常なプロフィールと記録で予測', () => {
+            const start = new Date();
+            start.setDate(start.getDate() - 140); // 20週
+            const profile = {
+                pregnancyStartDate: start.toISOString().split('T')[0],
+                prePregnancyWeight: 52,
+                height: 158
+            };
+            const d1 = new Date(); d1.setDate(d1.getDate() - 14);
+            const d2 = new Date(); d2.setDate(d2.getDate() - 1);
+            const records = [
+                { date: d1.toISOString().split('T')[0], weight: 56 },
+                { date: d2.toISOString().split('T')[0], weight: 57 }
+            ];
+            const r = projectFinalWeight(profile, records);
+            assertNotNull(r);
+            assert(r.totalGain > 0, '体重増加は正の値');
+            assert(r.remainingWeeks > 0, '残り週数は正の値');
+            assert(r.currentWeight === 57, '現在体重が最新記録');
+        });
+
+        it('記録1件 → null', () => {
+            const profile = { pregnancyStartDate: '2025-01-01', prePregnancyWeight: 52, height: 158 };
+            assertNull(projectFinalWeight(profile, [{ date: '2025-06-01', weight: 55 }]));
+        });
+
+        it('プロフィール不足 → null', () => {
+            assertNull(projectFinalWeight({}, [{ date: '2025-01-01', weight: 55 }, { date: '2025-01-08', weight: 56 }]));
+        });
+    });
+
+    describe('calculateAchievementRate', () => {
+        const nutrients = [
+            { nutrientId: 'calories', name: 'カロリー', unit: 'kcal', firstTrimester: 1800, secondTrimester: 2250, thirdTrimester: 2450 },
+            { nutrientId: 'iron', name: '鉄', unit: 'mg', firstTrimester: 9, secondTrimester: 16, thirdTrimester: 21 }
+        ];
+
+        it('50%達成を正しく計算', () => {
+            const daily = { calories: 1125, iron: 8 };
+            const r = calculateAchievementRate(daily, 'second', nutrients);
+            assertEqual(r.calories, 50);
+            assertEqual(r.iron, 50);
+        });
+
+        it('100%超過も計算', () => {
+            const daily = { calories: 4500, iron: 32 };
+            const r = calculateAchievementRate(daily, 'second', nutrients);
+            assertEqual(r.calories, 200);
+            assertEqual(r.iron, 200);
+        });
+
+        it('不正なtrimester → null', () => {
+            assertNull(calculateAchievementRate({ calories: 0 }, 'bad', nutrients));
+        });
+    });
+
+    describe('getDeficientNutrients', () => {
+        const nutrients = [
+            { nutrientId: 'calories', name: 'カロリー', unit: 'kcal', firstTrimester: 1800, secondTrimester: 2250, thirdTrimester: 2450 },
+            { nutrientId: 'iron', name: '鉄', unit: 'mg', firstTrimester: 9, secondTrimester: 16, thirdTrimester: 21 }
+        ];
+
+        it('不足栄養素を不足率順にソート', () => {
+            const daily = { calories: 2000, iron: 5 };
+            const rates = { calories: 89, iron: 31 };
+            const r = getDeficientNutrients(rates, daily, 'second', nutrients);
+            assertEqual(r.length, 2);
+            assertEqual(r[0].nutrientId, 'iron'); // 不足率69% > 11%
+        });
+
+        it('全て100%以上 → 空配列', () => {
+            const daily = { calories: 3000, iron: 20 };
+            const rates = { calories: 133, iron: 125 };
+            const r = getDeficientNutrients(rates, daily, 'second', nutrients);
+            assertEqual(r.length, 0);
+        });
+    });
+
+    // ========== 結果表示 ==========
+    function renderResults() {
+        const container = document.getElementById('results');
+        const summaryEl = document.getElementById('summary');
+
+        const passed = results.filter(r => r.pass).length;
+        const failed = results.filter(r => !r.pass).length;
+        const total = results.length;
+
+        summaryEl.textContent = `${passed}/${total} passed` + (failed > 0 ? ` (${failed} failed)` : '');
+        summaryEl.className = 'summary ' + (failed > 0 ? 'fail' : 'pass');
+
+        // グループ化
+        const suites = {};
+        results.forEach(r => {
+            if (!suites[r.suite]) suites[r.suite] = [];
+            suites[r.suite].push(r);
+        });
+
+        let html = '';
+        Object.keys(suites).forEach(suite => {
+            html += `<div class="suite"><div class="suite-name">${suite}</div>`;
+            suites[suite].forEach(r => {
+                const icon = r.pass ? '✓' : '✗';
+                html += `<div class="test ${r.pass ? 'pass' : 'fail'}"><span class="icon">${icon}</span> ${r.name}</div>`;
+                if (!r.pass) {
+                    html += `<div class="fail-detail">${r.error}</div>`;
+                }
+            });
+            html += '</div>';
+        });
+
+        container.innerHTML = html;
+    }
+
+    renderResults();
+    </script>
+</body>
+</html>
