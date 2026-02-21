@@ -2,48 +2,163 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マタニティ栄養ナビ - 妊婦向け栄養管理アプリ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>mamori - マタニティ栄養サポート</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D4708F">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="mamori">
+    <link rel="apple-touch-icon" href="icons/icon.svg">
+    <link rel="apple-touch-startup-image" href="icons/splash.svg">
+
+    <!-- OGP -->
+    <meta property="og:title" content="mamori - マタニティ栄養サポート">
+    <meta property="og:description" content="妊娠期別の栄養管理をサポート。食事記録・体重管理・栄養提案で、ママと赤ちゃんの健康を守ります。">
+    <meta property="og:image" content="icons/ogp.svg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
+    <a href="#tab-meals" class="sr-only">メインコンテンツへスキップ</a>
     <!-- ===== ヘッダー ===== -->
     <header class="header">
         <div class="header-content">
-            <h1 class="app-title">マタニティ栄養ナビ</h1>
+            <h1 class="app-title"><img src="icons/icon-bowl.svg" alt="" class="app-title-icon">mamori</h1>
             <p class="today-date" id="todayDate"></p>
             <p class="disclaimer-link">※栄養情報は参考値です。医師の指導を優先してください。</p>
         </div>
     </header>
 
     <!-- ===== ナビゲーションタブ ===== -->
-    <nav class="nav-tabs">
-        <button class="nav-tab active" data-tab="meals">食事記録</button>
-        <button class="nav-tab" data-tab="weight">体重記録</button>
-        <button class="nav-tab" data-tab="dashboard">管理</button>
-        <button class="nav-tab" data-tab="settings">設定</button>
+    <nav class="nav-tabs" role="tablist" aria-label="メインナビゲーション">
+        <button class="nav-tab active" data-tab="meals" role="tab" aria-selected="true" aria-controls="tab-meals">
+            <svg class="nav-tab-icon" viewBox="0 0 24 24"><path d="M3 14h18M5 14c0 4 3 7 7 7s7-3 7-7M8 14V6M12 14V3M16 14V6"/></svg>
+            食事記録
+        </button>
+        <button class="nav-tab" data-tab="weight" role="tab" aria-selected="false" aria-controls="tab-weight">
+            <svg class="nav-tab-icon" viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>
+            体重記録
+        </button>
+        <button class="nav-tab" data-tab="dashboard" role="tab" aria-selected="false" aria-controls="tab-dashboard">
+            <svg class="nav-tab-icon" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+            管理
+        </button>
+        <button class="nav-tab" data-tab="shopping" role="tab" aria-selected="false" aria-controls="tab-shopping">
+            <svg class="nav-tab-icon" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9H7.5L6 6zM6 6L5 2H2"/><circle cx="9" cy="20" r="1.5" fill="currentColor"/><circle cx="18" cy="20" r="1.5" fill="currentColor"/></svg>
+            買い物
+        </button>
+        <button class="nav-tab" data-tab="settings" role="tab" aria-selected="false" aria-controls="tab-settings">
+            <svg class="nav-tab-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1.08-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1.08 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001.08 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1.08z"/></svg>
+            設定
+        </button>
     </nav>
 
     <!-- ===== メインコンテンツ ===== -->
     <main class="main-container">
 
         <!-- =============== 食事記録タブ =============== -->
-        <div id="tab-meals" class="tab-content active">
+        <div id="tab-meals" class="tab-content active" role="tabpanel" aria-labelledby="tab-meals">
 
-        <!-- ===== 日付セレクター ===== -->
-        <div class="meal-date-selector">
-            <button type="button" id="mealDatePrev" class="date-nav-btn">&lt;</button>
-            <button type="button" id="mealDateDisplay" class="date-display-btn"></button>
-            <button type="button" id="mealDateNext" class="date-nav-btn">&gt;</button>
-            <input type="date" id="mealDatePicker" class="date-picker-hidden">
+        <!-- ===== 週間日付タブ ===== -->
+        <div class="week-date-bar">
+            <button type="button" id="weekPrev" class="week-nav-btn">&lsaquo;</button>
+            <div id="weekDateTabs" class="week-date-tabs">
+                <!-- JSで7日分のタブを動的生成 -->
+            </div>
+            <button type="button" id="weekNext" class="week-nav-btn">&rsaquo;</button>
         </div>
+        <input type="date" id="mealDatePicker" class="date-picker-hidden">
+
+        <!-- ===== つわりモードバナー (B7) ===== -->
+        <div id="morningSicknessBanner" class="morning-sickness-banner hidden">
+            <span class="ms-banner-icon"><svg class="ms-banner-svg" viewBox="0 0 24 24"><path d="M12 3C8 3 5 7 5 12s3 9 7 9 7-4 7-9-3-9-7-9z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5M10 14h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span class="ms-banner-text">つわりモードON: 無理せず食べられるものを少しずつ</span>
+        </div>
+
+        <!-- ===== 妊娠週数アドバイスヒント (B5) ===== -->
+        <div id="weekAdviceTip" class="week-advice-tip hidden"></div>
+
+        <!-- ===== ストリーク＆栄養スコア ===== -->
+        <div class="streak-score-bar">
+            <div class="streak-badge" id="streakBadge">
+                <span class="streak-flame"><svg class="streak-svg" viewBox="0 0 24 24"><path d="M12 22c4-2 7-6 7-10 0-3-2-5-4-7-1 2-3 3-3 3s-1-3 1-6c-4 2-7 6-7 10 0 4 2.5 7.5 6 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="streak-count" id="streakCount">0</span>
+                <span class="streak-label">日連続</span>
+            </div>
+            <div class="nutrition-score-badge" id="nutritionScoreBadge">
+                <span class="score-value" id="nutritionScoreValue">--</span>
+                <span class="score-label">栄養スコア</span>
+            </div>
+        </div>
+
+        <!-- ===== カロリーサマリー（ドーナツチャート） ===== -->
+        <div id="dailyCalorieSummary" class="daily-calorie-summary">
+            <div class="calorie-donut-container">
+                <svg class="calorie-donut" viewBox="0 0 120 120">
+                    <circle class="donut-bg" cx="60" cy="60" r="50" />
+                    <circle id="donutProgressPlanned" class="donut-progress donut-planned" cx="60" cy="60" r="50" />
+                    <circle id="donutProgress" class="donut-progress" cx="60" cy="60" r="50" />
+                </svg>
+                <div class="donut-center-text">
+                    <span id="donutCalRemaining" class="donut-remaining">--</span>
+                    <span class="donut-label">残り kcal</span>
+                </div>
+            </div>
+            <div class="calorie-equation">
+                <div class="eq-item">
+                    <span class="eq-value" id="eqGoal">--</span>
+                    <span class="eq-label">目標</span>
+                </div>
+                <span class="eq-operator">−</span>
+                <div class="eq-item">
+                    <span class="eq-value" id="eqFood">0</span>
+                    <span class="eq-label">摂取</span>
+                    <span class="eq-planned-note" id="eqPlannedNote"></span>
+                </div>
+                <span class="eq-operator">=</span>
+                <div class="eq-item">
+                    <span class="eq-value eq-result" id="eqRemaining">--</span>
+                    <span class="eq-label">残り</span>
+                </div>
+            </div>
+        </div>
+
         <div id="plannedBanner" class="planned-banner hidden">
-            この日の食事は予定です。確定するには各食事の「確定」を押してください。
+            <span>この日の食事は予定です。</span>
+            <button type="button" id="confirmAllMealsBtn" class="btn btn-confirm btn-small planned-banner-btn">すべて確定</button>
         </div>
 
-        <!-- ===== 食事記録フォーム ===== -->
-        <section class="form-section">
-            <h2>食事を記録</h2>
+        <!-- ===== ダイアリー形式の食事記録 ===== -->
+        <div id="mealDiary" class="meal-diary">
+            <!-- JS で動的に朝食/昼食/夕食/間食セクションを生成 -->
+        </div>
+
+        <!-- ===== 水分記録 ===== -->
+        <div class="water-tracker">
+            <div class="water-tracker-header">
+                <span class="water-icon"><svg class="water-icon-svg" viewBox="0 0 24 24"><path d="M12 2C12 2 5 10 5 15a7 7 0 0014 0c0-5-7-13-7-13z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="water-label">水分</span>
+                <span class="water-amount" id="waterAmount">0</span>
+                <span class="water-unit">/ 2000 ml</span>
+            </div>
+            <div class="water-glasses" id="waterGlasses">
+                <!-- JSで8杯分（250ml×8=2000ml）を生成 -->
+            </div>
+        </div>
+
+        <!-- ===== 食事入力フォーム（フルスクリーンモーダル） ===== -->
+        <div id="mealFormPanel" class="meal-form-panel hidden">
+            <div class="meal-form-panel-header">
+                <button type="button" id="closeMealFormPanel" class="meal-form-back-btn" aria-label="戻る">&larr;</button>
+                <h3 id="mealFormPanelTitle">朝食を追加</h3>
+                <div style="width:36px"></div>
+            </div>
 
             <!-- 食事タイプタブ -->
             <div class="meal-type-tabs">
@@ -53,19 +168,23 @@
                 <button class="tab-button" data-type="snack">間食</button>
             </div>
 
-            <!-- 食品検索・入力フォーム -->
             <form id="mealForm" class="meal-form">
+                <!-- お気に入り食品 (A2) -->
+                <div id="favoritesSection" class="favorites-section hidden">
+                    <p class="favorites-label">お気に入り</p>
+                    <div id="favoritesList" class="favorites-list"></div>
+                </div>
+
                 <!-- 最近の食事（履歴） -->
                 <div id="historySection" class="history-section hidden">
                     <p class="history-label">最近の食事から選ぶ</p>
                     <div id="historyList" class="history-list">
-                        <!-- 動的に生成: 横スクロールのチップ形式 -->
                     </div>
                 </div>
 
                 <!-- 食品検索エリア -->
                 <div class="form-group">
-                    <label for="foodSearch">食品名を検索</label>
+                    <label for="foodSearch">食品名を検索 <span class="required-mark">*</span></label>
                     <div class="search-container">
                         <input
                             type="text"
@@ -76,7 +195,11 @@
                         >
                         <div id="foodSuggestions" class="food-suggestions hidden"></div>
                     </div>
-                    <span class="input-hint">検索して食品を選択するか、直接入力してください</span>
+                    <span class="input-hint">検索して食品を選択してください</span>
+                    <button type="button" id="openCustomFoodFromForm" class="custom-food-link-btn">
+                        <span class="custom-food-link-icon">+</span>
+                        <span class="custom-food-link-text">オリジナル食品を登録</span>
+                    </button>
                 </div>
 
                 <!-- 選択された食品表示 -->
@@ -90,7 +213,7 @@
 
                 <!-- 摂取量入力エリア -->
                 <div class="form-group">
-                    <label for="quantity">摂取量</label>
+                    <label for="quantity">摂取量 <span class="required-mark">*</span></label>
                     <div class="quantity-row">
                         <input
                             type="number"
@@ -108,28 +231,31 @@
                     <span class="input-hint" id="quantityHint">数量を入力してください</span>
                 </div>
 
-                <!-- 追加ボタン -->
-                <button type="submit" class="btn btn-primary btn-add">食事を追加</button>
+                <!-- リストに追加ボタン -->
+                <button type="submit" class="btn btn-primary btn-add">リストに追加</button>
 
                 <!-- エラーメッセージ表示 -->
                 <div id="formErrorMessage" class="error-message hidden"></div>
+
+                <!-- 追加予定リスト -->
+                <div id="pendingMealsSection" class="pending-meals-section hidden">
+                    <p class="pending-meals-label">追加予定 (<span id="pendingMealsCount">0</span>品)</p>
+                    <div id="pendingMealsList" class="pending-meals-list"></div>
+                </div>
+
+                <!-- 確定ボタン -->
+                <button type="button" id="confirmPendingMeals" class="btn btn-secondary btn-add pending-confirm-btn hidden">まとめて確定</button>
             </form>
-        </section>
+        </div>
 
-        <!-- ===== 食事一覧セクション ===== -->
-        <section class="meals-list-section">
-            <h2 id="mealsListTitle">今日の食事一覧</h2>
+        <!-- ===== 食事一覧（非表示・後方互換用） ===== -->
+        <div id="emptyMealsMessage" class="hidden"></div>
+        <div id="mealsList" class="hidden"></div>
 
-            <!-- 食事が空の場合のメッセージ -->
-            <div id="emptyMealsMessage" class="empty-message empty-state-guide">
-                <p class="empty-state-icon">🍽️</p>
-                <p class="empty-state-title">まだ食事が記録されていません</p>
-                <p class="empty-state-hint">上のフォームから食品を検索して、今日の食事を記録してみましょう</p>
-            </div>
-
-            <!-- 食事一覧表示エリア -->
-            <div id="mealsList" class="meals-list-container"></div>
-        </section>
+        <!-- ===== FAB（食事追加ボタン） ===== -->
+        <button type="button" id="mealFab" class="fab-button" aria-label="食事を追加">
+            <span class="fab-icon">+</span>
+        </button>
 
         <!-- ===== 栄養素サマリーセクション ===== -->
         <section class="summary-section">
@@ -147,40 +273,138 @@
 
         <!-- ===== 不足栄養素の提案セクション ===== -->
         <section id="suggestionSection" class="suggestion-section hidden">
-            <h2>おすすめ食品</h2>
-            <p class="section-description">不足している栄養素を補える食品を提案します</p>
-            <div id="deficientNutrientsList" class="deficient-nutrients-list">
-                <!-- JSで動的に生成 -->
-            </div>
+            <details class="suggestion-details">
+                <summary class="suggestion-summary">
+                    <span>おすすめ食品</span>
+                    <span class="suggestion-summary-hint">不足栄養素を補える食品を提案</span>
+                </summary>
+                <div class="suggestion-details-body">
+                    <div id="deficientNutrientsList" class="deficient-nutrients-list">
+                        <!-- JSで動的に生成 -->
+                    </div>
+
+                    <!-- おすすめメニュー（組み合わせ） -->
+                    <div id="comboSuggestions" class="combo-section hidden"></div>
+
+                    <!-- 作り置きレシピ提案 -->
+                    <details class="suggestion-sub-details" id="mealPrepDetailsWrap">
+                        <summary class="suggestion-sub-summary">作り置きレシピ提案</summary>
+                        <div id="mealPrepRecipeSection" class="meal-prep-section">
+                            <p class="section-description">不足栄養素を補える作り置きレシピです</p>
+                            <div id="mealPrepRecipeList" class="meal-prep-recipe-list"></div>
+                        </div>
+                    </details>
+
+                    <!-- AI献立提案 -->
+                    <details class="suggestion-sub-details">
+                        <summary class="suggestion-sub-summary">AI献立提案</summary>
+                        <div id="aiRecipeSection" class="ai-recipe-section">
+                            <div class="ai-recipe-header">
+                                <div class="ai-recipe-controls">
+                                    <select id="aiMealTypeSelect" class="ai-meal-type-select">
+                                        <option value="dinner">夕食</option>
+                                        <option value="lunch">昼食</option>
+                                        <option value="breakfast">朝食</option>
+                                        <option value="snack">間食・おやつ</option>
+                                        <option value="mealprep">作り置き</option>
+                                    </select>
+                                    <button type="button" id="generateAIRecipeBtn" class="btn btn-accent">
+                                        AIで献立を提案
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="aiRecipeLoading" class="ai-loading hidden">
+                                <span class="spinner"></span> AIが献立を考えています...
+                            </div>
+                            <div id="aiRecipeResults" class="ai-recipe-results"></div>
+                        </div>
+                    </details>
+                </div>
+            </details>
         </section>
 
-        <!-- ===== オリジナル食品登録セクション ===== -->
+        <!-- ===== オリジナル食品管理セクション ===== -->
         <section class="custom-food-section">
-            <h2>オリジナル食品を登録</h2>
-            <p class="section-description">よく食べる食品やお気に入りの食品を登録できます</p>
-
-            <button type="button" id="openCustomFoodBtn" class="btn btn-outline">
-                + 新しい食品を登録
-            </button>
-
-            <!-- 登録済みのオリジナル食品一覧 -->
-            <div id="customFoodsList" class="custom-foods-list"></div>
+            <details>
+                <summary class="custom-food-summary">登録済みオリジナル食品</summary>
+                <div style="padding-top:0.5rem">
+                    <button type="button" id="openCustomFoodBtn" class="btn btn-outline btn-small">+ 新規登録</button>
+                    <div id="customFoodsList" class="custom-foods-list"></div>
+                </div>
+            </details>
         </section>
         <!-- ===== API設定セクション ===== -->
         <section class="api-settings-section">
             <details class="api-settings-details">
-                <summary class="api-settings-summary">AI解析設定（Claude API）</summary>
+                <summary class="api-settings-summary">AI解析設定</summary>
                 <div class="api-settings-body">
-                    <p class="modal-hint">Claude APIキーを設定すると、レシピ貼り付け時にAIによる高精度な食材解析が利用できます。未設定の場合はローカル解析（正規表現）を使用します。</p>
+                    <p class="modal-hint">APIキーを設定すると、レシピ貼り付け時のAI食材解析やAI献立提案が利用できます。未設定の場合はローカル解析を使用します。</p>
                     <div class="form-group">
-                        <label for="claudeApiKeyInput">APIキー</label>
-                        <input type="password" id="claudeApiKeyInput" placeholder="sk-ant-..." autocomplete="off">
+                        <label for="aiProviderSelect">AIプロバイダー</label>
+                        <select id="aiProviderSelect" class="unit-select">
+                            <option value="claude">Claude（Anthropic）</option>
+                            <option value="chatgpt">ChatGPT（OpenAI）</option>
+                            <option value="gemini">Gemini（Google）</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="aiApiKeyInput">APIキー</label>
+                        <input type="password" id="aiApiKeyInput" placeholder="" autocomplete="off">
+                        <span class="input-hint" id="aiApiKeyHint"></span>
                     </div>
                     <div class="api-settings-buttons">
                         <button type="button" id="saveApiKeyBtn" class="btn btn-small btn-apply">保存</button>
+                        <button type="button" id="testApiKeyBtn" class="btn btn-small btn-outline">接続テスト</button>
                         <button type="button" id="deleteApiKeyBtn" class="btn btn-small btn-delete-key">削除</button>
                     </div>
                     <p id="apiKeyStatus" class="api-key-status"></p>
+
+                    <!-- APIキー取得ガイド -->
+                    <details class="api-key-guide">
+                        <summary class="api-key-guide-summary">APIキーの取得方法</summary>
+                        <div class="api-key-guide-body">
+
+                            <div class="api-key-guide-provider" id="guideClaudeSection">
+                                <h4>Claude（Anthropic）</h4>
+                                <ol>
+                                    <li><a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic Console</a> にアクセス</li>
+                                    <li>アカウントを作成またはログイン</li>
+                                    <li>左メニューの「API Keys」をクリック</li>
+                                    <li>「Create Key」でAPIキーを生成</li>
+                                    <li><code>sk-ant-</code> で始まるキーをコピーして上の入力欄に貼り付け</li>
+                                </ol>
+                                <p class="api-key-guide-note">初回登録で無料クレジットが付与されます。料金は従量制です。</p>
+                            </div>
+
+                            <div class="api-key-guide-provider" id="guideChatGPTSection">
+                                <h4>ChatGPT（OpenAI）</h4>
+                                <ol>
+                                    <li><a href="https://platform.openai.com/" target="_blank" rel="noopener">OpenAI Platform</a> にアクセス</li>
+                                    <li>アカウントを作成またはログイン</li>
+                                    <li>右上のアイコン → 「API keys」を選択</li>
+                                    <li>「Create new secret key」でAPIキーを生成</li>
+                                    <li><code>sk-</code> で始まるキーをコピーして上の入力欄に貼り付け</li>
+                                </ol>
+                                <p class="api-key-guide-note">利用には支払い方法の登録が必要です。料金は従量制です。</p>
+                            </div>
+
+                            <div class="api-key-guide-provider" id="guideGeminiSection">
+                                <h4>Gemini（Google）</h4>
+                                <ol>
+                                    <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> にアクセス</li>
+                                    <li>Googleアカウントでログイン</li>
+                                    <li>「APIキーを作成」をクリック</li>
+                                    <li><code>AIza</code> で始まるキーをコピーして上の入力欄に貼り付け</li>
+                                </ol>
+                                <p class="api-key-guide-note">無料枠があり、個人利用であれば無料で始められます。</p>
+                            </div>
+
+                            <div class="api-key-guide-caution">
+                                <p><strong>APIキーの取り扱いについて</strong></p>
+                                <p>APIキーはお使いのブラウザ内（localStorage）にのみ保存され、外部に送信されることはありません（AI提供元のAPIへのリクエスト時を除く）。共有PCをお使いの場合は、使用後に「削除」ボタンでキーを消去することをおすすめします。</p>
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </details>
         </section>
@@ -188,23 +412,23 @@
         </div><!-- /tab-meals -->
 
         <!-- =============== 体重記録タブ =============== -->
-        <div id="tab-weight" class="tab-content">
+        <div id="tab-weight" class="tab-content" role="tabpanel" aria-labelledby="tab-weight">
 
         <!-- ===== 体重記録フォーム ===== -->
         <section class="form-section">
             <h2 id="weightFormTitle">体重を記録</h2>
             <form id="weightForm" class="meal-form">
                 <div class="form-group">
-                    <label for="weightDate">測定日</label>
-                    <input type="date" id="weightDate" class="quantity-input" style="width:100%">
+                    <label for="weightDate">測定日 <span class="required-mark">*</span></label>
+                    <input type="date" id="weightDate" class="quantity-input">
                 </div>
                 <div class="form-group">
-                    <label for="weightValue">体重 (kg)</label>
-                    <input type="number" id="weightValue" class="quantity-input" placeholder="例: 55.0" min="40" max="200" step="0.1" style="width:100%">
+                    <label for="weightValue">体重 (kg) <span class="required-mark">*</span></label>
+                    <input type="number" id="weightValue" class="quantity-input" placeholder="例: 55.0" min="40" max="200" step="0.1">
                 </div>
                 <div class="form-group">
-                    <label for="weightMemo">メモ（任意）</label>
-                    <input type="text" id="weightMemo" class="food-search-input" placeholder="例: 検診日" style="width:100%">
+                    <label for="weightMemo">メモ</label>
+                    <input type="text" id="weightMemo" class="food-search-input" placeholder="例: 検診日">
                 </div>
                 <button type="submit" id="weightSubmitBtn" class="btn btn-primary btn-add">体重を記録</button>
                 <button type="button" id="cancelWeightEditBtn" class="btn btn-secondary btn-add hidden" style="margin-top:0.5rem">キャンセル</button>
@@ -216,7 +440,7 @@
         <section class="meals-list-section">
             <h2>体重記録一覧</h2>
             <div id="emptyWeightMessage" class="empty-message empty-state-guide">
-                <p class="empty-state-icon">⚖️</p>
+                <p class="empty-state-icon"><svg class="empty-state-svg" viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
                 <p class="empty-state-title">まだ体重が記録されていません</p>
                 <p class="empty-state-hint">定期的な体重記録で、健康的な体重管理を始めましょう</p>
             </div>
@@ -226,15 +450,25 @@
         </div><!-- /tab-weight -->
 
         <!-- =============== 食事・体重管理（ダッシュボード）タブ =============== -->
-        <div id="tab-dashboard" class="tab-content">
+        <div id="tab-dashboard" class="tab-content" role="tabpanel" aria-labelledby="tab-dashboard">
 
-        <!-- ===== 妊娠週数サマリー ===== -->
+        <!-- ===== 健康管理ダッシュボード ===== -->
         <section class="form-section">
             <h2>健康管理ダッシュボード</h2>
             <div id="dashboardProfileNotice" class="empty-message hidden">
                 <p>設定タブでプロフィールを入力すると、より詳しい分析が表示されます。</p>
             </div>
             <div id="dashboardWeekInfo" class="dashboard-week-info hidden"></div>
+            <!-- 妊娠週数アドバイスカード (B5) -->
+            <div id="pregnancyAdviceCard" class="hidden" style="margin-top:0.6rem"></div>
+        </section>
+
+        <!-- ===== 総合コンディション ===== -->
+        <section class="form-section">
+            <h2>総合コンディション</h2>
+            <div id="dashboardSummary" class="dashboard-summary">
+                <!-- JSで動的に生成 -->
+            </div>
         </section>
 
         <!-- ===== 体重推移グラフ ===== -->
@@ -251,28 +485,75 @@
             <div class="chart-container">
                 <canvas id="weightChart"></canvas>
             </div>
+            <!-- 体重増加ペース予測 (B6) -->
+            <div id="weightPredictionCard" class="hidden" style="margin-top:0.8rem"></div>
         </section>
 
-        <!-- ===== 栄養バランス推移 ===== -->
+        <!-- ===== 栄養レポート ===== -->
         <section class="form-section">
-            <h2>直近7日間の栄養バランス</h2>
-            <div id="nutritionWeeklyGrid" class="dashboard-weekly-grid">
-                <!-- JSで動的に生成 -->
+            <h2>栄養レポート</h2>
+            <div class="report-period-tabs">
+                <button class="report-tab active" data-days="7">1週間</button>
+                <button class="report-tab" data-days="30">1ヶ月</button>
             </div>
-        </section>
-
-        <!-- ===== 総合評価 ===== -->
-        <section class="form-section">
-            <h2>総合コンディション</h2>
-            <div id="dashboardSummary" class="dashboard-summary">
+            <div id="reportContainer"></div>
+            <h3 style="font-size:0.88rem;margin:0.8rem 0 0.5rem;padding-top:0.6rem;border-top:1px solid var(--border-color)">直近7日間の栄養バランス</h3>
+            <div id="nutritionWeeklyGrid" class="dashboard-weekly-grid">
                 <!-- JSで動的に生成 -->
             </div>
         </section>
 
         </div><!-- /tab-dashboard -->
 
+        <!-- =============== 買い物タブ =============== -->
+        <div id="tab-shopping" class="tab-content" role="tabpanel" aria-labelledby="tab-shopping">
+
+        <!-- サブタブ -->
+        <div class="shopping-sub-tabs">
+            <button class="shopping-sub-tab active" data-subtab="meal-plan">献立予定</button>
+            <button class="shopping-sub-tab" data-subtab="pantry">在庫管理</button>
+            <button class="shopping-sub-tab" data-subtab="shopping-list">買い物リスト</button>
+        </div>
+
+        <!-- 献立予定サブタブ -->
+        <div id="subtab-meal-plan" class="shopping-sub-content active">
+            <section class="form-section">
+                <h2>今後7日間の献立予定</h2>
+                <p class="section-description">食事記録タブで未来の日付に食事を追加すると、ここに表示されます</p>
+                <div id="weeklyMealPlanContainer"></div>
+            </section>
+        </div>
+
+        <!-- 在庫管理サブタブ -->
+        <div id="subtab-pantry" class="shopping-sub-content">
+            <section class="form-section">
+                <h2>冷蔵庫・食品在庫</h2>
+                <div id="pantryContainer"></div>
+            </section>
+        </div>
+
+        <!-- 買い物リストサブタブ -->
+        <div id="subtab-shopping-list" class="shopping-sub-content">
+            <section class="form-section">
+                <h2>買い物リスト</h2>
+                <p class="section-description">献立予定の食材から在庫を差し引いて、購入リストを自動生成します</p>
+                <div id="shoppingListContainer"></div>
+            </section>
+            <!-- パートナー共有 -->
+            <section class="form-section share-section">
+                <h3>パートナーに共有</h3>
+                <p class="section-description">在庫と買い物リストを読み取り専用リンクで共有できます</p>
+                <div class="share-actions">
+                    <button type="button" class="btn btn-primary btn-small" onclick="shareWithPartner()">共有リンクを作成</button>
+                    <button type="button" class="btn btn-outline btn-small" onclick="copyShareURL()">リンクをコピー</button>
+                </div>
+            </section>
+        </div>
+
+        </div><!-- /tab-shopping -->
+
         <!-- =============== 設定タブ =============== -->
-        <div id="tab-settings" class="tab-content">
+        <div id="tab-settings" class="tab-content" role="tabpanel" aria-labelledby="tab-settings">
 
         <section class="form-section">
             <h2>プロフィール設定</h2>
@@ -281,35 +562,343 @@
                 <p class="input-hint" style="margin-bottom:1rem">妊娠開始日・出産予定日のどちらか一方を入力すると、もう一方が自動計算されます。</p>
                 <div class="form-group">
                     <label for="pregnancyStartDate">妊娠開始日（最終月経初日）</label>
-                    <input type="date" id="pregnancyStartDate" class="quantity-input" style="width:100%">
+                    <input type="date" id="pregnancyStartDate" class="quantity-input">
                 </div>
                 <div class="form-group">
                     <label for="dueDate">出産予定日</label>
-                    <input type="date" id="dueDate" class="quantity-input" style="width:100%">
+                    <input type="date" id="dueDate" class="quantity-input">
                 </div>
                 <div id="pregnancyCalcDisplay" class="bmi-display hidden">
                     <p id="pregnancyCalcText"></p>
                 </div>
                 <div class="form-group">
                     <label for="prePregnancyWeight">妊娠前体重 (kg)</label>
-                    <input type="number" id="prePregnancyWeight" class="quantity-input" placeholder="例: 52.0" min="30" max="200" step="0.1" style="width:100%">
+                    <input type="number" id="prePregnancyWeight" class="quantity-input" placeholder="例: 52.0" min="30" max="200" step="0.1">
                 </div>
                 <div class="form-group">
                     <label for="userHeight">身長 (cm)</label>
-                    <input type="number" id="userHeight" class="quantity-input" placeholder="例: 158.0" min="100" max="220" step="0.1" style="width:100%">
+                    <input type="number" id="userHeight" class="quantity-input" placeholder="例: 158.0" min="100" max="220" step="0.1">
                 </div>
                 <div id="bmiDisplay" class="bmi-display hidden">
                     <p>BMI: <strong id="bmiValue"></strong></p>
                     <p id="bmiCategory" class="bmi-category"></p>
                 </div>
+                <div class="form-group">
+                    <label for="activityLevel">活動レベル</label>
+                    <select id="activityLevel" class="quantity-input" style="width:100%; padding:0.5rem">
+                        <option value="low">低い（デスクワーク中心・座位が多い）</option>
+                        <option value="moderate" selected>ふつう（立ち仕事・家事・軽い運動）</option>
+                        <option value="high">高い（活発な運動習慣がある）</option>
+                    </select>
+                    <p class="section-description" style="margin-top:0.25rem; font-size:0.8rem; color:var(--text-secondary)">活動レベルに応じてカロリー推奨量が変わります</p>
+                </div>
                 <button type="submit" class="btn btn-primary btn-add">保存</button>
                 <div id="profileSaveMessage" class="success-message hidden">保存しました</div>
             </form>
+
+            <!-- 産後モード -->
+            <div class="postpartum-section">
+                <h3 style="font-size:0.95rem; margin-bottom:0.5rem">産後モード</h3>
+                <p class="section-description">出産後は授乳期の栄養推奨量に切り替わります</p>
+                <div class="ms-toggle-row">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="postpartumToggle" aria-label="産後モードを有効にする">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="ms-toggle-label">出産しました</span>
+                </div>
+                <div id="postpartumDateGroup" class="form-group hidden" style="margin-top:0.75rem">
+                    <label for="birthDateInput">出産日</label>
+                    <input type="date" id="birthDateInput" class="quantity-input">
+                    <label for="feedingTypeSelect" style="margin-top:0.75rem; display:block">授乳方法</label>
+                    <select id="feedingTypeSelect" class="quantity-input" style="width:100%; padding:0.5rem">
+                        <option value="breastfeeding">完全母乳</option>
+                        <option value="mixed">混合（母乳+ミルク）</option>
+                        <option value="formula">完全ミルク</option>
+                    </select>
+                    <p class="section-description" id="feedingTypeNote" style="margin-top:0.5rem; font-size:0.8rem; color:var(--text-secondary)">
+                        授乳方法によって必要な栄養量の目安が変わります。いつでも変更できます。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== テーマカラー選択 ===== -->
+        <section class="form-section">
+            <h2>テーマカラー</h2>
+            <p class="section-description">アプリの配色を選べます</p>
+            <div class="theme-picker" id="themePicker">
+                <button type="button" class="theme-option active" data-theme="default" aria-label="Warm Blossom">
+                    <span class="theme-swatch" style="background:#D4708F"></span>
+                    <span class="theme-swatch-sub" style="background:#4CAF7D"></span>
+                    <span class="theme-label">Blossom</span>
+                </button>
+                <button type="button" class="theme-option" data-theme="sage" aria-label="Soft Sage">
+                    <span class="theme-swatch" style="background:#6B9E82"></span>
+                    <span class="theme-swatch-sub" style="background:#D4878F"></span>
+                    <span class="theme-label">Sage</span>
+                </button>
+                <button type="button" class="theme-option" data-theme="terracotta" aria-label="Warm Terracotta">
+                    <span class="theme-swatch" style="background:#C4836A"></span>
+                    <span class="theme-swatch-sub" style="background:#7BA68E"></span>
+                    <span class="theme-label">Terracotta</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== つわり対応モード (B7) ===== -->
+        <section class="form-section">
+            <h2>つわり対応モード</h2>
+            <p class="section-description">つわりがつらい時期に、栄養スコアを優しい基準に切り替えます</p>
+            <div class="ms-toggle-row">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="morningSicknessToggle" aria-label="つわりモードを有効にする">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="ms-toggle-label" id="msToggleLabel">つわりモードを有効にする</span>
+            </div>
+            <div id="morningSicknessEasyFoods" class="ms-easy-foods hidden"></div>
+        </section>
+
+        <!-- ===== リマインダー設定 ===== -->
+        <section class="form-section">
+            <h2>リマインダー</h2>
+            <p class="section-description">未記録の項目をアプリ内バナーでお知らせします</p>
+            <div class="ms-toggle-row">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="reminderMasterToggle" aria-label="リマインダーを有効にする">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="ms-toggle-label">リマインダーを有効にする</span>
+            </div>
+
+            <div id="reminderDetailSettings">
+                <!-- 食事リマインダー -->
+                <div class="reminder-setting-group">
+                    <h3>🍽️ 食事リマインダー</h3>
+                    <div class="reminder-setting-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reminder_meal_breakfast">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="reminder-setting-label">朝食</span>
+                        <input type="time" id="reminder_time_breakfast" class="reminder-time-input" value="09:00">
+                    </div>
+                    <div class="reminder-setting-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reminder_meal_lunch">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="reminder-setting-label">昼食</span>
+                        <input type="time" id="reminder_time_lunch" class="reminder-time-input" value="12:00">
+                    </div>
+                    <div class="reminder-setting-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reminder_meal_dinner">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="reminder-setting-label">夕食</span>
+                        <input type="time" id="reminder_time_dinner" class="reminder-time-input" value="19:00">
+                    </div>
+                </div>
+
+                <!-- 体重リマインダー -->
+                <div class="reminder-setting-group">
+                    <h3>⚖️ 体重リマインダー</h3>
+                    <div class="reminder-setting-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reminder_weight">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="reminder-setting-label">今日の体重が未記録の場合に通知</span>
+                    </div>
+                </div>
+
+                <!-- 水分リマインダー -->
+                <div class="reminder-setting-group">
+                    <h3>💧 水分リマインダー</h3>
+                    <div class="reminder-setting-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reminder_water">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="reminder-setting-label">水分補給リマインダー</span>
+                        <select id="reminder_water_interval" class="reminder-select">
+                            <option value="1">1時間ごと</option>
+                            <option value="2">2時間ごと</option>
+                            <option value="3">3時間ごと</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== オンボーディング再表示 ===== -->
+        <section class="form-section">
+            <h2>初期設定</h2>
+            <p class="section-description">初回起動時のセットアップウィザードを再表示します</p>
+            <button type="button" class="btn btn-outline" onclick="resetOnboarding()">オンボーディングを再表示</button>
+        </section>
+
+        <!-- ===== データバックアップ ===== -->
+        <section class="form-section">
+            <h2>データバックアップ</h2>
+            <p class="section-description">食事記録・体重記録・在庫データなどをファイルに保存・復元できます</p>
+            <div class="backup-actions">
+                <button type="button" id="exportDataBtn" class="btn btn-primary">データをエクスポート</button>
+                <div class="backup-import-area">
+                    <label for="importDataFile" class="btn btn-outline backup-import-label">ファイルからインポート</label>
+                    <input type="file" id="importDataFile" accept=".json" class="backup-file-input">
+                </div>
+            </div>
+            <p id="backupMessage" class="backup-message hidden"></p>
+            <p class="input-hint" style="margin-top:0.8rem">エクスポートしたJSONファイルを安全な場所に保管してください。インポートすると現在のデータは上書きされます。</p>
+        </section>
+
+        <!-- ===== アプリについて ===== -->
+        <section class="form-section about-app-section">
+            <h2>アプリについて</h2>
+            <p class="section-description">mamori v1.0.0 — マタニティ栄養サポート</p>
+
+            <details class="legal-details">
+                <summary class="legal-summary">プライバシーポリシー</summary>
+                <div class="legal-body">
+                    <p>本アプリ「mamori」（以下「本アプリ」）は、ユーザーのプライバシーを尊重し、個人情報の保護に努めます。</p>
+
+                    <h4>1. データの保存について</h4>
+                    <p>本アプリで入力された食事記録・体重記録・設定情報などのデータは、すべてお使いの端末内（ローカルストレージ）に保存されます。外部サーバーへの送信は行いません。</p>
+
+                    <h4>2. 外部サービスとの通信</h4>
+                    <p>AI栄養アドバイス機能をご利用の場合、入力されたデータの一部がClaude API（Anthropic社）に送信されます。この通信はユーザーがAPIキーを設定し、明示的に機能を利用した場合にのみ発生します。送信されるデータは栄養アドバイスの生成にのみ使用されます。</p>
+
+                    <h4>3. 個人情報の取り扱い</h4>
+                    <p>本アプリは、アカウント登録やログインを必要としません。入力された妊娠週数・体重などの情報は端末内でのみ利用され、開発者がこれらの情報にアクセスすることはありません。</p>
+
+                    <h4>4. データの削除</h4>
+                    <p>ブラウザのサイトデータを削除するか、アプリをアンインストールすることで、すべてのデータを完全に削除できます。</p>
+
+                    <h4>5. お問い合わせ</h4>
+                    <p>プライバシーに関するお問い合わせは、アプリのGitHubリポジトリのIssuesからお願いいたします。</p>
+                </div>
+            </details>
+
+            <details class="legal-details">
+                <summary class="legal-summary">利用規約</summary>
+                <div class="legal-body">
+                    <h4>1. 本アプリの目的</h4>
+                    <p>本アプリは、妊娠中・産後の方の栄養管理をサポートすることを目的とした情報提供ツールです。</p>
+
+                    <h4>2. 医療アドバイスではありません</h4>
+                    <p>本アプリで提供される栄養情報・推奨摂取量・AIアドバイスは参考値であり、医療上の診断やアドバイスに代わるものではありません。健康上の不安がある場合は、必ず医師・管理栄養士等の専門家にご相談ください。</p>
+
+                    <h4>3. 栄養データについて</h4>
+                    <p>食品の栄養成分値は日本食品標準成分表（八訂）等を参考にしていますが、実際の食品との差異が生じる場合があります。料理・加工食品については一般的な調理法に基づく概算値です。</p>
+
+                    <h4>4. 免責事項</h4>
+                    <p>本アプリの利用により生じたいかなる損害についても、開発者は責任を負いかねます。本アプリの情報を参考にした食事管理は、ご自身の判断と責任のもとで行ってください。</p>
+
+                    <h4>5. 変更について</h4>
+                    <p>本利用規約は予告なく変更される場合があります。変更後の規約はアプリ内に掲載された時点で効力を生じるものとします。</p>
+                </div>
+            </details>
         </section>
 
         </div><!-- /tab-settings -->
 
     </main>
+
+    <!-- ===== 共有ビューアオーバーレイ ===== -->
+    <div id="shareViewerOverlay" class="share-viewer-overlay hidden"></div>
+
+    <!-- ===== オンボーディングウィザード ===== -->
+    <div id="onboardingOverlay" class="onboarding-overlay hidden">
+        <div class="onboarding-container">
+            <!-- プログレスドット -->
+            <div class="onboarding-progress">
+                <span class="onboarding-dot active"></span>
+                <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
+            </div>
+
+            <!-- ステップ1: ようこそ -->
+            <div class="onboarding-step" data-step="1">
+                <div class="onboarding-icon">
+                    <img src="icons/icon-bowl.svg" alt="" class="onboarding-logo">
+                </div>
+                <h2 class="onboarding-title">mamori へようこそ</h2>
+                <p class="onboarding-desc">妊娠期別の栄養管理をサポートするアプリです。<br>食事記録・体重管理・栄養提案で、ママと赤ちゃんの健康を守ります。</p>
+                <button type="button" class="btn btn-primary onboarding-btn" onclick="showOnboardingStep(2)">はじめる</button>
+            </div>
+
+            <!-- ステップ2: 妊娠情報 -->
+            <div class="onboarding-step hidden" data-step="2">
+                <h2 class="onboarding-title">妊娠情報</h2>
+                <p class="onboarding-desc">どちらか一方を入力するともう一方が自動計算されます</p>
+                <div class="onboarding-form">
+                    <div class="form-group">
+                        <label for="obPregnancyStart">最終月経日（妊娠開始日）</label>
+                        <input type="date" id="obPregnancyStart" class="quantity-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="obDueDate">出産予定日</label>
+                        <input type="date" id="obDueDate" class="quantity-input">
+                    </div>
+                </div>
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-outline onboarding-skip" onclick="showOnboardingStep(3)">スキップ</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" onclick="showOnboardingStep(3)">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ3: 体格情報 -->
+            <div class="onboarding-step hidden" data-step="3">
+                <h2 class="onboarding-title">体格情報</h2>
+                <p class="onboarding-desc">体重管理と栄養推奨量の計算に使用します</p>
+                <div class="onboarding-form">
+                    <div class="form-group">
+                        <label for="obHeight">身長 (cm)</label>
+                        <input type="number" id="obHeight" class="quantity-input" placeholder="例: 158.0" min="100" max="220" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="obWeight">妊娠前体重 (kg)</label>
+                        <input type="number" id="obWeight" class="quantity-input" placeholder="例: 52.0" min="30" max="200" step="0.1">
+                    </div>
+                    <p id="obBmiResult" class="onboarding-bmi hidden"></p>
+                </div>
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-outline onboarding-skip" onclick="showOnboardingStep(4)">スキップ</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" onclick="showOnboardingStep(4)">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ4: テーマ選択 -->
+            <div class="onboarding-step hidden" data-step="4">
+                <h2 class="onboarding-title">テーマカラー</h2>
+                <p class="onboarding-desc">お好みの配色を選んでください</p>
+                <div class="ob-theme-picker" id="obThemePicker">
+                    <button type="button" class="ob-theme-option active" data-theme="default">
+                        <span class="ob-theme-swatch" style="background:#D4708F"></span>
+                        <span class="ob-theme-swatch-sub" style="background:#4CAF7D"></span>
+                        <span class="ob-theme-label">Blossom</span>
+                    </button>
+                    <button type="button" class="ob-theme-option" data-theme="sage">
+                        <span class="ob-theme-swatch" style="background:#6B9E82"></span>
+                        <span class="ob-theme-swatch-sub" style="background:#D4878F"></span>
+                        <span class="ob-theme-label">Sage</span>
+                    </button>
+                    <button type="button" class="ob-theme-option" data-theme="terracotta">
+                        <span class="ob-theme-swatch" style="background:#C4836A"></span>
+                        <span class="ob-theme-swatch-sub" style="background:#7BA68E"></span>
+                        <span class="ob-theme-label">Terracotta</span>
+                    </button>
+                </div>
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-primary onboarding-btn" onclick="completeOnboarding()">設定を完了</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== オリジナル食品登録モーダル ===== -->
     <div id="customFoodModal" class="modal hidden">
@@ -321,13 +910,13 @@
             <form id="customFoodForm" class="modal-body">
                 <!-- 食品名 -->
                 <div class="form-group">
-                    <label for="customFoodName">食品名 *</label>
+                    <label for="customFoodName">食品名 <span class="required-mark">*</span></label>
                     <input type="text" id="customFoodName" placeholder="例: 手作りグラノーラ" required>
                 </div>
                 <!-- カテゴリ -->
                 <div class="form-group">
                     <label>カテゴリ</label>
-                    <select id="customFoodCategory" class="unit-select" style="width:100%">
+                    <select id="customFoodCategory" class="unit-select">
                         <option value="grain">穀類</option>
                         <option value="protein">タンパク質</option>
                         <option value="vegetable">野菜</option>
@@ -449,7 +1038,7 @@
 
                 <!-- 単位（共通） -->
                 <div class="form-group">
-                    <label>よく使う単位（任意）</label>
+                    <label>よく使う単位</label>
                     <div class="quantity-row">
                         <input type="text" id="customUnitLabel" placeholder="例: 杯、個、枚">
                         <input type="number" id="customUnitGrams" placeholder="1単位のg数" min="1" step="any">
@@ -460,6 +1049,26 @@
         </div>
     </div>
 
+    <!-- ===== 購入情報入力モーダル ===== -->
+    <div id="purchaseModal" class="purchase-modal-overlay hidden">
+      <div class="purchase-modal">
+        <h3>購入情報を入力</h3>
+        <p id="purchaseModalItemName" class="purchase-modal-name"></p>
+        <div class="form-group">
+          <label for="purchaseQuantity">購入量 (g) <span class="required-mark">*</span></label>
+          <input type="number" id="purchaseQuantity" class="quantity-input" min="0">
+        </div>
+        <div class="form-group">
+          <label for="purchaseExpiry">賞味期限</label>
+          <input type="date" id="purchaseExpiry" class="quantity-input">
+        </div>
+        <div class="purchase-modal-actions">
+          <button type="button" id="purchaseModalCancel" class="btn btn-outline btn-small">キャンセル</button>
+          <button type="button" id="purchaseModalConfirm" class="btn btn-primary btn-small">在庫に追加</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== JavaScript ===== -->
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -467,7 +1076,23 @@
     <script src="js/nutrition.js"></script>
     <!-- weight.js 体重管理機能 -->
     <script src="js/weight.js"></script>
+    <!-- shopping.js 買い物・在庫管理機能 -->
+    <script src="js/shopping.js"></script>
+    <!-- recipes.js 作り置きレシピ提案機能 -->
+    <script src="js/recipes.js"></script>
+    <!-- sharing.js パートナー共有機能 -->
+    <script src="js/sharing.js"></script>
+    <!-- onboarding.js オンボーディングウィザード -->
+    <script src="js/onboarding.js"></script>
     <!-- app.js がメインのアプリロジック -->
     <script src="js/app.js"></script>
+    <!-- reminders.js リマインダー機能 -->
+    <script src="js/reminders.js"></script>
+    <!-- Service Worker 登録 -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+    </script>
 </body>
 </html>
