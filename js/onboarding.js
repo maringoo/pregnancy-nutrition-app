@@ -1,6 +1,6 @@
 /**
  * オンボーディングウィザード
- * 初回起動時にフルスクリーン4ステップウィザードを表示
+ * 初回起動時にフルスクリーン7ステップウィザードを表示
  */
 
 function checkOnboarding() {
@@ -60,8 +60,12 @@ function showOnboardingStep(step) {
     if (step === 3) {
         initOnboardingBodyFields();
     }
-    // ステップ4: テーマ選択を初期化
+    // ステップ4: 活動レベル選択を初期化
     if (step === 4) {
+        initOnboardingActivity();
+    }
+    // ステップ7: テーマ選択を初期化
+    if (step === 7) {
         initOnboardingTheme();
     }
 }
@@ -128,6 +132,28 @@ function initOnboardingBodyFields() {
     updateOBBmi();
 }
 
+function initOnboardingActivity() {
+    const picker = document.getElementById('obActivityPicker');
+    if (!picker) return;
+
+    // 既存プロフィールがあれば反映
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    if (profile.activityLevel) {
+        picker.querySelectorAll('.ob-activity-option').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.activity === profile.activityLevel);
+        });
+    }
+
+    const ALLOWED_LEVELS = ['low', 'moderate', 'high'];
+    picker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ob-activity-option');
+        if (!btn) return;
+        if (!ALLOWED_LEVELS.includes(btn.dataset.activity)) return;
+        picker.querySelectorAll('.ob-activity-option').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+}
+
 function initOnboardingTheme() {
     const picker = document.getElementById('obThemePicker');
     if (!picker) return;
@@ -165,13 +191,27 @@ function completeOnboarding() {
     const height = parseFloat(document.getElementById('obHeight')?.value);
     const weight = parseFloat(document.getElementById('obWeight')?.value);
 
+    const activityBtn = document.querySelector('#obActivityPicker .ob-activity-option.active');
+    const activityLevel = activityBtn ? activityBtn.dataset.activity : 'moderate';
+
     if (startDate) profile.pregnancyStartDate = startDate;
     if (dueDate) profile.dueDate = dueDate;
     if (!isNaN(height) && height > 0) profile.height = height;
     if (!isNaN(weight) && weight > 0) profile.prePregnancyWeight = weight;
+    profile.activityLevel = activityLevel;
 
     localStorage.setItem('userProfile', JSON.stringify(profile));
     localStorage.setItem('onboardingCompleted', 'true');
+
+    // リマインダー設定を保存
+    const reminderEnabled = document.getElementById('obReminderToggle')?.checked ?? true;
+    const reminderSettings = typeof getReminderSettings === 'function'
+        ? getReminderSettings()
+        : JSON.parse(localStorage.getItem('reminderSettings') || '{"enabled":true}');
+    reminderSettings.enabled = reminderEnabled;
+    localStorage.setItem('reminderSettings', JSON.stringify(reminderSettings));
+    const masterToggle = document.getElementById('reminderMasterToggle');
+    if (masterToggle) masterToggle.checked = reminderEnabled;
 
     hideOnboardingWizard();
 
@@ -191,6 +231,10 @@ function completeOnboarding() {
     if (profile.prePregnancyWeight) {
         const el = document.getElementById('prePregnancyWeight');
         if (el) el.value = profile.prePregnancyWeight;
+    }
+    if (profile.activityLevel) {
+        const el = document.getElementById('activityLevel');
+        if (el) el.value = profile.activityLevel;
     }
 
     // 推奨量の再計算とダッシュボード更新
@@ -214,6 +258,10 @@ function completeOnboarding() {
 
 function resetOnboarding() {
     localStorage.removeItem('onboardingCompleted');
+    // チュートリアルチップもリセット
+    ['meals', 'weight', 'dashboard', 'shopping'].forEach(tab => {
+        localStorage.removeItem('tutorialTipSeen_' + tab);
+    });
     showOnboardingWizard();
 }
 

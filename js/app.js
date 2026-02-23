@@ -110,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // リマインダー初期化
     if (typeof initReminders === 'function') initReminders();
+
+    // チュートリアルチップ（初期表示の食事タブ用）
+    showTutorialTip('meals');
 });
 
 // ===== 日付表示の更新 =====
@@ -1414,6 +1417,45 @@ function resetDayRecords() {
 }
 
 // ===== ナビゲーションタブ =====
+// ===== チュートリアルチップ =====
+const TUTORIAL_TIPS = {
+    meals: { title: '食事を記録しよう', desc: '右下の＋ボタンから食品を検索して追加できます。日付タブで過去の記録も確認できます。' },
+    weight: { title: '体重を記録しよう', desc: 'フォームに今日の体重を入力して記録しましょう。定期的な記録でグラフに推移が表示されます。' },
+    dashboard: { title: 'ダッシュボードの見方', desc: '体重グラフや栄養レポートで健康状態を確認できます。データが増えるほど分析が充実します。' },
+    shopping: { title: '買い物リストを活用', desc: '献立予定を登録すると、買い物リストが自動で作成されます。在庫管理と連携して必要な食材だけ表示します。' }
+};
+
+function showTutorialTip(tabName) {
+    if (!localStorage.getItem('onboardingCompleted')) return;
+    if (!TUTORIAL_TIPS[tabName]) return;
+    if (localStorage.getItem('tutorialTipSeen_' + tabName)) return;
+
+    const container = document.getElementById('tutorialTip-' + tabName);
+    if (!container) return;
+
+    const tip = TUTORIAL_TIPS[tabName];
+    container.innerHTML = '<div class="tutorial-tip-title">' + escapeHtml(tip.title) + '</div>'
+        + '<div class="tutorial-tip-desc">' + escapeHtml(tip.desc) + '</div>'
+        + '<button type="button" class="tutorial-tip-close" aria-label="閉じる">&times;</button>';
+    container.classList.remove('hidden');
+
+    container.querySelector('.tutorial-tip-close').addEventListener('click', () => {
+        dismissTutorialTip(tabName);
+    });
+}
+
+function dismissTutorialTip(tabName) {
+    localStorage.setItem('tutorialTipSeen_' + tabName, 'true');
+    const container = document.getElementById('tutorialTip-' + tabName);
+    if (container) {
+        container.classList.add('fade-out');
+        container.addEventListener('animationend', () => {
+            container.classList.add('hidden');
+            container.classList.remove('fade-out');
+        }, { once: true });
+    }
+}
+
 function setupNavTabs() {
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
@@ -1435,6 +1477,9 @@ function setupNavTabs() {
             if (targetContent) {
                 targetContent.classList.add('active');
             }
+
+            // チュートリアルチップを表示
+            showTutorialTip(targetTab);
 
             // 体重タブに切り替えた時は一覧を更新
             if (targetTab === 'weight') {

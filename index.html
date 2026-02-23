@@ -66,6 +66,9 @@
         <!-- =============== 食事記録タブ =============== -->
         <div id="tab-meals" class="tab-content active" role="tabpanel" aria-labelledby="tab-meals">
 
+        <!-- ===== チュートリアルチップ ===== -->
+        <div id="tutorialTip-meals" class="tutorial-tip hidden"></div>
+
         <!-- ===== 週間日付タブ ===== -->
         <div class="week-date-bar">
             <button type="button" id="weekPrev" class="week-nav-btn">&lsaquo;</button>
@@ -415,6 +418,9 @@
         <!-- =============== 体重記録タブ =============== -->
         <div id="tab-weight" class="tab-content" role="tabpanel" aria-labelledby="tab-weight">
 
+        <!-- ===== チュートリアルチップ ===== -->
+        <div id="tutorialTip-weight" class="tutorial-tip hidden"></div>
+
         <!-- ===== 体重記録フォーム ===== -->
         <section class="form-section">
             <h2 id="weightFormTitle">体重を記録</h2>
@@ -452,6 +458,9 @@
 
         <!-- =============== 食事・体重管理（ダッシュボード）タブ =============== -->
         <div id="tab-dashboard" class="tab-content" role="tabpanel" aria-labelledby="tab-dashboard">
+
+        <!-- ===== チュートリアルチップ ===== -->
+        <div id="tutorialTip-dashboard" class="tutorial-tip hidden"></div>
 
         <!-- ===== 健康管理ダッシュボード ===== -->
         <section class="form-section">
@@ -508,6 +517,9 @@
 
         <!-- =============== 買い物タブ =============== -->
         <div id="tab-shopping" class="tab-content" role="tabpanel" aria-labelledby="tab-shopping">
+
+        <!-- ===== チュートリアルチップ ===== -->
+        <div id="tutorialTip-shopping" class="tutorial-tip hidden"></div>
 
         <!-- サブタブ -->
         <div class="shopping-sub-tabs">
@@ -829,6 +841,9 @@
                 <span class="onboarding-dot"></span>
                 <span class="onboarding-dot"></span>
                 <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
             </div>
 
             <!-- ステップ1: ようこそ -->
@@ -882,8 +897,78 @@
                 </div>
             </div>
 
-            <!-- ステップ4: テーマ選択 -->
+            <!-- ステップ4: 活動レベル -->
             <div class="onboarding-step hidden" data-step="4">
+                <h2 class="onboarding-title">活動レベル</h2>
+                <p class="onboarding-desc">普段の運動量を教えてください（カロリー推奨量に反映されます）</p>
+                <div class="ob-activity-picker" id="obActivityPicker">
+                    <button type="button" class="ob-activity-option" data-activity="low">
+                        <span class="ob-activity-icon">🪑</span>
+                        <span class="ob-activity-label">低い</span>
+                        <span class="ob-activity-desc">デスクワーク中心・座位が多い</span>
+                    </button>
+                    <button type="button" class="ob-activity-option active" data-activity="moderate">
+                        <span class="ob-activity-icon">🚶‍♀️</span>
+                        <span class="ob-activity-label">ふつう</span>
+                        <span class="ob-activity-desc">立ち仕事・家事・軽い運動</span>
+                    </button>
+                    <button type="button" class="ob-activity-option" data-activity="high">
+                        <span class="ob-activity-icon">🏃‍♀️</span>
+                        <span class="ob-activity-label">高い</span>
+                        <span class="ob-activity-desc">活発な運動習慣がある</span>
+                    </button>
+                </div>
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-outline onboarding-skip" data-step="5">スキップ</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" data-step="5">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ5: リマインダー -->
+            <div class="onboarding-step hidden" data-step="5">
+                <h2 class="onboarding-title">リマインダー</h2>
+                <p class="onboarding-desc">食事・体重・水分補給のタイミングをお知らせします。<br>詳細は設定タブで変更できます。</p>
+                <div class="ob-reminder-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="obReminderToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="ob-reminder-label">リマインダーを有効にする</span>
+                </div>
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-outline onboarding-skip" data-step="6">スキップ</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" data-step="6">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ6: 使い方ガイド -->
+            <div class="onboarding-step hidden" data-step="6">
+                <h2 class="onboarding-title">使い方ガイド</h2>
+                <p class="onboarding-desc">3つの機能で妊娠中の健康管理をサポートします</p>
+                <div class="ob-guide-cards">
+                    <div class="ob-guide-card">
+                        <span class="ob-guide-icon">🍽️</span>
+                        <strong>食事記録</strong>
+                        <p>食品を検索して追加 → 栄養バランスを自動チェック</p>
+                    </div>
+                    <div class="ob-guide-card">
+                        <span class="ob-guide-icon">📊</span>
+                        <strong>体重管理</strong>
+                        <p>定期的に体重を記録 → グラフで推移を確認</p>
+                    </div>
+                    <div class="ob-guide-card">
+                        <span class="ob-guide-icon">🛒</span>
+                        <strong>買い物リスト</strong>
+                        <p>献立予定から自動生成 → チェックしながらお買い物</p>
+                    </div>
+                </div>
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-primary onboarding-btn" data-step="7">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ7: テーマ選択 -->
+            <div class="onboarding-step hidden" data-step="7">
                 <h2 class="onboarding-title">テーマカラー</h2>
                 <p class="onboarding-desc">お好みの配色を選んでください</p>
                 <div class="ob-theme-picker" id="obThemePicker">
