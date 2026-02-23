@@ -18,3 +18,11 @@ node_modules/
 # Environment files
 .env
 .env.local
+
+# Build/dev files (not needed for deployment)
+capacitor.config.json
+package.json
+package-lock.json
+requirements.md
+tests/
+data/add-*.js
