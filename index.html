@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
     <link rel="manifest" href="manifest.json">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self';">
     <meta name="theme-color" content="#D4708F">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -544,8 +545,8 @@
                 <h3>パートナーに共有</h3>
                 <p class="section-description">在庫と買い物リストを読み取り専用リンクで共有できます</p>
                 <div class="share-actions">
-                    <button type="button" class="btn btn-primary btn-small" onclick="shareWithPartner()">共有リンクを作成</button>
-                    <button type="button" class="btn btn-outline btn-small" onclick="copyShareURL()">リンクをコピー</button>
+                    <button type="button" class="btn btn-primary btn-small" id="shareWithPartnerBtn">共有リンクを作成</button>
+                    <button type="button" class="btn btn-outline btn-small" id="copyShareURLBtn">リンクをコピー</button>
                 </div>
             </section>
         </div>
@@ -737,7 +738,7 @@
         <section class="form-section">
             <h2>初期設定</h2>
             <p class="section-description">初回起動時のセットアップウィザードを再表示します</p>
-            <button type="button" class="btn btn-outline" onclick="resetOnboarding()">オンボーディングを再表示</button>
+            <button type="button" class="btn btn-outline" id="resetOnboardingBtn">オンボーディングを再表示</button>
         </section>
 
         <!-- ===== データバックアップ ===== -->
@@ -777,7 +778,10 @@
                     <h4>4. データの削除</h4>
                     <p>ブラウザのサイトデータを削除するか、アプリをアンインストールすることで、すべてのデータを完全に削除できます。</p>
 
-                    <h4>5. お問い合わせ</h4>
+                    <h4>5. データセキュリティについて</h4>
+                    <p>本アプリのデータはお使いの端末のローカルストレージに暗号化されずに保存されます。端末のロック設定やブラウザのセキュリティ管理はユーザーご自身の責任で行ってください。共有PCや公共の端末での利用時は、使用後にブラウザのサイトデータを削除することを推奨します。</p>
+
+                    <h4>6. お問い合わせ</h4>
                     <p>プライバシーに関するお問い合わせは、アプリのGitHubリポジトリのIssuesからお願いいたします。</p>
                 </div>
             </details>
@@ -797,7 +801,13 @@
                     <h4>4. 免責事項</h4>
                     <p>本アプリの利用により生じたいかなる損害についても、開発者は責任を負いかねます。本アプリの情報を参考にした食事管理は、ご自身の判断と責任のもとで行ってください。</p>
 
-                    <h4>5. 変更について</h4>
+                    <h4>5. APIキーについて</h4>
+                    <p>AI機能の利用に必要なAPIキーの管理・保護はユーザーご自身の責任で行ってください。APIキーの漏洩・不正利用等により生じた損害（API利用料金の発生を含む）について、開発者は一切の責任を負いません。</p>
+
+                    <h4>6. セキュリティに関する免責</h4>
+                    <p>本アプリはセキュリティ対策に努めていますが、不正アクセス、データの改ざん、消失等に対する完全な保護を保証するものではありません。重要なデータは定期的にバックアップを取ることを推奨します。</p>
+
+                    <h4>7. 変更について</h4>
                     <p>本利用規約は予告なく変更される場合があります。変更後の規約はアプリ内に掲載された時点で効力を生じるものとします。</p>
                 </div>
             </details>
@@ -828,7 +838,7 @@
                 </div>
                 <h2 class="onboarding-title">mamori へようこそ</h2>
                 <p class="onboarding-desc">妊娠期別の栄養管理をサポートするアプリです。<br>食事記録・体重管理・栄養提案で、ママと赤ちゃんの健康を守ります。</p>
-                <button type="button" class="btn btn-primary onboarding-btn" onclick="showOnboardingStep(2)">はじめる</button>
+                <button type="button" class="btn btn-primary onboarding-btn" data-step="2">はじめる</button>
             </div>
 
             <!-- ステップ2: 妊娠情報 -->
@@ -846,8 +856,8 @@
                     </div>
                 </div>
                 <div class="onboarding-actions">
-                    <button type="button" class="btn btn-outline onboarding-skip" onclick="showOnboardingStep(3)">スキップ</button>
-                    <button type="button" class="btn btn-primary onboarding-btn" onclick="showOnboardingStep(3)">次へ</button>
+                    <button type="button" class="btn btn-outline onboarding-skip" data-step="3">スキップ</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" data-step="3">次へ</button>
                 </div>
             </div>
 
@@ -867,8 +877,8 @@
                     <p id="obBmiResult" class="onboarding-bmi hidden"></p>
                 </div>
                 <div class="onboarding-actions">
-                    <button type="button" class="btn btn-outline onboarding-skip" onclick="showOnboardingStep(4)">スキップ</button>
-                    <button type="button" class="btn btn-primary onboarding-btn" onclick="showOnboardingStep(4)">次へ</button>
+                    <button type="button" class="btn btn-outline onboarding-skip" data-step="4">スキップ</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" data-step="4">次へ</button>
                 </div>
             </div>
 
@@ -894,7 +904,7 @@
                     </button>
                 </div>
                 <div class="onboarding-actions">
-                    <button type="button" class="btn btn-primary onboarding-btn" onclick="completeOnboarding()">設定を完了</button>
+                    <button type="button" class="btn btn-primary onboarding-btn" id="completeOnboardingBtn">設定を完了</button>
                 </div>
             </div>
         </div>
@@ -1070,8 +1080,10 @@
     </div>
 
     <!-- ===== JavaScript ===== -->
+    <!-- セキュリティユーティリティ（最初に読み込み） -->
+    <script src="js/security.js"></script>
     <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" integrity="sha384-vsrfeLOOY6KuIYKDlmVH5UiBmgIdB1oEf7p01YgWHuqmOHfZr374+odEv96n9tNC" crossorigin="anonymous"></script>
     <!-- nutrition.js を先に読み込む（栄養計算ロジック） -->
     <script src="js/nutrition.js"></script>
     <!-- weight.js 体重管理機能 -->
@@ -1089,10 +1101,6 @@
     <!-- reminders.js リマインダー機能 -->
     <script src="js/reminders.js"></script>
     <!-- Service Worker 登録 -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-    }
-    </script>
+    <script src="js/sw-register.js"></script>
 </body>
 </html>

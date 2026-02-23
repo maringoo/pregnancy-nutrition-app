@@ -125,7 +125,7 @@ function renderWeeklyMealPlan() {
             if (meals.length > 0) {
                 meals.forEach(m => {
                     const badge = m.planned ? '<span class="chip-planned">予定</span>' : '';
-                    html += `<span class="weekly-meal-chip">${m.foodName}${badge}</span>`;
+                    html += `<span class="weekly-meal-chip">${escapeHtml(m.foodName)}${badge}</span>`;
                 });
             } else {
                 html += `<span class="weekly-meal-empty">未設定</span>`;
@@ -252,14 +252,14 @@ function renderPantryList() {
                 const altQty = gramsToAltUnit(item.quantity, alt);
                 altHtml = `
                     <input type="number" class="pantry-alt-input" value="${altQty}" min="0" step="any" data-id="${item.id}" data-grams-per-unit="${alt.gramsPerUnit}">
-                    <span class="pantry-unit">${alt.label}</span>
+                    <span class="pantry-unit">${escapeHtml(alt.label)}</span>
                 `;
             }
 
             html += `
                 <div class="pantry-item${expiryClass}" data-id="${item.id}">
                     <div class="pantry-item-info">
-                        <span class="pantry-item-name">${item.name}</span>
+                        <span class="pantry-item-name">${escapeHtml(item.name)}</span>
                         ${expiryLabel}
                     </div>
                     <div class="pantry-item-actions">
@@ -417,9 +417,9 @@ function showPantryFoodSuggestions(searchTerm) {
     }
 
     container.innerHTML = matched.map(food => `
-        <div class="food-suggestion-item" data-food-id="${food.foodId}">
-            <p class="food-suggestion-name">${food.name}</p>
-            <p class="food-suggestion-category">${getCategoryLabel(food.category)}</p>
+        <div class="food-suggestion-item" data-food-id="${escapeAttr(food.foodId)}">
+            <p class="food-suggestion-name">${escapeHtml(food.name)}</p>
+            <p class="food-suggestion-category">${escapeHtml(getCategoryLabel(food.category))}</p>
         </div>
     `).join('');
 
@@ -652,7 +652,7 @@ function renderShoppingItems(list) {
                 <div class="shopping-item${strikeClass}" data-id="${item.id}">
                     <label class="shopping-checkbox-label">
                         <input type="checkbox" class="shopping-checkbox" data-id="${item.id}"${checked}>
-                        <span class="shopping-item-name">${item.name}</span>
+                        <span class="shopping-item-name">${escapeHtml(item.name)}</span>
                     </label>
                     ${qtyInfo}
                     ${pantryInfo}

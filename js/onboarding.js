@@ -19,6 +19,21 @@ function showOnboardingWizard() {
     if (!overlay) return;
     overlay.classList.remove('hidden');
     showOnboardingStep(1);
+
+    // オンボーディング内のステップ遷移ボタン（data-step属性）にイベント登録
+    overlay.querySelectorAll('[data-step]').forEach(btn => {
+        if (btn.tagName === 'BUTTON') {
+            btn.addEventListener('click', () => {
+                showOnboardingStep(parseInt(btn.dataset.step));
+            });
+        }
+    });
+
+    // 設定完了ボタン
+    const completeBtn = document.getElementById('completeOnboardingBtn');
+    if (completeBtn) {
+        completeBtn.addEventListener('click', completeOnboarding);
+    }
 }
 
 function hideOnboardingWizard() {
@@ -122,10 +137,12 @@ function initOnboardingTheme() {
         btn.classList.toggle('active', btn.dataset.theme === saved);
     });
 
+    const ALLOWED_THEMES = ['default', 'sage', 'terracotta'];
     picker.addEventListener('click', (e) => {
         const btn = e.target.closest('.ob-theme-option');
         if (!btn) return;
         const theme = btn.dataset.theme;
+        if (!ALLOWED_THEMES.includes(theme)) return;
 
         picker.querySelectorAll('.ob-theme-option').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -199,3 +216,9 @@ function resetOnboarding() {
     localStorage.removeItem('onboardingCompleted');
     showOnboardingWizard();
 }
+
+// リセットボタンのイベント登録
+document.addEventListener('DOMContentLoaded', () => {
+    const resetBtn = document.getElementById('resetOnboardingBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetOnboarding);
+});

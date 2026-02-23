@@ -225,6 +225,30 @@ function copyShareURL(url) {
     });
 }
 
+function validateShareData(data) {
+    if (!data || typeof data !== 'object') return null;
+    return {
+        v: Number(data.v) || 0,
+        ts: typeof data.ts === 'string' ? data.ts : '',
+        pantry: Array.isArray(data.pantry)
+            ? data.pantry.map(item => ({
+                name: String(item.name || ''),
+                quantity: Number(item.quantity) || 0,
+                unit: String(item.unit || 'g'),
+                expiry: typeof item.expiry === 'string' ? item.expiry : ''
+            }))
+            : [],
+        shopping: Array.isArray(data.shopping)
+            ? data.shopping.map(item => ({
+                name: String(item.name || ''),
+                quantity: Number(item.quantity) || 0,
+                unit: String(item.unit || 'g'),
+                checked: !!item.checked
+            }))
+            : []
+    };
+}
+
 function checkShareURL() {
     const hash = location.hash;
     if (!hash.startsWith('#share=')) return;
@@ -233,10 +257,12 @@ function checkShareURL() {
     try {
         const json = LZString.decompressFromEncodedURIComponent(compressed);
         if (!json) return;
-        const data = JSON.parse(json);
+        const raw = JSON.parse(json);
+        const data = validateShareData(raw);
+        if (!data) return;
         showShareViewer(data);
     } catch (e) {
-        console.error('共有データの読み込みに失敗しました', e);
+        console.error('共有データの読み込みに失敗しました');
     }
     // URLフラグメントをクリア
     history.replaceState(null, '', location.pathname);
@@ -248,15 +274,15 @@ function showShareViewer(data) {
 
     const pantryHTML = (data.pantry && data.pantry.length > 0)
         ? data.pantry.map(item => {
-            const expiry = item.expiry ? ` (期限: ${item.expiry})` : '';
-            return `<div class="share-viewer-item"><span>${item.name}</span><span>${item.quantity}${item.unit}${expiry}</span></div>`;
+            const expiry = item.expiry ? ` (期限: ${escapeHtml(item.expiry)})` : '';
+            return `<div class="share-viewer-item"><span>${escapeHtml(item.name)}</span><span>${escapeHtml(item.quantity)}${escapeHtml(item.unit)}${expiry}</span></div>`;
         }).join('')
         : '<p style="color:var(--light-text);font-size:0.85rem">在庫データはありません</p>';
 
     const shoppingHTML = (data.shopping && data.shopping.length > 0)
         ? data.shopping.map(item => {
             const checked = item.checked ? ' style="text-decoration:line-through;opacity:0.5"' : '';
-            return `<div class="share-viewer-item"${checked}><span>${item.name}</span><span>${item.quantity}${item.unit}</span></div>`;
+            return `<div class="share-viewer-item"${checked}><span>${escapeHtml(item.name)}</span><span>${escapeHtml(item.quantity)}${escapeHtml(item.unit)}</span></div>`;
         }).join('')
         : '<p style="color:var(--light-text);font-size:0.85rem">買い物リストはありません</p>';
 
@@ -271,13 +297,24 @@ function showShareViewer(data) {
             ${pantryHTML}
             <h3>買い物リスト</h3>
             ${shoppingHTML}
-            <button type="button" class="btn btn-primary" style="margin-top:1.5rem;width:100%" onclick="closeShareViewer()">閉じる</button>
+            <button type="button" class="btn btn-primary share-viewer-close-btn" style="margin-top:1.5rem;width:100%">閉じる</button>
         </div>
     `;
     viewer.classList.remove('hidden');
+
+    const closeBtn = viewer.querySelector('.share-viewer-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', closeShareViewer);
 }
 
 function closeShareViewer() {
     const viewer = document.getElementById('shareViewerOverlay');
     if (viewer) viewer.classList.add('hidden');
 }
+
+// 共有ボタンのイベント登録
+document.addEventListener('DOMContentLoaded', () => {
+    const shareBtn = document.getElementById('shareWithPartnerBtn');
+    if (shareBtn) shareBtn.addEventListener('click', shareWithPartner);
+    const copyBtn = document.getElementById('copyShareURLBtn');
+    if (copyBtn) copyBtn.addEventListener('click', () => copyShareURL());
+});

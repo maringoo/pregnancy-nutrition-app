@@ -137,7 +137,7 @@ function loadFoodMaster() {
             foodMasterData = Array.isArray(data) ? data : data.foods;
             // オリジナル食品をマージ
             mergeCustomFoods();
-            console.log(`${foodMasterData.length} 件の食品マスタを読み込みました（オリジナル含む）`);
+            // 食品マスタ読み込み完了
         })
         .catch(error => {
             console.error('食品マスタの読み込みエラー:', error);
@@ -280,7 +280,7 @@ function useSampleFoodData() {
             category: 'protein'
         }
     ];
-    console.log('サンプル食品データを使用しています');
+    // サンプル食品データを使用
 }
 
 // ===== イベントリスナーの登録 =====
@@ -548,9 +548,9 @@ function showFoodSuggestions(searchTerm) {
             categoryText += ` ・ ${food.ingredients.length}食材`;
         }
         return `
-            <div class="food-suggestion-item" data-food-id="${food.foodId}">
-                <p class="food-suggestion-name">${food.name} ${dishTag}</p>
-                <p class="food-suggestion-category">${categoryText}</p>
+            <div class="food-suggestion-item" data-food-id="${escapeAttr(food.foodId)}">
+                <p class="food-suggestion-name">${escapeHtml(food.name)} ${dishTag}</p>
+                <p class="food-suggestion-category">${escapeHtml(categoryText)}</p>
             </div>
         `;
     }).join('');
@@ -667,8 +667,8 @@ function renderIngredientEditor() {
     const container = document.getElementById('ingredientsList');
     const rows = editableIngredients.map((ing, i) => `
         <div class="ingredient-row" data-index="${i}">
-            <span class="ingredient-name">${ing.name}</span>
-            <input type="text" class="ingredient-amount-input" value="${ing.amount}" data-index="${i}">
+            <span class="ingredient-name">${escapeHtml(ing.name)}</span>
+            <input type="text" class="ingredient-amount-input" value="${escapeAttr(ing.amount)}" data-index="${i}">
             <button type="button" class="ingredient-remove-btn" data-index="${i}">&times;</button>
         </div>
     `).join('');
@@ -725,8 +725,8 @@ function showIngredientAddSuggestions(searchTerm) {
     }
 
     container.innerHTML = matched.map(food => `
-        <div class="ingredient-add-item" data-name="${food.name}">
-            ${food.name} <span style="color:#999; font-size:0.8rem">${getCategoryLabel(food.category)}</span>
+        <div class="ingredient-add-item" data-name="${escapeAttr(food.name)}">
+            ${escapeHtml(food.name)} <span style="color:#999; font-size:0.8rem">${escapeHtml(getCategoryLabel(food.category))}</span>
         </div>
     `).join('');
 
@@ -829,8 +829,8 @@ function renderPendingMeals() {
     list.innerHTML = pendingMeals.map((item, idx) => `
         <div class="pending-meal-item">
             <div class="pending-meal-info">
-                <span class="pending-meal-name">${item.foodName}</span>
-                <span class="pending-meal-qty">${item.displayQuantity}${item.displayUnit} (${Math.round(item.nutrients.calories)}kcal)</span>
+                <span class="pending-meal-name">${escapeHtml(item.foodName)}</span>
+                <span class="pending-meal-qty">${escapeHtml(item.displayQuantity)}${escapeHtml(item.displayUnit)} (${Math.round(item.nutrients.calories)}kcal)</span>
             </div>
             <button type="button" class="pending-meal-remove" data-idx="${idx}">&times;</button>
         </div>
@@ -1042,10 +1042,10 @@ function displayMeals() {
                 html += `
                     <div class="meal-item-compact${plannedClass}">
                         <div class="meal-item-info">
-                            <button class="btn-fav-star${favClass}" data-food-id="${meal.foodId}" data-food-name="${meal.foodName}" data-qty="${displayQuantity}" data-unit="${displayUnit}">★</button>
-                            <span class="meal-item-name-inline">${meal.foodName}</span>
+                            <button class="btn-fav-star${favClass}" data-food-id="${escapeAttr(meal.foodId)}" data-food-name="${escapeAttr(meal.foodName)}" data-qty="${escapeAttr(displayQuantity)}" data-unit="${escapeAttr(displayUnit)}">★</button>
+                            <span class="meal-item-name-inline">${escapeHtml(meal.foodName)}</span>
                             ${statusBadge}
-                            <span class="meal-item-meta">${displayQuantity}${displayUnit} / ${meal.nutrients.calories}kcal</span>
+                            <span class="meal-item-meta">${escapeHtml(displayQuantity)}${escapeHtml(displayUnit)} / ${meal.nutrients.calories}kcal</span>
                         </div>
                         <div class="meal-item-actions">
                             ${confirmBtn}
@@ -2254,7 +2254,7 @@ function pruneOldData() {
         });
         if (pruned > 0) {
             localStorage.setItem('mealRecords', JSON.stringify(records));
-            console.log(`${pruned}日分の古い食事記録をアーカイブしました`);
+            // 古い食事記録をアーカイブ完了
         }
 
         // 水分記録も同様に整理
@@ -2380,9 +2380,9 @@ function displayMealHistory(mealType) {
 
     // 履歴チップを生成
     historyList.innerHTML = history.map((item, index) => `
-        <div class="history-chip" data-index="${index}" data-meal-type="${mealType}">
-            <span class="history-chip-text" data-index="${index}" data-meal-type="${mealType}">${item.foodName} (${item.quantity}${item.unitName})</span>
-            <span class="history-chip-delete" data-index="${index}" data-meal-type="${mealType}">&times;</span>
+        <div class="history-chip" data-index="${index}" data-meal-type="${escapeAttr(mealType)}">
+            <span class="history-chip-text" data-index="${index}" data-meal-type="${escapeAttr(mealType)}">${escapeHtml(item.foodName)} (${escapeHtml(item.quantity)}${escapeHtml(item.unitName)})</span>
+            <span class="history-chip-delete" data-index="${index}" data-meal-type="${escapeAttr(mealType)}">&times;</span>
         </div>
     `).join('');
 
@@ -2525,9 +2525,9 @@ function showLookupSuggestions(searchTerm) {
     }
 
     container.innerHTML = matched.map(food => `
-        <div class="food-suggestion-item" data-food-id="${food.foodId}">
-            <p class="food-suggestion-name">${food.name}</p>
-            <p class="food-suggestion-category">${getCategoryLabel(food.category)} - ${food.calories}kcal/100g</p>
+        <div class="food-suggestion-item" data-food-id="${escapeAttr(food.foodId)}">
+            <p class="food-suggestion-name">${escapeHtml(food.name)}</p>
+            <p class="food-suggestion-category">${escapeHtml(getCategoryLabel(food.category))} - ${food.calories}kcal/100g</p>
         </div>
     `).join('');
 
@@ -2594,9 +2594,9 @@ function showRecipeAddSuggestions(searchTerm) {
     }
 
     container.innerHTML = matched.map(food => `
-        <div class="food-suggestion-item" data-food-id="${food.foodId}">
-            <p class="food-suggestion-name">${food.name}</p>
-            <p class="food-suggestion-category">${getCategoryLabel(food.category)}</p>
+        <div class="food-suggestion-item" data-food-id="${escapeAttr(food.foodId)}">
+            <p class="food-suggestion-name">${escapeHtml(food.name)}</p>
+            <p class="food-suggestion-category">${escapeHtml(getCategoryLabel(food.category))}</p>
         </div>
     `).join('');
 
@@ -2639,7 +2639,7 @@ function renderRecipeIngredients() {
 
     container.innerHTML = recipeIngredients.map((ing, i) => `
         <div class="recipe-ingredient-row" data-index="${i}">
-            <span class="recipe-ingredient-name">${ing.name}</span>
+            <span class="recipe-ingredient-name">${escapeHtml(ing.name)}</span>
             <input type="number" class="recipe-ingredient-amount" value="${ing.amount}" min="1" step="any" data-index="${i}">
             <span class="recipe-ingredient-unit">g</span>
             <button type="button" class="recipe-ingredient-remove" data-index="${i}">&times;</button>
@@ -2873,7 +2873,7 @@ function registerCustomFood() {
 
     // 一覧を更新
     displayCustomFoods();
-    console.log(`オリジナル食品「${name}」を${wasEditing ? '更新' : '登録'}しました`);
+    // オリジナル食品を保存完了
 }
 
 // ===== オリジナル食品一覧を表示 =====
@@ -2889,12 +2889,12 @@ function displayCustomFoods() {
     container.innerHTML = custom.map(food => `
         <div class="custom-food-item">
             <div class="custom-food-info">
-                <span class="custom-food-name">${food.name}</span>
+                <span class="custom-food-name">${escapeHtml(food.name)}</span>
                 <span class="custom-food-cal">${food.calories}kcal/100g</span>
             </div>
             <div class="custom-food-actions">
-                <button type="button" class="btn-edit custom-food-edit" data-food-id="${food.foodId}">編集</button>
-                <button type="button" class="btn-delete custom-food-delete" data-food-id="${food.foodId}">削除</button>
+                <button type="button" class="btn-edit custom-food-edit" data-food-id="${escapeAttr(food.foodId)}">編集</button>
+                <button type="button" class="btn-delete custom-food-delete" data-food-id="${escapeAttr(food.foodId)}">削除</button>
             </div>
         </div>
     `).join('');
@@ -3018,7 +3018,7 @@ function updateApiKeyStatus() {
     const { provider, apiKey } = getActiveAIConfig();
     const providerName = AI_PROVIDERS[provider]?.name || provider;
     if (apiKey) {
-        statusEl.textContent = `${providerName} APIキー設定済み（${apiKey.slice(0, 10)}...）`;
+        statusEl.textContent = `${providerName} APIキー設定済み（${apiKey.slice(0, 4)}****）`;
         statusEl.style.color = 'var(--success-green)';
     } else {
         statusEl.textContent = `${providerName} APIキー未設定（ローカル解析を使用）`;
@@ -3093,8 +3093,7 @@ async function callClaude(apiKey, prompt, maxTokens) {
         })
     });
     if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        console.error('Claude API error:', response.status, err);
+        console.error('Claude API error:', response.status);
         return null;
     }
     const data = await response.json();
@@ -3115,8 +3114,7 @@ async function callChatGPT(apiKey, prompt, maxTokens) {
         })
     });
     if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        console.error('OpenAI API error:', response.status, err);
+        console.error('OpenAI API error:', response.status);
         return null;
     }
     const data = await response.json();
@@ -3159,30 +3157,29 @@ async function callGeminiModel(apiKey, prompt, maxTokens, model) {
         })
     });
     if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
         // 429 (quota exceeded) の場合は次のモデルを試す
         if (response.status === 429) {
-            console.warn(`Gemini ${model}: 無料枠超過、次のモデルを試行します`, err);
+            console.warn(`Gemini ${model}: 無料枠超過、次のモデルを試行します`);
             return null;
         }
-        console.error(`Gemini API error (${model}):`, response.status, err);
+        console.error(`Gemini API error (${model}):`, response.status);
         return null;
     }
     const data = await response.json();
     if (!data.candidates || data.candidates.length === 0) {
-        console.error(`Gemini ${model}: candidatesが空です`, data);
+        console.error(`Gemini ${model}: candidatesが空です`);
         return null;
     }
     const candidate = data.candidates[0];
     if (candidate.finishReason === 'SAFETY') {
-        console.error(`Gemini ${model}: 安全フィルターによりブロックされました`, candidate.safetyRatings);
+        console.error(`Gemini ${model}: 安全フィルターによりブロックされました`);
         return null;
     }
     if (!candidate.content || !candidate.content.parts || candidate.content.parts.length === 0) {
-        console.error(`Gemini ${model}: contentが空です`, candidate);
+        console.error(`Gemini ${model}: contentが空です`);
         return null;
     }
-    console.log(`Gemini: ${model} で応答を取得しました`);
+    // Gemini応答取得完了
     return candidate.content.parts[0].text;
 }
 
@@ -3590,12 +3587,12 @@ function renderPasteResult(ingredients) {
     listEl.innerHTML = ingredients.map((ing, i) => `
         <div class="paste-result-item ${ing.matched ? 'matched' : 'unmatched'}">
             <div class="paste-result-item-info">
-                <span class="paste-result-name">${ing.name}</span>
-                <span class="paste-result-quantity">${ing.rawQuantity}${ing.grams > 0 ? ` (${Math.round(ing.grams)}g)` : ''}</span>
+                <span class="paste-result-name">${escapeHtml(ing.name)}</span>
+                <span class="paste-result-quantity">${escapeHtml(ing.rawQuantity)}${ing.grams > 0 ? ` (${Math.round(ing.grams)}g)` : ''}</span>
             </div>
             <div class="paste-result-actions">
                 ${ing.matched
-                    ? `<span class="match-badge match-ok">${ing.matchedFood.name}</span>
+                    ? `<span class="match-badge match-ok">${escapeHtml(ing.matchedFood.name)}</span>
                        <button type="button" class="paste-result-remove" data-index="${i}">&times;</button>`
                     : `<span class="match-badge match-ng">未マッチ</span>`
                 }
@@ -3705,9 +3702,29 @@ function importAppData(e) {
     const reader = new FileReader();
     reader.onload = (event) => {
         try {
-            const data = JSON.parse(event.target.result);
+            const raw = event.target.result;
+            // サイズ制限（10MB）
+            if (raw.length > 10 * 1024 * 1024) {
+                if (msgEl) {
+                    msgEl.textContent = 'ファイルサイズが大きすぎます（上限10MB）。';
+                    msgEl.className = 'backup-message error';
+                    msgEl.classList.remove('hidden');
+                }
+                return;
+            }
+            const data = JSON.parse(raw);
 
-            // バリデーション: 最低限のキーが含まれているか
+            // バリデーション: オブジェクトであること
+            if (!data || typeof data !== 'object' || Array.isArray(data)) {
+                if (msgEl) {
+                    msgEl.textContent = 'このファイルは有効なバックアップファイルではありません。';
+                    msgEl.className = 'backup-message error';
+                    msgEl.classList.remove('hidden');
+                }
+                return;
+            }
+
+            // バリデーション: 許可されたキーのみ処理
             const validKeys = BACKUP_KEYS.filter(key => key in data);
             if (validKeys.length === 0) {
                 if (msgEl) {
@@ -3724,8 +3741,10 @@ function importAppData(e) {
             }
 
             // APIキーは復元しない（セキュリティ上の理由）
+            // __proto__, constructor, prototype などの危険なキーを除外
             validKeys.forEach(key => {
                 if (key.startsWith('aiApiKey_')) return;
+                if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
                 localStorage.setItem(key, JSON.stringify(data[key]));
             });
 
@@ -4051,7 +4070,7 @@ function renderCombinationCards(combos) {
     let html = '<h3 class="combo-title">おすすめメニュー（組み合わせ）</h3>';
 
     combos.forEach((combo, idx) => {
-        const comboJSON = JSON.stringify(combo.foods).replace(/"/g, '&quot;');
+        const comboJSON = escapeAttr(JSON.stringify(combo.foods));
         html += `
             <div class="combo-card">
                 <div class="combo-card-header">
@@ -4059,22 +4078,22 @@ function renderCombinationCards(combos) {
                 </div>
                 <div class="combo-foods-list">
                     ${combo.foods.map(f => `
-                        <span class="combo-food-pill">${f.name} ${f.grams}g</span>
+                        <span class="combo-food-pill">${escapeHtml(f.name)} ${f.grams}g</span>
                     `).join('')}
                 </div>
                 <div class="combo-coverage">
                     ${Object.entries(combo.coverageMap).map(([, cov]) => `
                         <div class="combo-coverage-item">
-                            <span class="combo-coverage-label">${cov.name}</span>
+                            <span class="combo-coverage-label">${escapeHtml(cov.name)}</span>
                             <div class="mini-progress-bar-container">
-                                <div class="mini-progress-bar" style="width: ${cov.rate}%"></div>
+                                <div class="mini-progress-bar" style="width: ${Math.min(100, Math.max(0, Number(cov.rate) || 0))}%"></div>
                             </div>
-                            <span class="combo-coverage-rate">${cov.rate}%補完</span>
+                            <span class="combo-coverage-rate">${escapeHtml(cov.rate)}%補完</span>
                         </div>
                     `).join('')}
                 </div>
                 <button type="button" class="btn btn-small btn-apply btn-add-combo"
-                    data-combo='${comboJSON}'>まとめて追加</button>
+                    data-combo="${comboJSON}">まとめて追加</button>
             </div>
         `;
     });
@@ -4224,7 +4243,7 @@ function renderAIRecipeCards(recipes) {
     let html = '';
 
     recipes.forEach((recipe, idx) => {
-        const recipeJSON = JSON.stringify(recipe).replace(/"/g, '&quot;');
+        const recipeJSON = escapeAttr(JSON.stringify(recipe));
         const nutrientBadges = recipe.estimatedNutrients
             ? Object.entries(recipe.estimatedNutrients)
                 .filter(([, v]) => v > 0)
@@ -4238,27 +4257,27 @@ function renderAIRecipeCards(recipes) {
         html += `
             <div class="ai-recipe-card">
                 <div class="ai-recipe-card-header">
-                    <h4 class="ai-recipe-name">${recipe.name}</h4>
-                    <span class="ai-recipe-time">${recipe.cookTime || ''}</span>
+                    <h4 class="ai-recipe-name">${escapeHtml(recipe.name)}</h4>
+                    <span class="ai-recipe-time">${escapeHtml(recipe.cookTime || '')}</span>
                 </div>
-                ${recipe.storageInfo ? `<div class="recipe-meta-badges"><span class="recipe-storage-badge">${recipe.storageInfo}</span>${recipe.servings ? `<span class="recipe-servings-badge">${recipe.servings}人前</span>` : ''}</div>` : ''}
+                ${recipe.storageInfo ? `<div class="recipe-meta-badges"><span class="recipe-storage-badge">${escapeHtml(recipe.storageInfo)}</span>${recipe.servings ? `<span class="recipe-servings-badge">${escapeHtml(recipe.servings)}人前</span>` : ''}</div>` : ''}
                 <div class="ai-recipe-nutrients">${nutrientBadges}</div>
                 <div class="ai-recipe-ingredients">
                     <p class="ai-recipe-sub-label">食材:</p>
                     <ul>
                         ${recipe.ingredients.map(ing =>
-                            `<li>${ing.name} ${ing.amount}</li>`
+                            `<li>${escapeHtml(ing.name)} ${escapeHtml(ing.amount)}</li>`
                         ).join('')}
                     </ul>
                 </div>
                 <details class="ai-recipe-steps">
                     <summary>作り方を見る</summary>
                     <ol>
-                        ${recipe.steps.map(s => `<li>${s}</li>`).join('')}
+                        ${recipe.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
                     </ol>
                 </details>
                 <button type="button" class="btn btn-small btn-apply btn-add-recipe-ingredients"
-                    data-recipe='${recipeJSON}'>食材を追加</button>
+                    data-recipe="${recipeJSON}">食材を追加</button>
             </div>
         `;
     });
@@ -4547,10 +4566,12 @@ function isMorningSicknessMode() {
 }
 
 // ===== テーマカラー切り替え =====
+const ALLOWED_THEMES = ['default', 'sage', 'terracotta'];
+
 function initThemePicker() {
-    // 保存済みテーマを適用
+    // 保存済みテーマを適用（ホワイトリスト検証）
     const saved = localStorage.getItem('appTheme');
-    if (saved && saved !== 'default') {
+    if (saved && saved !== 'default' && ALLOWED_THEMES.includes(saved)) {
         document.documentElement.setAttribute('data-theme', saved);
     }
 
@@ -4569,6 +4590,7 @@ function initThemePicker() {
         if (!btn) return;
 
         const theme = btn.dataset.theme;
+        if (!ALLOWED_THEMES.includes(theme)) return;
 
         // アクティブ状態の更新
         picker.querySelectorAll('.theme-option').forEach(b => b.classList.remove('active'));
@@ -4736,8 +4758,8 @@ function displayFavorites() {
     list.innerHTML = favorites.map((fav, i) => `
         <div class="favorite-chip" data-index="${i}">
             <span class="fav-star">★</span>
-            <span class="fav-text">${fav.foodName} (${fav.quantity}${fav.unitName})</span>
-            <span class="fav-remove" data-food-id="${fav.foodId}">&times;</span>
+            <span class="fav-text">${escapeHtml(fav.foodName)} (${escapeHtml(fav.quantity)}${escapeHtml(fav.unitName)})</span>
+            <span class="fav-remove" data-food-id="${escapeAttr(fav.foodId)}">&times;</span>
         </div>
     `).join('');
 

@@ -184,8 +184,8 @@ function renderReminderBanner(reminders) {
         item.className = 'reminder-item';
         item.dataset.id = r.id;
         item.innerHTML = `
-            <span class="reminder-icon">${r.icon}</span>
-            <span class="reminder-message">${r.message}</span>
+            <span class="reminder-icon">${escapeHtml(r.icon)}</span>
+            <span class="reminder-message">${escapeHtml(r.message)}</span>
             <button type="button" class="reminder-dismiss" aria-label="閉じる">&times;</button>
         `;
         list.appendChild(item);

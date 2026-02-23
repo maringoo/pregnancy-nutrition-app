@@ -10,7 +10,7 @@ async function loadRecipeData() {
         const response = await fetch('data/recipes.json');
         if (!response.ok) throw new Error('recipes.json の読み込みに失敗');
         recipeMasterData = await response.json();
-        console.log(`レシピデータ読み込み完了: ${recipeMasterData.length}品`);
+        // レシピデータ読み込み完了
     } catch (error) {
         console.error('レシピデータ読み込みエラー:', error);
         recipeMasterData = [];
@@ -153,11 +153,11 @@ function renderMealPrepRecipes(deficients, trimester) {
             .join('');
 
         const ingredientsList = recipe.ingredients
-            .map(ing => `<li>${ing.name} ${ing.amount}</li>`)
+            .map(ing => `<li>${escapeHtml(ing.name)} ${escapeHtml(ing.amount)}</li>`)
             .join('');
 
         const stepsList = recipe.steps
-            .map((step, i) => `<li>${step}</li>`)
+            .map((step, i) => `<li>${escapeHtml(step)}</li>`)
             .join('');
 
         // 料理として追加するためのデータ
@@ -172,12 +172,12 @@ function renderMealPrepRecipes(deficients, trimester) {
         html += `
             <div class="meal-prep-recipe-card">
                 <div class="meal-prep-recipe-header">
-                    <h4 class="meal-prep-recipe-name">${recipe.name}</h4>
-                    <span class="meal-prep-recipe-time">${recipe.cookTime}</span>
+                    <h4 class="meal-prep-recipe-name">${escapeHtml(recipe.name)}</h4>
+                    <span class="meal-prep-recipe-time">${escapeHtml(recipe.cookTime)}</span>
                 </div>
-                <p class="meal-prep-recipe-desc">${recipe.description}</p>
+                <p class="meal-prep-recipe-desc">${escapeHtml(recipe.description)}</p>
                 <div class="recipe-meta-badges">
-                    <span class="recipe-storage-badge">${recipe.storageInfo}</span>
+                    <span class="recipe-storage-badge">${escapeHtml(recipe.storageInfo)}</span>
                     <span class="recipe-servings-badge">${recipe.servings}人前</span>
                 </div>
                 <div class="recipe-nutrient-tags">
@@ -198,7 +198,7 @@ function renderMealPrepRecipes(deficients, trimester) {
                         <option value="dinner" selected>夕食</option>
                         <option value="snack">間食</option>
                     </select>
-                    <button type="button" class="btn btn-add-meal-prep" data-recipe='${JSON.stringify(recipeDataForAdd).replace(/'/g, "&#39;")}'>
+                    <button type="button" class="btn btn-add-meal-prep" data-recipe="${escapeAttr(JSON.stringify(recipeDataForAdd))}">
                         料理として追加（1人前）
                     </button>
                 </div>

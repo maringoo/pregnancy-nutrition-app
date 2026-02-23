@@ -283,25 +283,26 @@ function displayWeightRecords() {
                     ${memoHtml}
                 </div>
                 <div class="weight-record-actions">
-                    <button class="btn btn-small btn-outline-sm" onclick="startWeightEdit('${record.id}')">編集</button>
-                    <button class="btn-delete-sm" onclick="deleteWeightRecord('${record.id}')">&times;</button>
+                    <button class="btn btn-small btn-outline-sm weight-edit-btn" data-record-id="${escapeAttr(record.id)}">編集</button>
+                    <button class="btn-delete-sm weight-delete-btn" data-record-id="${escapeAttr(record.id)}">&times;</button>
                 </div>
             </div>
         `;
     }).join('');
+
+    // イベントデリゲーション
+    container.querySelectorAll('.weight-edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => startWeightEdit(btn.dataset.recordId));
+    });
+    container.querySelectorAll('.weight-delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteWeightRecord(btn.dataset.recordId));
+    });
 }
 
 // ===== 日付を日本語フォーマットに変換 =====
 function formatDateJP(dateStr) {
     const d = new Date(dateStr);
     return `${d.getMonth() + 1}/${d.getDate()}`;
-}
-
-// ===== HTMLエスケープ =====
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // ===== BMI区分から推奨増加量を取得 =====

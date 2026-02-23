@@ -1,8 +1,9 @@
-const CACHE_NAME = 'maternity-nutrition-v3';
+const CACHE_NAME = 'maternity-nutrition-v4';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './css/style.css',
+    './js/security.js',
     './js/nutrition.js',
     './js/weight.js',
     './js/shopping.js',
@@ -11,6 +12,7 @@ const ASSETS_TO_CACHE = [
     './js/sharing.js',
     './js/app.js',
     './js/reminders.js',
+    './js/sw-register.js',
     './data/foods.json',
     './data/nutrients.json',
     './data/recipes.json',
@@ -50,11 +52,13 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         fetch(event.request)
             .then((response) => {
-                // 成功したレスポンスをキャッシュに保存
-                const clone = response.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, clone);
-                });
+                // 正常なレスポンスのみキャッシュに保存
+                if (response.ok && response.type === 'basic') {
+                    const clone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, clone);
+                    });
+                }
                 return response;
             })
             .catch(() => {
