@@ -1459,15 +1459,17 @@ function dismissTutorialTip(tabName) {
 function setupNavTabs() {
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
-            const targetTab = e.target.dataset.tab;
+            const btn = e.target.closest('.nav-tab');
+            if (!btn) return;
+            const targetTab = btn.dataset.tab;
 
             // タブボタンの切替
             document.querySelectorAll('.nav-tab').forEach(t => {
                 t.classList.remove('active');
                 t.setAttribute('aria-selected', 'false');
             });
-            e.target.classList.add('active');
-            e.target.setAttribute('aria-selected', 'true');
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
 
             // コンテンツの切替
             document.querySelectorAll('.tab-content').forEach(content => {
